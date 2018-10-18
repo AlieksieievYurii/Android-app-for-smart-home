@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.MainActivity"
+        android:orientation="vertical"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:background="#b4b4b4">
+
+  <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center">
+      <Button
+              android:id="@+id/btn_led_1"
+              style="@style/view_elements"
+              android:background="@drawable/lamp"/>
+      <Button
+                    android:id="@+id/btn_led_2"
+                    style="@style/view_elements"
+                    android:background="@drawable/lamp"/>
+      <Button
+                          android:id="@+id/btn_led_3"
+                          style="@style/view_elements"
+                          android:background="@drawable/lamp"/>
+      <Button
+                          android:id="@+id/btn_led_4"
+                          style="@style/view_elements"
+                          android:background="@drawable/lamp"/>
+  </LinearLayout>
+    <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center">
+          <Button
+                  android:id="@+id/btn_led_5"
+                  style="@style/view_elements"
+                  android:background="@drawable/lamp"/>
+          <Button
+                        android:id="@+id/btn_led_6"
+                        style="@style/view_elements"
+                        android:background="@drawable/lamp"/>
+          <Button
+                              android:id="@+id/btn_led_7"
+                              style="@style/view_elements"
+                              android:background="@drawable/lamp"/>
+          <Button
+                              android:id="@+id/btn_led_8"
+                              style="@style/view_elements"
+                              android:background="@drawable/lamp"/>
+      </LinearLayout>
+
+</LinearLayout>
