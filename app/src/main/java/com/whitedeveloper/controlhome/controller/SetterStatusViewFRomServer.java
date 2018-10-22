@@ -7,12 +7,20 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class SetterStatusViewFRomServer {
-    
+public class SetterStatusViewFRomServer
+{
+    private static final String PROPERTY_ACTIONS_FROM_SERVER = "Actions";
+    private static final String PROPERTY_TYPE_PIN = "T";
+    private static final String PROPERTY_TYPE_DIGITAL = "D";
+    private static final String PROPERTY_PIN = "P";
+    private static final String PROPERTY_STATUS_PIN = "S";
+    private static final String PROPERTY_HIGH_LEVEL = "H";
+
+
     public static void setButtonsStatus(ArrayList<ControllerButton> controllerButtons, String dataFromServer) throws JSONException {
 
         JSONObject dataJson = new JSONObject(dataFromServer);
-        JSONArray jsonArrayListActions = dataJson.getJSONArray("Actions");
+        JSONArray jsonArrayListActions = dataJson.getJSONArray(PROPERTY_ACTIONS_FROM_SERVER);
 
         for (ControllerButton controllerButton : controllerButtons) 
         {
@@ -26,10 +34,10 @@ public class SetterStatusViewFRomServer {
     }
     
     private static boolean isDigitalPinON(JSONObject jsonObject) throws JSONException {
-        String typePin = jsonObject.getString("T");
+        String typePin = jsonObject.getString(PROPERTY_TYPE_PIN);
         
-        if(typePin.equals("D"))
-            return jsonObject.getString("S").equals("H");
+        if(typePin.equals(PROPERTY_TYPE_DIGITAL))
+            return jsonObject.getString(PROPERTY_STATUS_PIN).equals(PROPERTY_HIGH_LEVEL);
         else throw new JSONException("Pin is not digital -> " + jsonObject.toString());
     }
     
@@ -38,9 +46,9 @@ public class SetterStatusViewFRomServer {
         {
             JSONObject jsonObject = (JSONObject) jsonArray.get(i);
             
-            if(jsonObject.getInt("P") == pin )
+            if(jsonObject.getInt(PROPERTY_PIN) == pin )
                 return jsonObject;
         }
-        throw new JSONException("Not found JSONobject with pin " + pin);
+        throw new JSONException("Not found JSON object with pin " + pin);
     }
 }

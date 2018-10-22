@@ -14,14 +14,16 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
 {
-    private final int[] ID_VIEWS = {R.id.btn_led_1,
+    private final int[] ID_BUTTONS = {R.id.btn_led_1,
                                     R.id.btn_led_2,
                                     R.id.btn_led_3,
                                     R.id.btn_led_4,
-                                    R.id.btn_led_5,
-                                    R.id.btn_led_6,
-                                    R.id.btn_led_7,
-                                    R.id.btn_led_8};
+                                    R.id.btn_computer_1,
+                                    R.id.btn_computer_2,
+                                    R.id.btn_computer_3,
+                                    R.id.btn_computer_4};
+
+    private final int[] ID_SEEK_BARS = {R.id.sb_1};
 
     private final PinArduino[] PIN_ARDUINO = {new PinArduino('D',3),
                                     new PinArduino('D',4),
@@ -54,8 +56,8 @@ public class MainActivity extends AppCompatActivity
 
     private void init()
     {
-        for (int i = 0; i < ID_VIEWS.length; i++)
-            arrayListControllerButtons.add(new ControllerButton((Button) findViewById(ID_VIEWS[i]),PIN_ARDUINO[i],"Home"));
+        for (int i = 0; i < ID_BUTTONS.length; i++)
+            arrayListControllerButtons.add(new ControllerButton((Button) findViewById(ID_BUTTONS[i]),PIN_ARDUINO[i],"Home"));
 
         setuperArrayListButtons = new Controller();
     }
