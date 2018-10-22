@@ -14,32 +14,41 @@ import java.util.ArrayList;
 
 public class Controller implements ISetuperArrayListButtons, UpDateActiviti, IonClickButton
 {
+    private static final String SERVLET_ACTION_BY_DEVICES = "actions-by-device";
+    private static final String HOST = "http://192.168.0.106:8080/";
+    private static final String KEY_TO_HOST = "12345678";
+
     private DataFromServer dataFromServer;
     private ArrayList<ControllerButton> controllerButtons;
-    String likeData = "[{\"T\":\"D\",\"P\":3,\"S\":\"L\"},{\"T\":\"D\",\"P\":4,\"S\":\"L\"},{\"T\":\"D\",\"P\":5,\"S\":\"L\"},{\"T\":\"D\",\"P\":6,\"S\":\"L\"},{\"T\":\"D\",\"P\":7,\"S\":\"H\"},{\"T\":\"D\",\"P\":8,\"S\":\"L\"},{\"T\":\"D\",\"P\":9,\"S\":\"H\"},{\"T\":\"D\",\"P\":10,\"S\":\"L\"}]";
 
     public Controller()
     {
         dataFromServer  = new DataFromServer(
-                "http://192.168.0.106:8080/actions",
-                "JbhT692Hy2",
+                HOST,
+                KEY_TO_HOST,
                 this);
-        dataFromServer.readDataFromServer();
+
+        readingFromServer();
     }
 
-    private void setButtonsByActionsFromServer()
+    private void setButtonsByActionsFromServer(String data)
     {
         try {
-            SetterStatusViewFRomServer.setButtonsStatuc(this.controllerButtons,likeData);
+            SetterStatusViewFRomServer.setButtonsStatus(this.controllerButtons,data);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
+    private void readingFromServer()
+    {
+        dataFromServer.readDataFromServer(SERVLET_ACTION_BY_DEVICES);
+    }
+
     private void sendToServer(String json)
         {
             Log.i("TAG",json);
-            dataFromServer.writeDataToServer(json);
+            dataFromServer.writeDataToServer(SERVLET_ACTION_BY_DEVICES,json);
         }
 
     @Override
@@ -52,11 +61,12 @@ public class Controller implements ISetuperArrayListButtons, UpDateActiviti, Ion
 
     @Override
     public void updateActiviti(String data) {
-        setButtonsByActionsFromServer();
+        setButtonsByActionsFromServer(data);
     }
 
     @Override
     public void onClickButton() {
         sendToServer(CreatorJsonByControllerButton.getJsonActions(this.controllerButtons));
+        readingFromServer();
     }
 }

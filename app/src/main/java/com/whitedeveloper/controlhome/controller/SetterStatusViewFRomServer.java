@@ -9,15 +9,16 @@ import java.util.ArrayList;
 
 public class SetterStatusViewFRomServer {
     
-    public static void setButtonsStatuc(ArrayList<ControllerButton> controllerButtons,String dataFromServer) throws JSONException {
+    public static void setButtonsStatus(ArrayList<ControllerButton> controllerButtons, String dataFromServer) throws JSONException {
 
-        JSONArray jsonFromServer = new JSONArray(dataFromServer);
+        JSONObject dataJson = new JSONObject(dataFromServer);
+        JSONArray jsonArrayListActions = dataJson.getJSONArray("Actions");
 
         for (ControllerButton controllerButton : controllerButtons) 
         {
             JSONObject jsonObject = getJsonObjectByArduinoPin(
                     controllerButton.getPinArduino().getPin(),
-                    jsonFromServer);
+                    jsonArrayListActions);
 
             controllerButton.setChecked(isDigitalPinON(jsonObject));
         }

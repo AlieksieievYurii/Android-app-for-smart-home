@@ -13,7 +13,6 @@ public class WriteToServer extends AsyncTask<String,Void,Integer>
 {
     private IresponceFromServer iresponceFromServer;
     private HttpURLConnection httpURLConnection;
-
     private int responceCode;
 
     public WriteToServer(HttpURLConnection httpURLConnection, IresponceFromServer iresponceFromServer) {
@@ -23,12 +22,11 @@ public class WriteToServer extends AsyncTask<String,Void,Integer>
 
     protected Integer doInBackground(String ... text)
     {
-        String data = text[1];
-        String key = text[0];
+        String data = text[0];
 
         try{
             OutputStream outputStream = httpURLConnection.getOutputStream();
-            writeToServer(outputStream,String.format("key=%s&data=%s",key,data));
+            writeToServer(outputStream,String.format("data=%s",data));
             outputStream.close();
 
             this.responceCode = httpURLConnection.getResponseCode();

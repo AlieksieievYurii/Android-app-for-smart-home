@@ -1,6 +1,7 @@
 package com.whitedeveloper.controlhome.model.http.writerreader;
 
 import android.os.AsyncTask;
+import android.util.Log;
 import com.whitedeveloper.controlhome.model.http.interfeice.IresponceFromServer;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,7 +16,7 @@ public class ReadFromServer extends AsyncTask<Void,Void,String>
 
     private int codeResponce;
 
-    public ReadFromServer(HttpURLConnection httpURLConnection, IresponceFromServer iresponceFromServer)
+    public ReadFromServer(HttpURLConnection httpURLConnection,IresponceFromServer iresponceFromServer)
     {
         this.httpURLConnection = httpURLConnection;
         this.iresponceFromServer = iresponceFromServer;
@@ -24,7 +25,6 @@ public class ReadFromServer extends AsyncTask<Void,Void,String>
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-
         iresponceFromServer.dataFromServer(s,codeResponce);
     }
 
@@ -54,6 +54,8 @@ public class ReadFromServer extends AsyncTask<Void,Void,String>
 
             while((text = bufferedReader.readLine()) != null)
                 stringBuilder.append(text);
+
+            bufferedReader.close();
 
             return stringBuilder.toString();
         }
