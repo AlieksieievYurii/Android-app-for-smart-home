@@ -1,22 +1,19 @@
 package com.whitedeveloper.controlhome.model.http.writerreader;
 
 import android.os.AsyncTask;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.util.Log;
-import com.whitedeveloper.controlhome.model.http.interfeice.IresponceFromServer;
+import com.whitedeveloper.controlhome.model.http.IresponseFromServer;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 
 public class WriteToServer extends AsyncTask<String,Void,Integer>
 {
-    private IresponceFromServer iresponceFromServer;
+    private IresponseFromServer iresponseFromServer;
     private HttpURLConnection httpURLConnection;
-    private int responceCode;
+    private int responseCode;
 
-    public WriteToServer(HttpURLConnection httpURLConnection, IresponceFromServer iresponceFromServer) {
-        this.iresponceFromServer = iresponceFromServer;
+    public WriteToServer(HttpURLConnection httpURLConnection, IresponseFromServer iresponseFromServer) {
+        this.iresponseFromServer = iresponseFromServer;
         this.httpURLConnection = httpURLConnection;
     }
 
@@ -29,20 +26,20 @@ public class WriteToServer extends AsyncTask<String,Void,Integer>
             writeToServer(outputStream,String.format("data=%s",data));
             outputStream.close();
 
-            this.responceCode = httpURLConnection.getResponseCode();
+            this.responseCode = httpURLConnection.getResponseCode();
 
 
            } catch (Exception e) {
             e.printStackTrace(); }
 
-            return responceCode;
+            return responseCode;
        }
 
     @Override
     protected void onPostExecute(Integer integer) {
         super.onPostExecute(integer);
 
-        iresponceFromServer.responceFromServer(integer);
+        iresponseFromServer.responseFromServer(integer);
     }
 
     private void writeToServer(OutputStream outputStream, String text) throws IOException {

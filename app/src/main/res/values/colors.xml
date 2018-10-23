@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="background_activity">#b4b4b4</color>
+    <color name="background_seek_bar">#6a6a6a</color>
+    <color name="color_progress_bar">#ffffff</color>
 </resources>

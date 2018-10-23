@@ -2,17 +2,21 @@ package com.whitedeveloper.controlhome.controller;
 
 import android.util.Log;
 import com.whitedeveloper.controlhome.controller.interfaces.ISetuperArrayListButtons;
+import com.whitedeveloper.controlhome.controller.interfaces.ISetuperArrayListSeekBars;
 import com.whitedeveloper.controlhome.controller.interfaces.UpDateActiviti;
 import com.whitedeveloper.controlhome.controller.json.CreatorJsonByControllerButton;
 import com.whitedeveloper.controlhome.model.DataFromServer;
-import com.whitedeveloper.controlhome.model.http.interfeice.IonClickButton;
+import com.whitedeveloper.custom.buttons.IonClickButton;
 import com.whitedeveloper.custom.buttons.ControllerButton;
 import com.whitedeveloper.custom.buttons.ImplementationButtons;
+import com.whitedeveloper.custom.seekbar.ControllerSeekBar;
+import com.whitedeveloper.custom.seekbar.ImplementationSeekBars;
+import com.whitedeveloper.custom.seekbar.IonDoSeekBar;
 import org.json.JSONException;
 
 import java.util.ArrayList;
 
-public class Controller implements ISetuperArrayListButtons, UpDateActiviti, IonClickButton
+public class Controller implements ISetuperArrayListButtons, UpDateActiviti, IonClickButton, IonDoSeekBar,ISetuperArrayListSeekBars
 {
     private static final String SERVLET_ACTION_BY_DEVICES = "actions-by-device";
     private static final String HOST = "http://192.168.0.106:8080/";
@@ -20,8 +24,9 @@ public class Controller implements ISetuperArrayListButtons, UpDateActiviti, Ion
 
     private DataFromServer dataFromServer;
     private ArrayList<ControllerButton> controllerButtons;
+    private ArrayList<ControllerSeekBar> controllerSeekBars;
 
-    public Controller()
+    public  Controller()
     {
         dataFromServer  = new DataFromServer(
                 HOST,
@@ -31,10 +36,19 @@ public class Controller implements ISetuperArrayListButtons, UpDateActiviti, Ion
         readingFromServer();
     }
 
-    private void setButtonsByActionsFromServer(String data)
+    private void runWithServer()
+    {
+        sendToServer(CreatorJsonByControllerButton.getReadyJsonActionsForArduino(
+                this.controllerButtons,
+                this.controllerSeekBars));
+                readingFromServer();
+    }
+
+    private void setViewsByActionsFromServer(String data)
     {
         try {
             SetterStatusViewFRomServer.setButtonsStatus(this.controllerButtons,data);
+            SetterStatusViewFRomServer.setSeekBarsStatus(this.controllerSeekBars,data);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -46,10 +60,10 @@ public class Controller implements ISetuperArrayListButtons, UpDateActiviti, Ion
     }
 
     private void sendToServer(String json)
-        {
-            Log.i("TAG",json);
-            dataFromServer.writeDataToServer(SERVLET_ACTION_BY_DEVICES,json);
-        }
+    {
+        Log.i("TAG",json);
+        dataFromServer.writeDataToServer(SERVLET_ACTION_BY_DEVICES,json);
+    }
 
     @Override
     public void iSettuperArrayListButtons(ArrayList<ControllerButton> controllerButtons)
@@ -58,15 +72,26 @@ public class Controller implements ISetuperArrayListButtons, UpDateActiviti, Ion
         this.controllerButtons = controllerButtons;
     }
 
-
     @Override
-    public void updateActiviti(String data) {
-        setButtonsByActionsFromServer(data);
+    public void iSettuperArrayListSeekBars(ArrayList<ControllerSeekBar> controllerSeekBarArrayList) {
+            new ImplementationSeekBars(controllerSeekBarArrayList,this);
+            this.controllerSeekBars = controllerSeekBarArrayList;
     }
+
 
     @Override
     public void onClickButton() {
-        sendToServer(CreatorJsonByControllerButton.getJsonActions(this.controllerButtons));
-        readingFromServer();
+        runWithServer();
     }
+
+
+    @Override
+    public void onDoSeekBar() {
+        runWithServer();
+    }
+
+    @Override
+    public void updateActivity(String data) {
+          setViewsByActionsFromServer(data);
+      }
 }

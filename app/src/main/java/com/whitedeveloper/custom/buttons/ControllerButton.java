@@ -26,7 +26,7 @@ public class ControllerButton
         button.setText(name);
     }
 
-    public void buttonPressed()
+    void buttonPressed()
     {
         checked = !checked;
         checkChecked();
@@ -55,7 +55,7 @@ public class ControllerButton
     public PinArduino getPinArduino() {
             return pinArduino;
         }
-    public void setOnClickLIstener(View.OnClickListener onClickLIstener)
+    void setOnClickLIstener(View.OnClickListener onClickLIstener)
     {
         button.setOnClickListener(onClickLIstener);
     }

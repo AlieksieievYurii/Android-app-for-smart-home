@@ -1,8 +1,7 @@
 package com.whitedeveloper.controlhome.model.http.writerreader;
 
 import android.os.AsyncTask;
-import android.util.Log;
-import com.whitedeveloper.controlhome.model.http.interfeice.IresponceFromServer;
+import com.whitedeveloper.controlhome.model.http.IresponseFromServer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,20 +11,20 @@ import java.net.HttpURLConnection;
 public class ReadFromServer extends AsyncTask<Void,Void,String>
 {
     private HttpURLConnection httpURLConnection;
-    private IresponceFromServer iresponceFromServer;
+    private IresponseFromServer iresponseFromServer;
 
-    private int codeResponce;
+    private int codeResponse;
 
-    public ReadFromServer(HttpURLConnection httpURLConnection,IresponceFromServer iresponceFromServer)
+    public ReadFromServer(HttpURLConnection httpURLConnection, IresponseFromServer iresponseFromServer)
     {
         this.httpURLConnection = httpURLConnection;
-        this.iresponceFromServer = iresponceFromServer;
+        this.iresponseFromServer = iresponseFromServer;
     }
 
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        iresponceFromServer.dataFromServer(s,codeResponce);
+        iresponseFromServer.dataFromServer(s, codeResponse);
     }
 
     @Override
@@ -38,7 +37,7 @@ public class ReadFromServer extends AsyncTask<Void,Void,String>
             dataFromServer =  readFormServer(inputStream);
             inputStream.close();
 
-            codeResponce =  httpURLConnection.getResponseCode();
+            codeResponse =  httpURLConnection.getResponseCode();
         } catch (IOException e) {
             e.printStackTrace();
         }

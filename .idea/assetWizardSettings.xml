@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/E:/Programs/IntelliJ%20IDEA%20Community%20Edition%202018.2/plugins/android/lib/android.jar!/images/material_design_icons/device/ic_bluetooth_connected_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/E:/Programs/IntelliJ%20IDEA%20Community%20Edition%202018.2/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_brightness_5_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -44,6 +44,47 @@
                         <option name="values">
                           <map>
                             <entry key="outputIconType" value="LAUNCHER_LEGACY" />
+                          </map>
+                        </option>
+                      </PersistentState>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </PersistentState>
+          </value>
+        </entry>
+        <entry key="vectorWizard">
+          <value>
+            <PersistentState>
+              <option name="children">
+                <map>
+                  <entry key="vectorAssetStep">
+                    <value>
+                      <PersistentState>
+                        <option name="children">
+                          <map>
+                            <entry key="clipartAsset">
+                              <value>
+                                <PersistentState>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="url" value="jar:file:/E:/Programs/IntelliJ%20IDEA%20Community%20Edition%202018.2/plugins/android/lib/android.jar!/images/material_design_icons/social/ic_sentiment_satisfied_black_24dp.xml" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                        <option name="values">
+                          <map>
+                            <entry key="color" value="faffff" />
+                            <entry key="height" value="48" />
+                            <entry key="outputName" value="ic_sentiment_satisfied_black_48dp" />
+                            <entry key="overrideSize" value="true" />
+                            <entry key="sourceFile" value="C:\Users\WhiteDeveloper" />
+                            <entry key="width" value="48" />
                           </map>
                         </option>
                       </PersistentState>

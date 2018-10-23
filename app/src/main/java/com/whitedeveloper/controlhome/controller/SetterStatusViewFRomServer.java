@@ -1,13 +1,14 @@
 package com.whitedeveloper.controlhome.controller;
 
 import com.whitedeveloper.custom.buttons.ControllerButton;
+import com.whitedeveloper.custom.seekbar.ControllerSeekBar;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class SetterStatusViewFRomServer
+class SetterStatusViewFRomServer
 {
     private static final String PROPERTY_ACTIONS_FROM_SERVER = "Actions";
     private static final String PROPERTY_TYPE_PIN = "T";
@@ -15,14 +16,15 @@ public class SetterStatusViewFRomServer
     private static final String PROPERTY_PIN = "P";
     private static final String PROPERTY_STATUS_PIN = "S";
     private static final String PROPERTY_HIGH_LEVEL = "H";
+    private static final String PROPERTY_VALUE = "V";
 
 
-    public static void setButtonsStatus(ArrayList<ControllerButton> controllerButtons, String dataFromServer) throws JSONException {
+    static void setButtonsStatus(ArrayList<ControllerButton> controllerButtons, String dataFromServer) throws JSONException {
 
         JSONObject dataJson = new JSONObject(dataFromServer);
         JSONArray jsonArrayListActions = dataJson.getJSONArray(PROPERTY_ACTIONS_FROM_SERVER);
 
-        for (ControllerButton controllerButton : controllerButtons) 
+        for (ControllerButton controllerButton : controllerButtons)
         {
             JSONObject jsonObject = getJsonObjectByArduinoPin(
                     controllerButton.getPinArduino().getPin(),
@@ -30,7 +32,23 @@ public class SetterStatusViewFRomServer
 
             controllerButton.setChecked(isDigitalPinON(jsonObject));
         }
-        
+    }
+
+    static void setSeekBarsStatus(ArrayList<ControllerSeekBar> controllerSeekBars,String dataFromServer) throws JSONException {
+        JSONObject jsonObject = new JSONObject(dataFromServer);
+        JSONArray jsonArrayListActions = jsonObject.getJSONArray(PROPERTY_ACTIONS_FROM_SERVER);
+
+        for(ControllerSeekBar controllerSeekBar : controllerSeekBars)
+        {
+            JSONObject seekBar = getJsonObjectByArduinoPin(
+                    controllerSeekBar.getPinArduino().getPin(),
+                    jsonArrayListActions);
+            controllerSeekBar.setValue(parseValue(seekBar));
+        }
+    }
+
+    private static int parseValue(JSONObject jsonObject) throws JSONException {
+        return Integer.parseInt(jsonObject.getString(PROPERTY_VALUE));
     }
     
     private static boolean isDigitalPinON(JSONObject jsonObject) throws JSONException {

@@ -3,14 +3,14 @@ package com.whitedeveloper.controlhome.model;
 import android.util.Log;
 import com.whitedeveloper.controlhome.controller.interfaces.UpDateActiviti;
 import com.whitedeveloper.controlhome.model.http.ConnectorHttp;
-import com.whitedeveloper.controlhome.model.http.interfeice.IresponceFromServer;
+import com.whitedeveloper.controlhome.model.http.IresponseFromServer;
 import com.whitedeveloper.controlhome.model.http.writerreader.ReadFromServer;
 import com.whitedeveloper.controlhome.model.http.writerreader.WriteToServer;
 
 
 import java.net.HttpURLConnection;
 
-public class DataFromServer implements IresponceFromServer {
+public class DataFromServer implements IresponseFromServer {
 
     private UpDateActiviti upDateActiviti;
     private String url;
@@ -35,15 +35,15 @@ public class DataFromServer implements IresponceFromServer {
 
 
     @Override
-    public void responceFromServer(int codeResponce) {
-        Log.i("RESPONCE_FOR_RADING",String.valueOf(codeResponce));
+    public void responseFromServer(int codeResponse) {
+        Log.i("RESPONCE_FOR_READING",String.valueOf(codeResponse));
     }
 
     @Override
-    public void dataFromServer(String data, int codeResponce)
+    public void dataFromServer(String data, int codeResponse)
     {
-        Log.i("RESPONCE", String.valueOf(codeResponce));
-        if(codeResponce == HttpURLConnection.HTTP_OK)
-            upDateActiviti.updateActiviti(data);
+        Log.i("RESPONCE", String.valueOf(codeResponse));
+        if(codeResponse == HttpURLConnection.HTTP_OK)
+            upDateActiviti.updateActivity(data);
     }
 }

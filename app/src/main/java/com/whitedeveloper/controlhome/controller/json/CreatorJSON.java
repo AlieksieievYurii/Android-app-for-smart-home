@@ -3,9 +3,9 @@ package com.whitedeveloper.controlhome.controller.json;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CreatorJSON
+class CreatorJSON
 {
-    public static JSONObject getJsonObject(char type, int pin, int status)
+    static JSONObject getJsonPinArduinoObject(char type, int pin, int status)
     {
             try {
                 if(type == 'D')

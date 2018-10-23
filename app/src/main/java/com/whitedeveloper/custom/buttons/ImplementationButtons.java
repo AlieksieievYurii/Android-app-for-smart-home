@@ -1,7 +1,6 @@
 package com.whitedeveloper.custom.buttons;
 
 import android.view.View;
-import com.whitedeveloper.controlhome.model.http.interfeice.IonClickButton;
 
 import java.util.ArrayList;
 

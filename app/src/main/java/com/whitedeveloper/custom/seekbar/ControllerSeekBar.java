@@ -1,34 +1,46 @@
 package com.whitedeveloper.custom.seekbar;
 
-import android.widget.SeekBar;
+import abak.tr.com.boxedverticalseekbar.BoxedVertical;
+import com.whitedeveloper.custom.PinArduino;
+
 
 public class ControllerSeekBar {
 
-    private SeekBar seekBar;
-    private int pin;
+    private BoxedVertical seekBar;
+    private PinArduino arduinoPin;
 
-    public ControllerSeekBar(SeekBar seekBar, int pin) {
+    public ControllerSeekBar(BoxedVertical seekBar, PinArduino arduinoPin) {
         this.seekBar = seekBar;
-        this.pin = pin;
+        this.arduinoPin = arduinoPin;
 
         init();
     }
 
     private void init()
+        {
+            seekBar.setMax(255);
+        }
+
+    void setOnDoListener(BoxedVertical.OnValuesChangeListener onValuesChangeListener)
     {
-        seekBar.setMax(255);
+        seekBar.setOnBoxedPointsChangeListener(onValuesChangeListener);
     }
 
-    public SeekBar getSeekBar() {
+    public BoxedVertical getSeekBar() {
         return seekBar;
     }
 
-    public int getPin() {
-        return pin;
+    public PinArduino getPinArduino() {
+        return arduinoPin;
+    }
+    public int getId()
+    {
+        return seekBar.getId();
     }
 
     public void setValue(int value)
     {
-        seekBar.setProgress(value);
+        arduinoPin.setValue(value);
+        seekBar.setValue(value);
     }
 }
