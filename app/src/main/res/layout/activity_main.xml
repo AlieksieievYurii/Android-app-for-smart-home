@@ -7,13 +7,52 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".view.MainActivity"
         android:orientation="vertical"
-        android:paddingLeft="1dp"
-        android:paddingRight="1dp"
+        android:animateLayoutChanges="true"
         android:background="@color/background_activity">
+
+    <ImageView
+            android:id="@+id/img_logo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/logo_smart_home"
+            android:layout_gravity="center"
+            android:padding="90dp"
+            android:background="#2f3131"
+            android:visibility="gone"
+            tools:ignore="ContentDescription"/>
+    <ScrollView
+            android:id="@+id/lnl_body"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="6dp">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:orientation="horizontal"
+                android:background="@drawable/background_head">
+            <TextView
+                   android:id="@+id/tv_temperature"
+                    style="@style/view_sensors"
+                    android:background="@drawable/ic_celsius"
+                    android:text="32"/>
+            <TextView
+                    android:id="@+id/tv_day_or_night"
+                    style="@style/view_sensors"
+                    android:background="@drawable/state_day"
+                    android:text="90"/>
+        </LinearLayout>
 
   <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:orientation="horizontal"
           android:gravity="center">
       <Button
               android:id="@+id/btn_led_1"
@@ -35,6 +74,7 @@
     <LinearLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:orientation="horizontal"
               android:gravity="center">
           <Button
                   android:id="@+id/btn_computer_1"
@@ -55,10 +95,15 @@
       </LinearLayout>
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
         <abak.tr.com.boxedverticalseekbar.BoxedVertical
                 android:id="@+id/sb_1"
-                style="@style/view_seek_bars"/>
+                style="@style/view_seek_bars"
+                app:imageEnabled="true"
+                app:defaultImage="@drawable/ic_volue_up"
+                app:maxImage="@drawable/ic_computer_on"
+                app:minImage="@drawable/ic_volue_off"/>
 
         <abak.tr.com.boxedverticalseekbar.BoxedVertical
                         android:id="@+id/sb_2"
@@ -70,5 +115,69 @@
                         android:id="@+id/sb_4"
                         style="@style/view_seek_bars"/>
     </LinearLayout>
+
+       <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:paddingRight="10dp"
+               android:paddingLeft="10dp"
+               android:background="@drawable/background_head">
+           <abak.tr.com.boxedverticalseekbar.BoxedVertical
+                   style="@style/view_seek_bars"
+                   app:imageEnabled="true"
+                   app:defaultImage="@drawable/ic_volue_up"
+                   app:maxImage="@drawable/ic_computer_on"
+                   app:minImage="@drawable/ic_volue_off"/>
+
+           <abak.tr.com.boxedverticalseekbar.BoxedVertical
+                           style="@style/view_seek_bars"/>
+           <abak.tr.com.boxedverticalseekbar.BoxedVertical
+                           style="@style/view_seek_bars"/>
+           <abak.tr.com.boxedverticalseekbar.BoxedVertical
+                           style="@style/view_seek_bars"/>
+       </LinearLayout>
+
+        <LinearLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:gravity="center">
+                  <Button
+                          style="@style/view_buttons"
+                          android:background="@drawable/computer"/>
+                  <Button
+                          style="@style/view_buttons"
+                          android:background="@drawable/computer"/>
+                  <Button
+                          style="@style/view_buttons"
+                          android:background="@drawable/computer"/>
+                  <Button
+                          style="@style/view_buttons"
+                          android:background="@drawable/computer"/>
+              </LinearLayout>
+
+        <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:gravity="center">
+              <Button
+                      style="@style/view_buttons"
+                      android:background="@drawable/lamp"/>
+              <Button
+                            style="@style/view_buttons"
+                            android:background="@drawable/lamp"/>
+              <Button
+                                  style="@style/view_buttons"
+                                  android:background="@drawable/lamp"/>
+              <Button
+                                  style="@style/view_buttons"
+                                  android:background="@drawable/lamp"/>
+          </LinearLayout>
+
+    </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

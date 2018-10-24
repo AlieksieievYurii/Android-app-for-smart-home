@@ -61,7 +61,9 @@ public class Controller implements ISetuperArrayListButtons, UpDateActiviti, Ion
 
     private void sendToServer(String json)
     {
-        Log.i("TAG",json);
+        Log.i("URL_ADRESS::",HOST.concat(SERVLET_ACTION_BY_DEVICES));
+        Log.i("KEY_TO_HOST::",KEY_TO_HOST);
+        Log.i("DATA_FOR_SERVER:::",json);
         dataFromServer.writeDataToServer(SERVLET_ACTION_BY_DEVICES,json);
     }
 

@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/E:/Programs/IntelliJ%20IDEA%20Community%20Edition%202018.2/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_brightness_5_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/E:/Programs/IntelliJ%20IDEA%20Community%20Edition%202018.2/plugins/android/lib/android.jar!/images/material_design_icons/av/ic_volume_off_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -33,7 +33,8 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_btn_led_1_on" />
+                                      <entry key="iconShape" value="NONE" />
+                                      <entry key="outputName" value="ic_volue_off" />
                                     </map>
                                   </option>
                                 </PersistentState>

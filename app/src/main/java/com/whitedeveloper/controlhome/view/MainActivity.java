@@ -1,8 +1,10 @@
 package com.whitedeveloper.controlhome.view;
 
 import abak.tr.com.boxedverticalseekbar.BoxedVertical;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.controller.Controller;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity
     private ISetuperArrayListSeekBars setuperArrayListSeekBars;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +62,25 @@ public class MainActivity extends AppCompatActivity
 
        initAll();
        sendArrayListForController();
+       splashScreen();
+    }
+
+    private void splashScreen()
+    {
+        Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                start();
+            }
+        };
+        handler.postDelayed(runnable,2000);
+    }
+
+    private void start()
+    {
+        (findViewById(R.id.img_logo)).setVisibility(View.GONE);
+        (findViewById(R.id.lnl_body)).setVisibility(View.VISIBLE);
     }
 
 

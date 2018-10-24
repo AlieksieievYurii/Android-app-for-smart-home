@@ -36,13 +36,13 @@ public class DataFromServer implements IresponseFromServer {
 
     @Override
     public void responseFromServer(int codeResponse) {
-        Log.i("RESPONCE_FOR_READING",String.valueOf(codeResponse));
+        Log.i("RESPONCE_FOR_READING::",String.valueOf(codeResponse));
     }
 
     @Override
     public void dataFromServer(String data, int codeResponse)
     {
-        Log.i("RESPONCE", String.valueOf(codeResponse));
+        Log.i("RESPONCE_FOR_WRITING::", String.valueOf(codeResponse));
         if(codeResponse == HttpURLConnection.HTTP_OK)
             upDateActiviti.updateActivity(data);
     }
