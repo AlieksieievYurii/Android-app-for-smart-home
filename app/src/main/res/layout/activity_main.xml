@@ -10,16 +10,30 @@
         android:animateLayoutChanges="true"
         android:background="@color/background_activity">
 
-    <ImageView
+    <RelativeLayout
             android:id="@+id/img_logo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/logo_smart_home"
-            android:layout_gravity="center"
-            android:padding="90dp"
-            android:background="#2f3131"
             android:visibility="gone"
-            tools:ignore="ContentDescription"/>
+            android:background="#2f3131"
+            android:orientation="vertical">
+        <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/logo_smart_home"
+                    android:layout_gravity="center"
+                    android:padding="60dp"
+                    android:layout_marginBottom="90dp"
+                    tools:ignore="ContentDescription"/>
+        <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_gravity="center"
+                android:indeterminateDrawable="@drawable/animation_load_bar"
+                android:layout_alignParentBottom="true"
+                android:paddingBottom="30dp"/>
+    </RelativeLayout>
+
     <ScrollView
             android:id="@+id/lnl_body"
             android:layout_width="match_parent"
@@ -40,13 +54,11 @@
             <TextView
                    android:id="@+id/tv_temperature"
                     style="@style/view_sensors"
-                    android:background="@drawable/ic_celsius"
-                    android:text="32"/>
+                    android:background="@drawable/ic_celsius"/>
             <TextView
                     android:id="@+id/tv_day_or_night"
                     style="@style/view_sensors"
-                    android:background="@drawable/state_day"
-                    android:text="90"/>
+                    android:background="@drawable/state_day"/>
         </LinearLayout>
 
   <LinearLayout

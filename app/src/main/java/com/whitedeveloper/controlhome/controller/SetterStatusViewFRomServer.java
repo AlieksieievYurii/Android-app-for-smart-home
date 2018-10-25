@@ -2,6 +2,7 @@ package com.whitedeveloper.controlhome.controller;
 
 import com.whitedeveloper.custom.buttons.ControllerButton;
 import com.whitedeveloper.custom.seekbar.ControllerSeekBar;
+import com.whitedeveloper.custom.textview.ControllerTextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,18 +12,18 @@ import java.util.ArrayList;
 class SetterStatusViewFRomServer
 {
     private static final String PROPERTY_ACTIONS_FROM_SERVER = "Actions";
-    private static final String PROPERTY_TYPE_PIN = "T";
-    private static final String PROPERTY_TYPE_DIGITAL = "D";
-    private static final String PROPERTY_PIN = "P";
-    private static final String PROPERTY_STATUS_PIN = "S";
-    private static final String PROPERTY_HIGH_LEVEL = "H";
-    private static final String PROPERTY_VALUE = "V";
+    private static final String PROPERTY_SENSORS_FROM_SERVER = "ParamsFromArduino";
+    private static final String PROPERTY_TYPE_PIN_FOR_ACTIONS = "T";
+    private static final String PROPERTY_TYPE_DIGITAL_FOR_ACTIONS = "D";
+    private static final String PROPERTY_PIN_FOR_ACTIONS = "P";
+    private static final String PROPERTY_STATUS_PIN_FOR_ACTIONS = "S";
+    private static final String PROPERTY_HIGH_LEVEL_FOR_ACTIONS = "H";
+    private static final String PROPERTY_VALUE_FOR_ACTIONS = "V";
+    private static final String PROPERTY_VALUE_FOR_SENSOR = "Value";
 
 
     static void setButtonsStatus(ArrayList<ControllerButton> controllerButtons, String dataFromServer) throws JSONException {
-
-        JSONObject dataJson = new JSONObject(dataFromServer);
-        JSONArray jsonArrayListActions = dataJson.getJSONArray(PROPERTY_ACTIONS_FROM_SERVER);
+        JSONArray jsonArrayListActions = getArrayListOfSpecificElements(dataFromServer,PROPERTY_ACTIONS_FROM_SERVER);
 
         for (ControllerButton controllerButton : controllerButtons)
         {
@@ -35,8 +36,7 @@ class SetterStatusViewFRomServer
     }
 
     static void setSeekBarsStatus(ArrayList<ControllerSeekBar> controllerSeekBars,String dataFromServer) throws JSONException {
-        JSONObject jsonObject = new JSONObject(dataFromServer);
-        JSONArray jsonArrayListActions = jsonObject.getJSONArray(PROPERTY_ACTIONS_FROM_SERVER);
+        JSONArray jsonArrayListActions = getArrayListOfSpecificElements(dataFromServer,PROPERTY_ACTIONS_FROM_SERVER);
 
         for(ControllerSeekBar controllerSeekBar : controllerSeekBars)
         {
@@ -47,15 +47,30 @@ class SetterStatusViewFRomServer
         }
     }
 
+    static void setTextViewSensors(ArrayList<ControllerTextView> arrayListControllersTextView,String dataFromServer) throws JSONException {
+        JSONArray jsonArraySensor = getArrayListOfSpecificElements(dataFromServer,PROPERTY_SENSORS_FROM_SERVER);
+
+        for(ControllerTextView controllerTextView : arrayListControllersTextView)
+        {
+            JSONObject jsonObject = getJsonObjectByNamePropertySensor(controllerTextView.getName(),jsonArraySensor);
+            controllerTextView.setValue(jsonObject.getInt(PROPERTY_VALUE_FOR_SENSOR));
+        }
+    }
+
+    private static JSONArray getArrayListOfSpecificElements(String dataFromServer, String property) throws JSONException {
+        JSONObject jsonObject = new JSONObject(dataFromServer);
+        return jsonObject.getJSONArray(property);
+    }
+
     private static int parseValue(JSONObject jsonObject) throws JSONException {
-        return Integer.parseInt(jsonObject.getString(PROPERTY_VALUE));
+        return Integer.parseInt(jsonObject.getString(PROPERTY_VALUE_FOR_ACTIONS));
     }
     
     private static boolean isDigitalPinON(JSONObject jsonObject) throws JSONException {
-        String typePin = jsonObject.getString(PROPERTY_TYPE_PIN);
+        String typePin = jsonObject.getString(PROPERTY_TYPE_PIN_FOR_ACTIONS);
         
-        if(typePin.equals(PROPERTY_TYPE_DIGITAL))
-            return jsonObject.getString(PROPERTY_STATUS_PIN).equals(PROPERTY_HIGH_LEVEL);
+        if(typePin.equals(PROPERTY_TYPE_DIGITAL_FOR_ACTIONS))
+            return jsonObject.getString(PROPERTY_STATUS_PIN_FOR_ACTIONS).equals(PROPERTY_HIGH_LEVEL_FOR_ACTIONS);
         else throw new JSONException("Pin is not digital -> " + jsonObject.toString());
     }
     
@@ -64,9 +79,19 @@ class SetterStatusViewFRomServer
         {
             JSONObject jsonObject = (JSONObject) jsonArray.get(i);
             
-            if(jsonObject.getInt(PROPERTY_PIN) == pin )
+            if(jsonObject.getInt(PROPERTY_PIN_FOR_ACTIONS) == pin )
                 return jsonObject;
         }
         throw new JSONException("Not found JSON object with pin " + pin);
+    }
+
+    private static JSONObject getJsonObjectByNamePropertySensor(String nameProperty, JSONArray array) throws JSONException {
+        for(int i = 0; i < array.length(); i++)
+        {
+            JSONObject jsonObject = (JSONObject) array.get(i);
+            if(jsonObject.getString("ParamsFromArduino").equals(nameProperty))
+                return jsonObject;
+        }
+        throw new JSONException("Not found JSON object with name params " + nameProperty);
     }
 }
