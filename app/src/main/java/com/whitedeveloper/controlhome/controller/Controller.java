@@ -1,10 +1,10 @@
 package com.whitedeveloper.controlhome.controller;
 
+import android.content.Context;
 import android.util.Log;
-import com.whitedeveloper.controlhome.controller.interfaces.ISettuperTextViewSensors;
-import com.whitedeveloper.controlhome.controller.interfaces.ISetuperArrayListButtons;
-import com.whitedeveloper.controlhome.controller.interfaces.ISetuperArrayListSeekBars;
-import com.whitedeveloper.controlhome.controller.interfaces.UpDateActiviti;
+import android.widget.Toast;
+import com.whitedeveloper.controlhome.controller.alertdialog.AlertDialogSettupURL;
+import com.whitedeveloper.controlhome.controller.interfaces.*;
 import com.whitedeveloper.controlhome.controller.json.CreatorJsonByControllerButton;
 import com.whitedeveloper.controlhome.model.DataFromServer;
 import com.whitedeveloper.custom.buttons.IonClickButton;
@@ -22,9 +22,10 @@ public class Controller implements
                         ISetuperArrayListButtons,
                         ISetuperArrayListSeekBars,
                         ISettuperTextViewSensors,
-                        UpDateActiviti,
+                        UpDateActivity,
                         IonClickButton,
-                        IonDoSeekBar
+                        IonDoSeekBar,
+                        ICallSetting
 
 {
     private static final String SERVLET_ACTION_BY_DEVICES = "actions-by-device";
@@ -36,8 +37,11 @@ public class Controller implements
     private ArrayList<ControllerSeekBar> controllerSeekBars;
     private ArrayList<ControllerTextView> controllerTextViews;
 
-    public  Controller()
+    private Context context;
+
+    public  Controller(Context context)
     {
+        this.context = context;
         dataFromServer  = new DataFromServer(
                 HOST,
                 KEY_TO_HOST,
@@ -103,12 +107,21 @@ public class Controller implements
     }
 
     @Override
-    public void updateActivity(String data) {
-          setViewsByActionsFromServer(data);
+    public void updateActivity(String data, int codeResponse) {
+          if(data != null)
+              setViewsByActionsFromServer(data);
+          else
+              Toast.makeText(context,"Error of server CODE:"+codeResponse,Toast.LENGTH_LONG).show();
       }
 
     @Override
     public void setArrayListTextViewSensors(ArrayList<ControllerTextView> arrayListControllerTextViews) {
         this.controllerTextViews = arrayListControllerTextViews;
+    }
+
+    @Override
+    public void setPreference() {
+        AlertDialogSettupURL alertDialogSettupURL = new AlertDialogSettupURL(context);
+        alertDialogSettupURL.show();
     }
 }

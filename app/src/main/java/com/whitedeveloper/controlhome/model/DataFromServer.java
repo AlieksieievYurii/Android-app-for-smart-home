@@ -1,7 +1,7 @@
 package com.whitedeveloper.controlhome.model;
 
 import android.util.Log;
-import com.whitedeveloper.controlhome.controller.interfaces.UpDateActiviti;
+import com.whitedeveloper.controlhome.controller.interfaces.UpDateActivity;
 import com.whitedeveloper.controlhome.model.http.ConnectorHttp;
 import com.whitedeveloper.controlhome.model.http.IresponseFromServer;
 import com.whitedeveloper.controlhome.model.http.writerreader.ReadFromServer;
@@ -12,11 +12,11 @@ import java.net.HttpURLConnection;
 
 public class DataFromServer implements IresponseFromServer {
 
-    private UpDateActiviti upDateActiviti;
+    private UpDateActivity upDateActiviti;
     private String url;
     private String key;
 
-    public DataFromServer(String url,String key, UpDateActiviti upDateActiviti)
+    public DataFromServer(String url,String key, UpDateActivity upDateActiviti)
     {
         this.url = url;
         this.key = key;
@@ -33,17 +33,18 @@ public class DataFromServer implements IresponseFromServer {
         new WriteToServer(ConnectorHttp.getConnection(url.concat(nameServlet),key,"POST"),this).execute(data);
     }
 
-
     @Override
     public void responseFromServer(int codeResponse) {
-        Log.i("RESPONCE_FOR_READING::",String.valueOf(codeResponse));
+        Log.i("RESPONCE_FOR_WRITING::",String.valueOf(codeResponse));
     }
 
     @Override
     public void dataFromServer(String data, int codeResponse)
     {
-        Log.i("RESPONCE_FOR_WRITING::", String.valueOf(codeResponse));
+        Log.i("RESPONCE_FOR_READING::", String.valueOf(codeResponse));
         if(codeResponse == HttpURLConnection.HTTP_OK)
-            upDateActiviti.updateActivity(data);
+            upDateActiviti.updateActivity(data,codeResponse);
+        else
+            upDateActiviti.updateActivity(null,codeResponse);
     }
 }

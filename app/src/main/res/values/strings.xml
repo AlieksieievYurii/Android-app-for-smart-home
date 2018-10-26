@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">SmartHome</string>
     <string name="text_add_btn">Add</string>
+    <string name="text_activity_main_item_setting">Setting URL</string>
+    <string name="text_hind_edt_url">Url…</string>
+    <string name="text_hind_edt_name_key_param">Key param…</string>
+    <string name="text_hind_edt_key">Key…</string>
+    <string name="text_btn_alert_dialog_set">Set</string>
 </resources>

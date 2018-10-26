@@ -13,8 +13,8 @@ public class ConnectorHttp
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
             httpURLConnection.setRequestMethod(requestMethod);
-            httpURLConnection.setConnectTimeout(20000);
-            httpURLConnection.setReadTimeout(20000);
+            httpURLConnection.setConnectTimeout(5000);
+            httpURLConnection.setReadTimeout(5000);
             httpURLConnection.setDoInput(true);
             httpURLConnection.setDoOutput(requestMethod.equals("POST"));
             return httpURLConnection;

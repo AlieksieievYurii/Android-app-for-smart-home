@@ -4,14 +4,18 @@ import abak.tr.com.boxedverticalseekbar.BoxedVertical;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.controller.Controller;
+import com.whitedeveloper.controlhome.controller.interfaces.ICallSetting;
 import com.whitedeveloper.controlhome.controller.interfaces.ISettuperTextViewSensors;
 import com.whitedeveloper.controlhome.controller.interfaces.ISetuperArrayListButtons;
 import com.whitedeveloper.controlhome.controller.interfaces.ISetuperArrayListSeekBars;
+import com.whitedeveloper.controlhome.view.elementarduino.ElementArduino;
 import com.whitedeveloper.custom.buttons.ControllerButton;
 import com.whitedeveloper.custom.PinArduino;
 import com.whitedeveloper.custom.seekbar.ControllerSeekBar;
@@ -24,42 +28,27 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity
 {
 
-    private static final int[] ID_BUTTONS = {R.id.btn_led_1,
-                                    R.id.btn_led_2,
-                                    R.id.btn_led_3,
-                                    R.id.btn_led_4,
-                                    R.id.btn_computer_1,
-                                    R.id.btn_computer_2,
-                                    R.id.btn_computer_3,
-                                    R.id.btn_computer_4};
+    private static final ElementArduino[] elementArduinos = {
+                                                        new ElementArduino(ElementArduino.BTN,R.id.btn_led_1,new PinArduino('D',22),"Led 1"),
+                                                        new ElementArduino(ElementArduino.BTN,R.id.btn_led_2,new PinArduino('D',23),"Led 2"),
+                                                        new ElementArduino(ElementArduino.BTN,R.id.btn_led_3,new PinArduino('D',24),"Led 3"),
+                                                        new ElementArduino(ElementArduino.BTN,R.id.btn_led_4,new PinArduino('D',25),"Led 4"),
+                                                        new ElementArduino(ElementArduino.BTN,R.id.btn_computer_1,new PinArduino('D',26),"Comp 1"),
+                                                        new ElementArduino(ElementArduino.BTN,R.id.btn_computer_2,new PinArduino('D',27),"Comp 2"),
+                                                        new ElementArduino(ElementArduino.BTN,R.id.btn_computer_3,new PinArduino('D',28),"Comp 3"),
+                                                        new ElementArduino(ElementArduino.BTN,R.id.btn_computer_4,new PinArduino('D',29),"Comp 4"),
+                                                        new ElementArduino(ElementArduino.SKB,R.id.sb_1,new PinArduino('A',2),null),
+                                                        new ElementArduino(ElementArduino.SKB,R.id.sb_2,new PinArduino('A',3),null),
+                                                        new ElementArduino(ElementArduino.SKB,R.id.sb_3,new PinArduino('A',4),null),
+                                                        new ElementArduino(ElementArduino.SKB,R.id.sb_4,new PinArduino('A',5),null)};
 
-    private static final PinArduino[] PIN_ARDUINO_BUTTONS = {
-                                    new PinArduino('D',30),
-                                    new PinArduino('D',29),
-                                    new PinArduino('D',28),
-                                    new PinArduino('D',27),
-                                    new PinArduino('D',26),
-                                    new PinArduino('D',25),
-                                    new PinArduino('D',24),
-                                    new PinArduino('D',23),
-                                    new PinArduino('D',22)};
-
-    private final int[] ID_SEEK_BARS = {R.id.sb_1,
-                                    R.id.sb_2,
-                                    R.id.sb_3,
-                                    R.id.sb_4};
-
-    private static final PinArduino[] PIN_ARDUINO_SEEK_BAR = {new PinArduino('A',2),
-                                    new PinArduino('A',3),
-                                    new PinArduino('A',4),
-                                    new PinArduino('A',5)};
 
     private static  final int[] ID_TEXT_VIEWS = {
                                     R.id.tv_temperature,
                                     R.id.tv_day_or_night};
     private static  final String[] NAME_SENSOR_ARDUINO = {"light","TEST_PARAM"};
 
-    private static final Intervals[] interwals = {
+    private static final Intervals[] intervals = {
             null,
             new Intervals(700)
     };
@@ -70,6 +59,7 @@ public class MainActivity extends AppCompatActivity
     private ISetuperArrayListButtons setuperArrayListButtons;
     private ISetuperArrayListSeekBars setuperArrayListSeekBars;
     private ISettuperTextViewSensors settuperTextViewSensors;
+    private ICallSetting callSetting;
 
 
 
@@ -81,6 +71,25 @@ public class MainActivity extends AppCompatActivity
        initAll();
        sendArrayListForController();
        splashScreen();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.activity_main_item_setting:
+                callSetting.setPreference();
+                break;
+            default:break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void splashScreen()
@@ -112,25 +121,31 @@ public class MainActivity extends AppCompatActivity
 
     private void initAll()
     {
-        initButtons();
-        initSeekBars();
+        for(ElementArduino elementArduino : elementArduinos)
+                    if(elementArduino.getTypeView() == ElementArduino.BTN)
+                        initButton(elementArduino);
+                    else if(elementArduino.getTypeView() == ElementArduino.SKB)
+                        initSeekBar(elementArduino);
+
         initTextViewSensors();
 
-        Controller controller = new Controller();
+        Controller controller = new Controller(this);
         setuperArrayListButtons = controller;
         setuperArrayListSeekBars = controller;
         settuperTextViewSensors = controller;
+        callSetting = controller;
     }
-    private void initButtons()
+    private void initButton(ElementArduino elementArduino)
     {
-        for (int i = 0; i < ID_BUTTONS.length; i++)
-            arrayListControllerButtons.add(new ControllerButton((Button) findViewById(ID_BUTTONS[i]),PIN_ARDUINO_BUTTONS[i],"Home"));
+        arrayListControllerButtons.add(new ControllerButton((Button) findViewById(elementArduino.getId_view()),
+                                            elementArduino.getPinArduino(),
+                                            elementArduino.getTextName()));
     }
 
-    private void initSeekBars()
+    private void initSeekBar(ElementArduino elementArduino)
     {
-        for(int i = 0; i < ID_SEEK_BARS.length; i++)
-            arrayListControllerSeekBars.add(new ControllerSeekBar((BoxedVertical)findViewById(ID_SEEK_BARS[i]),PIN_ARDUINO_SEEK_BAR[i]));
+        arrayListControllerSeekBars.add(new ControllerSeekBar((BoxedVertical)findViewById(elementArduino.getId_view()),
+                                            elementArduino.getPinArduino()));
     }
 
     private void initTextViewSensors()
@@ -139,7 +154,7 @@ public class MainActivity extends AppCompatActivity
             arrayListControllersTextView.add(new ControllerTextView(
                     (TextView) findViewById(ID_TEXT_VIEWS[i]),
                     NAME_SENSOR_ARDUINO[i],
-                    interwals[i]));
+                    intervals[i]));
     }
 
 }
