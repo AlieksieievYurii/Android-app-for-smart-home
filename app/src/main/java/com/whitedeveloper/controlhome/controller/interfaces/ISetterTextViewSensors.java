@@ -4,7 +4,7 @@ import com.whitedeveloper.custom.textview.ControllerTextView;
 
 import java.util.ArrayList;
 
-public interface ISettuperTextViewSensors {
+public interface ISetterTextViewSensors {
 
     void setArrayListTextViewSensors(ArrayList<ControllerTextView> arrayListControllersTextView);
 }

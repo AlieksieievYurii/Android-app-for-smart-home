@@ -12,9 +12,9 @@ import android.widget.TextView;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.controller.Controller;
 import com.whitedeveloper.controlhome.controller.interfaces.ICallSetting;
-import com.whitedeveloper.controlhome.controller.interfaces.ISettuperTextViewSensors;
-import com.whitedeveloper.controlhome.controller.interfaces.ISetuperArrayListButtons;
-import com.whitedeveloper.controlhome.controller.interfaces.ISetuperArrayListSeekBars;
+import com.whitedeveloper.controlhome.controller.interfaces.ISetterTextViewSensors;
+import com.whitedeveloper.controlhome.controller.interfaces.ISetterArrayListButtons;
+import com.whitedeveloper.controlhome.controller.interfaces.ISetterArrayListSeekBars;
 import com.whitedeveloper.controlhome.view.elementarduino.ElementArduino;
 import com.whitedeveloper.custom.buttons.ControllerButton;
 import com.whitedeveloper.custom.PinArduino;
@@ -56,9 +56,9 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<ControllerButton> arrayListControllerButtons = new ArrayList<>();
     private ArrayList<ControllerSeekBar> arrayListControllerSeekBars = new ArrayList<>();
     private ArrayList<ControllerTextView> arrayListControllersTextView = new ArrayList<>();
-    private ISetuperArrayListButtons setuperArrayListButtons;
-    private ISetuperArrayListSeekBars setuperArrayListSeekBars;
-    private ISettuperTextViewSensors settuperTextViewSensors;
+    private ISetterArrayListButtons setterArrayListButtons;
+    private ISetterArrayListSeekBars setterArrayListSeekBars;
+    private ISetterTextViewSensors setterTextViewSensors;
     private ICallSetting callSetting;
 
 
@@ -113,10 +113,9 @@ public class MainActivity extends AppCompatActivity
 
     private void sendArrayListForController()
     {
-        setuperArrayListButtons.iSettuperArrayListButtons(arrayListControllerButtons);
-        setuperArrayListSeekBars.iSettuperArrayListSeekBars(arrayListControllerSeekBars);
-        settuperTextViewSensors.setArrayListTextViewSensors(arrayListControllersTextView);
-
+        setterArrayListButtons.iSetterArrayListButtons(arrayListControllerButtons);
+        setterArrayListSeekBars.iSetterArrayListSeekBars(arrayListControllerSeekBars);
+        setterTextViewSensors.setArrayListTextViewSensors(arrayListControllersTextView);
     }
 
     private void initAll()
@@ -130,9 +129,9 @@ public class MainActivity extends AppCompatActivity
         initTextViewSensors();
 
         Controller controller = new Controller(this);
-        setuperArrayListButtons = controller;
-        setuperArrayListSeekBars = controller;
-        settuperTextViewSensors = controller;
+        setterArrayListButtons = controller;
+        setterArrayListSeekBars = controller;
+        setterTextViewSensors = controller;
         callSetting = controller;
     }
     private void initButton(ElementArduino elementArduino)

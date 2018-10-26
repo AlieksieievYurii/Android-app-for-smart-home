@@ -38,7 +38,7 @@ public class ReadFromServer extends AsyncTask<Void,Void,String>
             inputStream.close();
 
             codeResponse =  httpURLConnection.getResponseCode();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

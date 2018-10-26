@@ -7,4 +7,6 @@
     <color name="background_activity">#b4b4b4</color>
     <color name="background_seek_bar">#6a6a6a</color>
     <color name="color_progress_bar">#ffffff</color>
+    <color name="color_btn_unpressed">#6a6a6a</color>
+    <color name="color_btn_pressed">#393939</color>
 </resources>

@@ -3,9 +3,12 @@ package com.whitedeveloper.controlhome.controller;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
-import com.whitedeveloper.controlhome.controller.alertdialog.AlertDialogSettupURL;
+import com.whitedeveloper.controlhome.controller.alertdialog.AlertDialogSetterURL;
+import com.whitedeveloper.controlhome.controller.alertdialog.ISetterURL;
 import com.whitedeveloper.controlhome.controller.interfaces.*;
 import com.whitedeveloper.controlhome.controller.json.CreatorJsonByControllerButton;
+import com.whitedeveloper.controlhome.controller.prefaranse.ControllerUrlSharedPreference;
+import com.whitedeveloper.controlhome.controller.prefaranse.UrlPreference;
 import com.whitedeveloper.controlhome.model.DataFromServer;
 import com.whitedeveloper.custom.buttons.IonClickButton;
 import com.whitedeveloper.custom.buttons.ControllerButton;
@@ -15,22 +18,20 @@ import com.whitedeveloper.custom.seekbar.ImplementationSeekBars;
 import com.whitedeveloper.custom.seekbar.IonDoSeekBar;
 import com.whitedeveloper.custom.textview.ControllerTextView;
 import org.json.JSONException;
-
 import java.util.ArrayList;
 
 public class Controller implements
-                        ISetuperArrayListButtons,
-                        ISetuperArrayListSeekBars,
-                        ISettuperTextViewSensors,
+        ISetterArrayListButtons,
+        ISetterArrayListSeekBars,
+        ISetterTextViewSensors,
                         UpDateActivity,
                         IonClickButton,
                         IonDoSeekBar,
-                        ICallSetting
+                        ICallSetting,
+                        ISetterURL
 
 {
     private static final String SERVLET_ACTION_BY_DEVICES = "actions-by-device";
-    private static final String HOST = "http://192.168.0.106:8080/";
-    private static final String KEY_TO_HOST = "12345678";
 
     private DataFromServer dataFromServer;
     private ArrayList<ControllerButton> controllerButtons;
@@ -43,8 +44,7 @@ public class Controller implements
     {
         this.context = context;
         dataFromServer  = new DataFromServer(
-                HOST,
-                KEY_TO_HOST,
+                getURLpreferanse(),
                 this);
 
         readingFromServer();
@@ -76,20 +76,24 @@ public class Controller implements
 
     private void sendToServer(String json)
     {
-        Log.i("URL_ADRESS::",HOST.concat(SERVLET_ACTION_BY_DEVICES));
-        Log.i("KEY_TO_HOST::",KEY_TO_HOST);
+        Log.i("URL_ADDRESS::",getURLpreferanse().getFullUrl(SERVLET_ACTION_BY_DEVICES));
         Log.i("DATA_FOR_SERVER:::",json);
         dataFromServer.writeDataToServer(SERVLET_ACTION_BY_DEVICES,json);
     }
 
+    private UrlPreference getURLpreferanse()
+    {
+        return ControllerUrlSharedPreference.getUrlPreference(context);
+    }
+
     @Override
-    public void iSettuperArrayListButtons(ArrayList<ControllerButton> controllerButtons) {
+    public void iSetterArrayListButtons(ArrayList<ControllerButton> controllerButtons) {
         new ImplementationButtons(controllerButtons,this);
         this.controllerButtons = controllerButtons;
     }
 
     @Override
-    public void iSettuperArrayListSeekBars(ArrayList<ControllerSeekBar> controllerSeekBarArrayList) {
+    public void iSetterArrayListSeekBars(ArrayList<ControllerSeekBar> controllerSeekBarArrayList) {
             new ImplementationSeekBars(controllerSeekBarArrayList,this);
             this.controllerSeekBars = controllerSeekBarArrayList;
     }
@@ -121,7 +125,15 @@ public class Controller implements
 
     @Override
     public void setPreference() {
-        AlertDialogSettupURL alertDialogSettupURL = new AlertDialogSettupURL(context);
-        alertDialogSettupURL.show();
+        AlertDialogSetterURL alertDialogSetterURL = new AlertDialogSetterURL(context,this);
+        alertDialogSetterURL.show(ControllerUrlSharedPreference.getUrlPreference(context));
+    }
+
+    @Override
+    public void setterURL(UrlPreference urlPreference)
+    {
+       ControllerUrlSharedPreference.putUrlPreference(context,urlPreference);
+       Toast.makeText(context,"Please restart the App for apply URL",Toast.LENGTH_LONG).show();
+
     }
 }

@@ -4,7 +4,7 @@ import com.whitedeveloper.custom.seekbar.ControllerSeekBar;
 
 import java.util.ArrayList;
 
-public interface ISetuperArrayListSeekBars
+public interface ISetterArrayListSeekBars
 {
-    public void iSettuperArrayListSeekBars(ArrayList<ControllerSeekBar> controllerSeekBarArrayList);
+    void iSetterArrayListSeekBars(ArrayList<ControllerSeekBar> controllerSeekBarArrayList);
 }

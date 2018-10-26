@@ -3,6 +3,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/background_activity"
               android:padding="10dp">
     <EditText
             android:id="@+id/edt_alert_dialog_url"
@@ -32,7 +33,10 @@
     <Button
             android:id="@+id/btn_alert_dialog_set"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/text_btn_alert_dialog_set"/>
+            android:layout_height="50dp"
+            android:background="@drawable/btn_set"
+            android:text="@string/text_btn_alert_dialog_set"
+            android:textSize="20dp"
+            android:textColor="@color/white"/>
 
 </LinearLayout>
