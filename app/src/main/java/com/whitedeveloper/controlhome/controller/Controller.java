@@ -10,6 +10,8 @@ import com.whitedeveloper.controlhome.controller.json.CreatorJsonByControllerBut
 import com.whitedeveloper.controlhome.controller.prefaranse.ControllerUrlSharedPreference;
 import com.whitedeveloper.controlhome.controller.prefaranse.UrlPreference;
 import com.whitedeveloper.controlhome.model.DataFromServer;
+import com.whitedeveloper.controlhome.model.cheduletimer.ItimeUpDate;
+import com.whitedeveloper.controlhome.model.cheduletimer.ScheduleTimeUpDate;
 import com.whitedeveloper.custom.buttons.IonClickButton;
 import com.whitedeveloper.custom.buttons.ControllerButton;
 import com.whitedeveloper.custom.buttons.ImplementationButtons;
@@ -28,12 +30,15 @@ public class Controller implements
                         IonClickButton,
                         IonDoSeekBar,
                         ICallSetting,
-                        ISetterURL
+                        ISetterURL,
+                        ItimeUpDate
 
 {
     private static final String SERVLET_ACTION_BY_DEVICES = "actions-by-device";
 
     private DataFromServer dataFromServer;
+    private ScheduleTimeUpDate scheduleTimeUpDate;
+    private VibrationButton vibrationButton;
     private ArrayList<ControllerButton> controllerButtons;
     private ArrayList<ControllerSeekBar> controllerSeekBars;
     private ArrayList<ControllerTextView> controllerTextViews;
@@ -43,10 +48,13 @@ public class Controller implements
     public  Controller(Context context)
     {
         this.context = context;
-        dataFromServer  = new DataFromServer(
-                getURLpreferanse(),
+        this.dataFromServer  = new DataFromServer(
+                getURLpreferance(),
                 this);
-
+        this.vibrationButton = new VibrationButton(context);
+        this.vibrationButton.setActivated(true);
+        this.scheduleTimeUpDate = new ScheduleTimeUpDate(this);
+        this.scheduleTimeUpDate.run();
         readingFromServer();
     }
 
@@ -76,12 +84,12 @@ public class Controller implements
 
     private void sendToServer(String json)
     {
-        Log.i("URL_ADDRESS::",getURLpreferanse().getFullUrl(SERVLET_ACTION_BY_DEVICES));
+        Log.i("URL_ADDRESS::", getURLpreferance().getFullUrl(SERVLET_ACTION_BY_DEVICES));
         Log.i("DATA_FOR_SERVER:::",json);
         dataFromServer.writeDataToServer(SERVLET_ACTION_BY_DEVICES,json);
     }
 
-    private UrlPreference getURLpreferanse()
+    private UrlPreference getURLpreferance()
     {
         return ControllerUrlSharedPreference.getUrlPreference(context);
     }
@@ -101,21 +109,31 @@ public class Controller implements
 
     @Override
     public void onClickButton() {
+
         runWithServer();
+        vibrationButton.pressEffect();
     }
 
 
     @Override
     public void onDoSeekBar() {
+
         runWithServer();
+        vibrationButton.pressEffect();
     }
 
     @Override
     public void updateActivity(String data, int codeResponse) {
-          if(data != null)
+          if(data != null) {
               setViewsByActionsFromServer(data);
-          else
-              Toast.makeText(context,"Error of server CODE:"+codeResponse,Toast.LENGTH_LONG).show();
+              if(!scheduleTimeUpDate.isRun())
+                  scheduleTimeUpDate.run();
+          }
+          else {
+              if(scheduleTimeUpDate.isRun())
+                  scheduleTimeUpDate.stop();
+              Toast.makeText(context, "Error of server CODE:" + codeResponse, Toast.LENGTH_LONG).show();
+          }
       }
 
     @Override
@@ -135,5 +153,11 @@ public class Controller implements
        ControllerUrlSharedPreference.putUrlPreference(context,urlPreference);
        Toast.makeText(context,"Please restart the App for apply URL",Toast.LENGTH_LONG).show();
 
+    }
+
+    @Override
+    public void timeUpDate() {
+        readingFromServer();
+        Log.i("timer_schedule:::","is running...");
     }
 }

@@ -37,16 +37,16 @@ public class MainActivity extends AppCompatActivity
                                                         new ElementArduino(ElementArduino.BTN,R.id.btn_computer_2,new PinArduino('D',27),"Comp 2"),
                                                         new ElementArduino(ElementArduino.BTN,R.id.btn_computer_3,new PinArduino('D',28),"Comp 3"),
                                                         new ElementArduino(ElementArduino.BTN,R.id.btn_computer_4,new PinArduino('D',29),"Comp 4"),
-                                                        new ElementArduino(ElementArduino.SKB,R.id.sb_1,new PinArduino('A',2),null),
-                                                        new ElementArduino(ElementArduino.SKB,R.id.sb_2,new PinArduino('A',3),null),
-                                                        new ElementArduino(ElementArduino.SKB,R.id.sb_3,new PinArduino('A',4),null),
-                                                        new ElementArduino(ElementArduino.SKB,R.id.sb_4,new PinArduino('A',5),null)};
+                                                        new ElementArduino(ElementArduino.SKB,R.id.sb_1,new PinArduino('A',3),null),
+                                                        new ElementArduino(ElementArduino.SKB,R.id.sb_2,new PinArduino('A',4),null),
+                                                        new ElementArduino(ElementArduino.SKB,R.id.sb_3,new PinArduino('A',5),null),
+                                                        new ElementArduino(ElementArduino.SKB,R.id.sb_4,new PinArduino('A',6),null)};
 
 
     private static  final int[] ID_TEXT_VIEWS = {
                                     R.id.tv_temperature,
                                     R.id.tv_day_or_night};
-    private static  final String[] NAME_SENSOR_ARDUINO = {"light","TEST_PARAM"};
+    private static  final String[] NAME_SENSOR_ARDUINO = {"temperature","light"};
 
     private static final Intervals[] intervals = {
             null,
