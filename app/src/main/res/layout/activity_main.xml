@@ -156,6 +156,7 @@
                       android:orientation="horizontal"
                       android:gravity="center">
                   <Button
+                          android:onClick="test"
                           style="@style/view_buttons"
                           android:background="@drawable/computer"/>
                   <Button

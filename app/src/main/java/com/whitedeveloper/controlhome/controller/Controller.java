@@ -23,19 +23,12 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 public class Controller implements
-        ISetterArrayListButtons,
-        ISetterArrayListSeekBars,
-        ISetterTextViewSensors,
                         UpDateActivity,
                         IonClickButton,
                         IonDoSeekBar,
-                        ICallSetting,
                         ISetterURL,
                         ItimeUpDate
-
 {
-    private static final String SERVLET_ACTION_BY_DEVICES = "actions-by-device";
-
     private DataFromServer dataFromServer;
     private ScheduleTimeUpDate scheduleTimeUpDate;
     private VibrationButton vibrationButton;
@@ -48,13 +41,20 @@ public class Controller implements
     public  Controller(Context context)
     {
         this.context = context;
+        init();
+    }
+
+    private void init()
+    {
         this.dataFromServer  = new DataFromServer(
-                getURLpreferance(),
-                this);
+                       getURLpreferance(),
+                       this);
+
         this.vibrationButton = new VibrationButton(context);
         this.vibrationButton.setActivated(true);
         this.scheduleTimeUpDate = new ScheduleTimeUpDate(this);
         this.scheduleTimeUpDate.run();
+
         readingFromServer();
     }
 
@@ -79,31 +79,39 @@ public class Controller implements
 
     private void readingFromServer()
     {
-        dataFromServer.readDataFromServer(SERVLET_ACTION_BY_DEVICES);
+        dataFromServer.readDataFromServer();
     }
 
     private void sendToServer(String json)
     {
-        Log.i("URL_ADDRESS::", getURLpreferance().getFullUrl(SERVLET_ACTION_BY_DEVICES));
+        Log.i("URL_ADDRESS::", getURLpreferance().getFullUrl());
         Log.i("DATA_FOR_SERVER:::",json);
-        dataFromServer.writeDataToServer(SERVLET_ACTION_BY_DEVICES,json);
+        dataFromServer.writeDataToServer(json);
     }
 
     private UrlPreference getURLpreferance()
     {
-        return ControllerUrlSharedPreference.getUrlPreference(context);
+        try {
+            return ControllerUrlSharedPreference.getUrlPreference(context);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    @Override
-    public void iSetterArrayListButtons(ArrayList<ControllerButton> controllerButtons) {
-        new ImplementationButtons(controllerButtons,this);
+
+    public void setArrayListButtons(ArrayList<ControllerButton> controllerButtons) {
         this.controllerButtons = controllerButtons;
-    }
+        new ImplementationButtons(controllerButtons,this);
 
-    @Override
-    public void iSetterArrayListSeekBars(ArrayList<ControllerSeekBar> controllerSeekBarArrayList) {
-            new ImplementationSeekBars(controllerSeekBarArrayList,this);
-            this.controllerSeekBars = controllerSeekBarArrayList;
+    }
+    public void setArrayListSeekBars(ArrayList<ControllerSeekBar> controllerSeekBarArrayList) {
+        this.controllerSeekBars = controllerSeekBarArrayList;
+        new ImplementationSeekBars(controllerSeekBarArrayList,this);
+
+    }
+    public void setArrayListTextViewSensors(ArrayList<ControllerTextView> arrayListControllerTextViews) {
+        this.controllerTextViews = arrayListControllerTextViews;
     }
 
 
@@ -124,8 +132,16 @@ public class Controller implements
 
     @Override
     public void updateActivity(String data, int codeResponse) {
-          if(data != null) {
+          if(data != null)
+          {
               setViewsByActionsFromServer(data);
+              /*if(areViewsInitalizated())
+                  setViewsByActionsFromServer(data);
+              else {
+                  scheduleTimeUpDate.stop();
+                  Toast.makeText(context, "Error of initalization Views", Toast.LENGTH_LONG).show();
+                  return;
+              }*/
               if(!scheduleTimeUpDate.isRun())
                   scheduleTimeUpDate.run();
           }
@@ -136,20 +152,20 @@ public class Controller implements
           }
       }
 
-    @Override
-    public void setArrayListTextViewSensors(ArrayList<ControllerTextView> arrayListControllerTextViews) {
-        this.controllerTextViews = arrayListControllerTextViews;
+    private boolean areViewsInitalizated()
+    {
+        return controllerButtons != null && controllerSeekBars != null && controllerTextViews != null;
     }
 
-    @Override
     public void setPreference() {
         AlertDialogSetterURL alertDialogSetterURL = new AlertDialogSetterURL(context,this);
-        alertDialogSetterURL.show(ControllerUrlSharedPreference.getUrlPreference(context));
+        alertDialogSetterURL.show(getURLpreferance());
     }
 
     @Override
     public void setterURL(UrlPreference urlPreference)
     {
+        Log.i("TAG",urlPreference.convertToJson());
        ControllerUrlSharedPreference.putUrlPreference(context,urlPreference);
        Toast.makeText(context,"Please restart the App for apply URL",Toast.LENGTH_LONG).show();
 

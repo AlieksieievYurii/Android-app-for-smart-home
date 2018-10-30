@@ -6,4 +6,5 @@
     <string name="text_hind_edt_name_key_param">Key param…</string>
     <string name="text_hind_edt_key">Key…</string>
     <string name="text_btn_alert_dialog_set">Set</string>
+    <string name="text_hind_edt_url_addition_path">Addition path...</string>
 </resources>

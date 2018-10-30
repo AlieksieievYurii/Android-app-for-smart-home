@@ -8,10 +8,10 @@ import java.net.URL;
 
 public class ConnectorHttp
 {
-    public static HttpURLConnection getConnection(UrlPreference urlPreference,String additionPath, String requestMethod)
+    public static HttpURLConnection getConnection(UrlPreference urlPreference, String requestMethod)
     {
         try {
-            URL url = new URL(urlPreference.getFullUrl(additionPath));
+            URL url = new URL(urlPreference.getFullUrl());
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
             httpURLConnection.setRequestMethod(requestMethod);

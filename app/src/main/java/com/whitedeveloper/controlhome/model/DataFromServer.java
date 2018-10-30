@@ -22,14 +22,14 @@ public class DataFromServer implements IresponseFromServer {
         this.upDateActivity = upDateActivity;
     }
 
-    public void readDataFromServer(String nameServlet)
+    public void readDataFromServer()
     {
-        new ReadFromServer(ConnectorHttp.getConnection(urlPreference,nameServlet,"GET"),this).execute();
+        new ReadFromServer(ConnectorHttp.getConnection(urlPreference,"GET"),this).execute();
     }
 
-    public void writeDataToServer(String nameServlet,String data)
+    public void writeDataToServer(String data)
     {
-        new WriteToServer(ConnectorHttp.getConnection(urlPreference,nameServlet,"POST"),this).execute(data);
+        new WriteToServer(ConnectorHttp.getConnection(urlPreference,"POST"),this).execute(data);
     }
 
     @Override

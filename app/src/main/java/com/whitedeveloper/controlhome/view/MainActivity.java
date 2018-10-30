@@ -1,6 +1,7 @@
 package com.whitedeveloper.controlhome.view;
 
 import abak.tr.com.boxedverticalseekbar.BoxedVertical;
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,10 +12,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.controller.Controller;
-import com.whitedeveloper.controlhome.controller.interfaces.ICallSetting;
-import com.whitedeveloper.controlhome.controller.interfaces.ISetterTextViewSensors;
-import com.whitedeveloper.controlhome.controller.interfaces.ISetterArrayListButtons;
-import com.whitedeveloper.controlhome.controller.interfaces.ISetterArrayListSeekBars;
 import com.whitedeveloper.controlhome.view.elementarduino.ElementArduino;
 import com.whitedeveloper.custom.buttons.ControllerButton;
 import com.whitedeveloper.custom.PinArduino;
@@ -28,7 +25,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity
 {
 
-    private static final ElementArduino[] elementArduinos = {
+    private static final ElementArduino[] elementsArduino = {
                                                         new ElementArduino(ElementArduino.BTN,R.id.btn_led_1,new PinArduino('D',22),"Led 1"),
                                                         new ElementArduino(ElementArduino.BTN,R.id.btn_led_2,new PinArduino('D',23),"Led 2"),
                                                         new ElementArduino(ElementArduino.BTN,R.id.btn_led_3,new PinArduino('D',24),"Led 3"),
@@ -56,12 +53,7 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<ControllerButton> arrayListControllerButtons = new ArrayList<>();
     private ArrayList<ControllerSeekBar> arrayListControllerSeekBars = new ArrayList<>();
     private ArrayList<ControllerTextView> arrayListControllersTextView = new ArrayList<>();
-    private ISetterArrayListButtons setterArrayListButtons;
-    private ISetterArrayListSeekBars setterArrayListSeekBars;
-    private ISetterTextViewSensors setterTextViewSensors;
-    private ICallSetting callSetting;
-
-
+    private Controller controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +77,7 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId())
         {
             case R.id.activity_main_item_setting:
-                callSetting.setPreference();
+                controller.setPreference();
                 break;
             default:break;
         }
@@ -113,26 +105,22 @@ public class MainActivity extends AppCompatActivity
 
     private void sendArrayListForController()
     {
-        setterArrayListButtons.iSetterArrayListButtons(arrayListControllerButtons);
-        setterArrayListSeekBars.iSetterArrayListSeekBars(arrayListControllerSeekBars);
-        setterTextViewSensors.setArrayListTextViewSensors(arrayListControllersTextView);
+       controller.setArrayListButtons(arrayListControllerButtons);
+       controller.setArrayListSeekBars(arrayListControllerSeekBars);
+       controller.setArrayListTextViewSensors(arrayListControllersTextView);
     }
 
     private void initAll()
     {
-        for(ElementArduino elementArduino : elementArduinos)
+        controller = new Controller(this);
+
+        for(ElementArduino elementArduino : elementsArduino)
                     if(elementArduino.getTypeView() == ElementArduino.BTN)
                         initButton(elementArduino);
                     else if(elementArduino.getTypeView() == ElementArduino.SKB)
                         initSeekBar(elementArduino);
 
         initTextViewSensors();
-
-        Controller controller = new Controller(this);
-        setterArrayListButtons = controller;
-        setterArrayListSeekBars = controller;
-        setterTextViewSensors = controller;
-        callSetting = controller;
     }
     private void initButton(ElementArduino elementArduino)
     {
@@ -154,6 +142,11 @@ public class MainActivity extends AppCompatActivity
                     (TextView) findViewById(ID_TEXT_VIEWS[i]),
                     NAME_SENSOR_ARDUINO[i],
                     intervals[i]));
+    }
+
+    public void test(View view)
+    {
+        startActivity(new Intent(this,Main2Activity.class));
     }
 
 }
