@@ -55,7 +55,6 @@ public class Controller implements
         this.scheduleTimeUpDate = new ScheduleTimeUpDate(this);
         this.scheduleTimeUpDate.run();
 
-        readingFromServer();
     }
 
     private void runWithServer()
@@ -77,7 +76,7 @@ public class Controller implements
         }
     }
 
-    private void readingFromServer()
+    public void readingFromServer()
     {
         dataFromServer.readDataFromServer();
     }

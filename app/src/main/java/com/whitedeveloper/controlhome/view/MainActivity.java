@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity
        initAll();
        sendArrayListForController();
        splashScreen();
+       controller.readingFromServer();
     }
 
     @Override
@@ -125,8 +126,7 @@ public class MainActivity extends AppCompatActivity
     private void initButton(ElementArduino elementArduino)
     {
         arrayListControllerButtons.add(new ControllerButton((Button) findViewById(elementArduino.getId_view()),
-                                            elementArduino.getPinArduino(),
-                                            elementArduino.getTextName()));
+                                            elementArduino.getPinArduino()));
     }
 
     private void initSeekBar(ElementArduino elementArduino)

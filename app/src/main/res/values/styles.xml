@@ -34,9 +34,9 @@
        </style>
 
     <style name="view_seek_bars">
-        <item name="android:layout_width">65dp</item>
-        <item name="android:layout_height">200dp</item>
-        <item name="android:layout_margin">10dp</item>
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">160dp</item>
+        <item name="android:layout_margin">6dp</item>
         <item name="libCornerRadius">20</item>
         <item name="backgroundColor">@color/background_seek_bar</item>
         <item name="progressColor">@color/color_progress</item>

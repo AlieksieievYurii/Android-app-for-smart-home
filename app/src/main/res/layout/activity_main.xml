@@ -69,10 +69,12 @@
       <Button
               android:id="@+id/btn_led_1"
               style="@style/view_buttons"
+              android:text="led one"
               android:background="@drawable/lamp"/>
       <Button
                     android:id="@+id/btn_led_2"
                     style="@style/view_buttons"
+                    android:text="led two"
                     android:background="@drawable/lamp"/>
       <Button
                           android:id="@+id/btn_led_3"

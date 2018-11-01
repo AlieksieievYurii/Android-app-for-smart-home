@@ -12,19 +12,13 @@ public class ControllerButton
     private PinArduino pinArduino;
 
 
-    public ControllerButton(Button button, PinArduino pinArduino,String name)
+    public ControllerButton(Button button, PinArduino pinArduino)
     {
         this.button = button;
         this.pinArduino = pinArduino;
         this.id  = button.getId();
-
-        setText(name);
     }
 
-    private void setText(String name)
-    {
-        button.setText(name);
-    }
 
     void buttonPressed()
     {
