@@ -7,7 +7,7 @@ import com.whitedeveloper.controlhome.controller.alertdialog.AlertDialogSetterUR
 import com.whitedeveloper.controlhome.controller.alertdialog.ISetterURL;
 import com.whitedeveloper.controlhome.controller.interfaces.*;
 import com.whitedeveloper.controlhome.controller.json.CreatorJsonByControllerButton;
-import com.whitedeveloper.controlhome.controller.prefaranse.ControllerUrlSharedPreference;
+import com.whitedeveloper.controlhome.controller.prefaranse.ControllerSharedPreference;
 import com.whitedeveloper.controlhome.controller.prefaranse.UrlPreference;
 import com.whitedeveloper.controlhome.model.DataFromServer;
 import com.whitedeveloper.controlhome.model.cheduletimer.ItimeUpDate;
@@ -83,7 +83,11 @@ public class Controller implements
 
     private void sendToServer(String json)
     {
-        Log.i("URL_ADDRESS::", getURLpreferance().getFullUrl());
+        try
+        {
+            Log.i("URL_ADDRESS::", getURLpreferance().getFullUrl());
+
+        }catch (Exception e){}
         Log.i("DATA_FOR_SERVER:::",json);
         dataFromServer.writeDataToServer(json);
     }
@@ -91,7 +95,7 @@ public class Controller implements
     private UrlPreference getURLpreferance()
     {
         try {
-            return ControllerUrlSharedPreference.getUrlPreference(context);
+            return ControllerSharedPreference.getUrlPreference(context);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -134,13 +138,6 @@ public class Controller implements
           if(data != null)
           {
               setViewsByActionsFromServer(data);
-              /*if(areViewsInitalizated())
-                  setViewsByActionsFromServer(data);
-              else {
-                  scheduleTimeUpDate.stop();
-                  Toast.makeText(context, "Error of initalization Views", Toast.LENGTH_LONG).show();
-                  return;
-              }*/
               if(!scheduleTimeUpDate.isRun())
                   scheduleTimeUpDate.run();
           }
@@ -151,10 +148,6 @@ public class Controller implements
           }
       }
 
-    private boolean areViewsInitalizated()
-    {
-        return controllerButtons != null && controllerSeekBars != null && controllerTextViews != null;
-    }
 
     public void setPreference() {
         AlertDialogSetterURL alertDialogSetterURL = new AlertDialogSetterURL(context,this);
@@ -165,7 +158,7 @@ public class Controller implements
     public void setterURL(UrlPreference urlPreference)
     {
         Log.i("TAG",urlPreference.convertToJson());
-       ControllerUrlSharedPreference.putUrlPreference(context,urlPreference);
+       ControllerSharedPreference.putUrlPreference(context,urlPreference);
        Toast.makeText(context,"Please restart the App for apply URL",Toast.LENGTH_LONG).show();
 
     }

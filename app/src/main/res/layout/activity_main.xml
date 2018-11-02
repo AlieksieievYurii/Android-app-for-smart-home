@@ -4,7 +4,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".view.MainActivity"
         android:orientation="vertical"
         android:animateLayoutChanges="true"
@@ -14,7 +13,7 @@
             android:id="@+id/img_logo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible"
+            android:visibility="gone"
             android:background="#2f3131"
             android:orientation="vertical">
         <ImageView
@@ -38,160 +37,16 @@
             android:id="@+id/lnl_body"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
-    <LinearLayout
-            android:layout_width="match_parent"
+            android:visibility="visible">
+    <GridLayout
+            android:id="@+id/main_grid_layout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="6dp">
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:orientation="horizontal"
-                android:background="@drawable/background_head">
-            <TextView
-                   android:id="@+id/tv_temperature"
-                    style="@style/view_sensors"
-                    android:background="@drawable/ic_celsius"/>
-            <TextView
-                    android:id="@+id/tv_day_or_night"
-                    style="@style/view_sensors"
-                    android:background="@drawable/state_day"/>
-        </LinearLayout>
+            android:layout_gravity="center_horizontal"
+            android:padding="6dp"
+            android:columnCount="4">
 
-  <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal"
-          android:gravity="center">
-      <Button
-              android:id="@+id/btn_led_1"
-              style="@style/view_buttons"
-              android:text="led one"
-              android:background="@drawable/lamp"/>
-      <Button
-                    android:id="@+id/btn_led_2"
-                    style="@style/view_buttons"
-                    android:text="led two"
-                    android:background="@drawable/lamp"/>
-      <Button
-                          android:id="@+id/btn_led_3"
-                          style="@style/view_buttons"
-                          android:background="@drawable/lamp"/>
-      <Button
-                          android:id="@+id/btn_led_4"
-                          style="@style/view_buttons"
-                          android:background="@drawable/lamp"/>
-  </LinearLayout>
-    <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal"
-              android:gravity="center">
-          <Button
-                  android:id="@+id/btn_computer_1"
-                  style="@style/view_buttons"
-                  android:background="@drawable/computer"/>
-          <Button
-                        android:id="@+id/btn_computer_2"
-                        style="@style/view_buttons"
-                        android:background="@drawable/computer"/>
-          <Button
-                              android:id="@+id/btn_computer_3"
-                              style="@style/view_buttons"
-                              android:background="@drawable/computer"/>
-          <Button
-                              android:id="@+id/btn_computer_4"
-                              style="@style/view_buttons"
-                              android:background="@drawable/computer"/>
-      </LinearLayout>
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-        <abak.tr.com.boxedverticalseekbar.BoxedVertical
-                android:id="@+id/sb_1"
-                style="@style/view_seek_bars"
-                app:imageEnabled="true"
-                app:defaultImage="@drawable/ic_volue_up"
-                app:maxImage="@drawable/ic_computer_on"
-                app:minImage="@drawable/ic_volue_off"/>
-
-        <abak.tr.com.boxedverticalseekbar.BoxedVertical
-                        android:id="@+id/sb_2"
-                        style="@style/view_seek_bars"/>
-        <abak.tr.com.boxedverticalseekbar.BoxedVertical
-                        android:id="@+id/sb_3"
-                        style="@style/view_seek_bars"/>
-        <abak.tr.com.boxedverticalseekbar.BoxedVertical
-                        android:id="@+id/sb_4"
-                        style="@style/view_seek_bars"/>
-    </LinearLayout>
-
-       <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:orientation="horizontal"
-               android:paddingRight="10dp"
-               android:paddingLeft="10dp"
-               android:background="@drawable/background_head">
-           <abak.tr.com.boxedverticalseekbar.BoxedVertical
-                   style="@style/view_seek_bars"
-                   app:imageEnabled="true"
-                   app:defaultImage="@drawable/ic_volue_up"
-                   app:maxImage="@drawable/ic_computer_on"
-                   app:minImage="@drawable/ic_volue_off"/>
-
-           <abak.tr.com.boxedverticalseekbar.BoxedVertical
-                           style="@style/view_seek_bars"/>
-           <abak.tr.com.boxedverticalseekbar.BoxedVertical
-                           style="@style/view_seek_bars"/>
-           <abak.tr.com.boxedverticalseekbar.BoxedVertical
-                           style="@style/view_seek_bars"/>
-       </LinearLayout>
-
-        <LinearLayout
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-                      android:gravity="center">
-                  <Button
-                          android:onClick="test"
-                          style="@style/view_buttons"
-                          android:background="@drawable/computer"/>
-                  <Button
-                          style="@style/view_buttons"
-                          android:background="@drawable/computer"/>
-                  <Button
-                          style="@style/view_buttons"
-                          android:background="@drawable/computer"/>
-                  <Button
-                          style="@style/view_buttons"
-                          android:background="@drawable/computer"/>
-              </LinearLayout>
-
-        <LinearLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                  android:gravity="center">
-              <Button
-                      style="@style/view_buttons"
-                      android:background="@drawable/lamp"/>
-              <Button
-                            style="@style/view_buttons"
-                            android:background="@drawable/lamp"/>
-              <Button
-                                  style="@style/view_buttons"
-                                  android:background="@drawable/lamp"/>
-              <Button
-                                  style="@style/view_buttons"
-                                  android:background="@drawable/lamp"/>
-          </LinearLayout>
-
-    </LinearLayout>
+    </GridLayout>
 
     </ScrollView>
 

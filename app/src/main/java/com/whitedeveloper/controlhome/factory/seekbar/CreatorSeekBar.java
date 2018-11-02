@@ -13,6 +13,7 @@ public class CreatorSeekBar extends CreatorView {
 
     public static final String ATR_ID = "id";
     public static final String ATR_PIN = "pin";
+    public static final String ATR_NAME = "name";
 
     public CreatorSeekBar(Context context, JSONObject jsonObject) {
         super(context, jsonObject);

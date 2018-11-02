@@ -1,59 +1,39 @@
 package com.whitedeveloper.controlhome.view;
 
-import abak.tr.com.boxedverticalseekbar.BoxedVertical;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.GridLayout;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.controller.Controller;
-import com.whitedeveloper.controlhome.view.elementarduino.ElementArduino;
+import com.whitedeveloper.controlhome.controller.prefaranse.ControllerSharedPreference;
+import com.whitedeveloper.controlhome.factory.FactoryViews;
+import com.whitedeveloper.controlhome.factory.IcreateView;
+import com.whitedeveloper.controlhome.view.activitycreator.ActivityCreateNewElement;
 import com.whitedeveloper.custom.buttons.ControllerButton;
-import com.whitedeveloper.custom.PinArduino;
 import com.whitedeveloper.custom.seekbar.ControllerSeekBar;
 import com.whitedeveloper.custom.textview.ControllerTextView;
-import com.whitedeveloper.custom.textview.intervals.Intervals;
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements IcreateView
 {
 
-    private static final ElementArduino[] elementsArduino = {
-                                                        new ElementArduino(ElementArduino.BTN,R.id.btn_led_1,new PinArduino('D',22),"Led 1"),
-                                                        new ElementArduino(ElementArduino.BTN,R.id.btn_led_2,new PinArduino('D',23),"Led 2"),
-                                                        new ElementArduino(ElementArduino.BTN,R.id.btn_led_3,new PinArduino('D',24),"Led 3"),
-                                                        new ElementArduino(ElementArduino.BTN,R.id.btn_led_4,new PinArduino('D',25),"Led 4"),
-                                                        new ElementArduino(ElementArduino.BTN,R.id.btn_computer_1,new PinArduino('D',26),"Comp 1"),
-                                                        new ElementArduino(ElementArduino.BTN,R.id.btn_computer_2,new PinArduino('D',27),"Comp 2"),
-                                                        new ElementArduino(ElementArduino.BTN,R.id.btn_computer_3,new PinArduino('D',28),"Comp 3"),
-                                                        new ElementArduino(ElementArduino.BTN,R.id.btn_computer_4,new PinArduino('D',29),"Comp 4"),
-                                                        new ElementArduino(ElementArduino.SKB,R.id.sb_1,new PinArduino('A',3),null),
-                                                        new ElementArduino(ElementArduino.SKB,R.id.sb_2,new PinArduino('A',4),null),
-                                                        new ElementArduino(ElementArduino.SKB,R.id.sb_3,new PinArduino('A',5),null),
-                                                        new ElementArduino(ElementArduino.SKB,R.id.sb_4,new PinArduino('A',6),null)};
-
-
-    private static  final int[] ID_TEXT_VIEWS = {
-                                    R.id.tv_temperature,
-                                    R.id.tv_day_or_night};
-    private static  final String[] NAME_SENSOR_ARDUINO = {"temperature","light"};
-
-    private static final Intervals[] intervals = {
-            null,
-            new Intervals(700)
-    };
-
+    private static final int CODE_REQUEST_ACTIVITY_CREATE_NEW_VIEW = 1;
     private ArrayList<ControllerButton> arrayListControllerButtons = new ArrayList<>();
     private ArrayList<ControllerSeekBar> arrayListControllerSeekBars = new ArrayList<>();
     private ArrayList<ControllerTextView> arrayListControllersTextView = new ArrayList<>();
     private Controller controller;
+    private FactoryViews factoryViews;
+    private GridLayout gridLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +41,11 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
        initAll();
+       createViews();
        sendArrayListForController();
        splashScreen();
        controller.readingFromServer();
+
     }
 
     @Override
@@ -80,9 +62,18 @@ public class MainActivity extends AppCompatActivity
             case R.id.activity_main_item_setting:
                 controller.setPreference();
                 break;
+            case R.id.activity_main_item_add_new_view:
+                startActivityForResult(new Intent(MainActivity.this, ActivityCreateNewElement.class),CODE_REQUEST_ACTIVITY_CREATE_NEW_VIEW);
+                break;
             default:break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CODE_REQUEST_ACTIVITY_CREATE_NEW_VIEW && resultCode == Activity.RESULT_OK)
+            upDateViews();
     }
 
     private void splashScreen()
@@ -95,6 +86,16 @@ public class MainActivity extends AppCompatActivity
             }
         };
         handler.postDelayed(runnable,2000);
+    }
+
+    private void upDateViews()
+    {
+        arrayListControllerButtons.clear();
+        arrayListControllerSeekBars.clear();
+        arrayListControllersTextView.clear();
+        gridLayout.removeAllViews();
+        createViews();
+        sendArrayListForController();
     }
 
     private void start()
@@ -114,39 +115,38 @@ public class MainActivity extends AppCompatActivity
     private void initAll()
     {
         controller = new Controller(this);
-
-        for(ElementArduino elementArduino : elementsArduino)
-                    if(elementArduino.getTypeView() == ElementArduino.BTN)
-                        initButton(elementArduino);
-                    else if(elementArduino.getTypeView() == ElementArduino.SKB)
-                        initSeekBar(elementArduino);
-
-        initTextViewSensors();
+        factoryViews = new FactoryViews(this,this);
+        gridLayout = findViewById(R.id.main_grid_layout);
     }
-    private void initButton(ElementArduino elementArduino)
+
+    private void createViews() {
+        try {
+            JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(this);
+            Log.i("JSON_VIEWS::",jsonArray.toString());
+            factoryViews.createViews(jsonArray);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void createButton(ControllerButton controllerButton)
     {
-        arrayListControllerButtons.add(new ControllerButton((Button) findViewById(elementArduino.getId_view()),
-                                            elementArduino.getPinArduino()));
+        arrayListControllerButtons.add(controllerButton);
+        gridLayout.addView(controllerButton.getButton());
+
     }
 
-    private void initSeekBar(ElementArduino elementArduino)
+    @Override
+    public void createSeekBar(ControllerSeekBar controllerSeekBar)
     {
-        arrayListControllerSeekBars.add(new ControllerSeekBar((BoxedVertical)findViewById(elementArduino.getId_view()),
-                                            elementArduino.getPinArduino()));
+        arrayListControllerSeekBars.add(controllerSeekBar);
+        gridLayout.addView(controllerSeekBar.getSeekBar());
     }
 
-    private void initTextViewSensors()
-    {
-        for (int i = 0; i < ID_TEXT_VIEWS.length; i++)
-            arrayListControllersTextView.add(new ControllerTextView(
-                    (TextView) findViewById(ID_TEXT_VIEWS[i]),
-                    NAME_SENSOR_ARDUINO[i],
-                    intervals[i]));
+    @Override
+    public void createTextView(ControllerTextView controllerTextView) {
+        arrayListControllersTextView.add(controllerTextView);
+        gridLayout.addView(controllerTextView.getTextViewSensor());
     }
-
-    public void test(View view)
-    {
-        startActivity(new Intent(this,Main2Activity.class));
-    }
-
 }

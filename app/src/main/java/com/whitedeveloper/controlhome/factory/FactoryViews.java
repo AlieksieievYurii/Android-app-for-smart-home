@@ -4,22 +4,24 @@ import abak.tr.com.boxedverticalseekbar.BoxedVertical;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import com.whitedeveloper.controlhome.factory.button.CreatorButton;
-import com.whitedeveloper.controlhome.factory.button.IcreateView;
 import com.whitedeveloper.controlhome.factory.seekbar.CreatorSeekBar;
+import com.whitedeveloper.controlhome.factory.textview.CreatorTextView;
 import com.whitedeveloper.custom.PinArduino;
 import com.whitedeveloper.custom.buttons.ControllerButton;
 import com.whitedeveloper.custom.seekbar.ControllerSeekBar;
+import com.whitedeveloper.custom.textview.ControllerTextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class FactoryViews
 {
-    private static final String TYPE_VIEW = "type_view" ;
-    private static final String TYPE_VIEW_BUTTON = "type_view_button" ;
-    private static final String TYPE_VIEW_SEEK_BAR = "type_view_seek_bar";
-    private static final String TYPE_VIEW_TEXT_VIEW = "type_view_text_view";
+    public static final String TYPE_VIEW = "type_view" ;
+    public static final String TYPE_VIEW_BUTTON = "type_view_button" ;
+    public static final String TYPE_VIEW_SEEK_BAR = "type_view_seek_bar";
+    public static final String TYPE_VIEW_TEXT_VIEW = "type_view_text_view";
     private IcreateView icreateView;
     private CreatorView creatorView;
     private Context context;
@@ -30,8 +32,7 @@ public class FactoryViews
         this.context = context;
     }
 
-    public void createViews(String json) throws JSONException {
-        JSONArray jsonArray = new JSONArray(json);
+    public void createViews(JSONArray jsonArray) throws JSONException {
 
         for(int i = 0; i < jsonArray.length(); i++)
         {
@@ -40,7 +41,7 @@ public class FactoryViews
                     {
                         case TYPE_VIEW_BUTTON:createButton(jsonObject);break;
                         case TYPE_VIEW_SEEK_BAR:createSeekBar(jsonObject); break;
-                        case TYPE_VIEW_TEXT_VIEW:/*TODO Implement factory for textview(Sensors)*/break;
+                        case TYPE_VIEW_TEXT_VIEW:createTextView(jsonObject); break;
                         default: throw new JSONException("Unknown type of view!");
                     }
         }
@@ -59,6 +60,13 @@ public class FactoryViews
         View view = creatorView.createView();
         PinArduino pinArduino = creatorView.createPinArduino();
         icreateView.createSeekBar(new ControllerSeekBar((BoxedVertical)view,pinArduino));
+    }
+
+    private void createTextView(JSONObject jsonObject) throws JSONException {
+        creatorView = new CreatorTextView(context,jsonObject);
+        View view = creatorView.createView();
+        String nameSensor = ((CreatorTextView)creatorView).getNameSensorArduino();
+        icreateView.createTextView(new ControllerTextView((TextView) view,nameSensor));
     }
 
 }

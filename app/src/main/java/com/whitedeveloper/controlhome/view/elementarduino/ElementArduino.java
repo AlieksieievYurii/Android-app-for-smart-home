@@ -1,7 +1,7 @@
 package com.whitedeveloper.controlhome.view.elementarduino;
 
 import com.whitedeveloper.custom.PinArduino;
-import com.whitedeveloper.custom.textview.intervals.Intervals;
+
 
 public class ElementArduino
 {
@@ -10,17 +10,8 @@ public class ElementArduino
 
     private PinArduino pinArduino;
     private int id_view;
-    private Intervals intervals;
     private char typeView;
     private String textName;
-
-    public Intervals getIntervals() {
-        return intervals;
-    }
-
-    public void setIntervals(Intervals intervals) {
-        this.intervals = intervals;
-    }
 
     public PinArduino getPinArduino() {
         return pinArduino;

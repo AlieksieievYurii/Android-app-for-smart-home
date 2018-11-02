@@ -6,5 +6,12 @@
     <string name="text_hind_edt_name_key_param">Key param…</string>
     <string name="text_hind_edt_key">Key…</string>
     <string name="text_btn_alert_dialog_set">Set</string>
-    <string name="text_hind_edt_url_addition_path">Addition path...</string>
+    <string name="text_hind_edt_url_addition_path">Addition path…</string>
+    <string name="text_fragment_id">Id…</string>
+    <string name="text_fragment_name">Name…</string>
+    <string name="text_fragment_pin">Pin…</string>
+    <string name="text_example_json">Example of JSON</string>
+    <string name="text_btn_add_new_view">Add View</string>
+    <string name="text_activity_main_item_add_new_view">Add view</string>
+    <string name="text_fragment_interval">Interval...</string>
 </resources>

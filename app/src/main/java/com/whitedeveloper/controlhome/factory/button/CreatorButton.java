@@ -11,21 +11,21 @@ import org.json.JSONObject;
 
 public class CreatorButton extends CreatorView {
 
-    private static final String ATR_TEXT = "text";
-    private static final String ATR_IMAGE_TYPE = "typeImage";
-    private static final String ATR_PIN = "pin";
-    private static final String ATR_ID = "id";
+    public static final String ATR_TEXT = "text";
+    public static final String ATR_IMAGE_TYPE = "typeImage";
+    public static final String ATR_PIN = "pin";
+    public static final String ATR_ID = "id";
 
-    private static final String COMPUTER = "computer";
-    private static final String LAMP = "lamp";
-    private static final String FAN = "fan";
-    private static final String SOCKET = "socket";
+    public static final String COMPUTER = "computer";
+    public static final String LAMP = "lamp";
+    public static final String FAN = "fan";
+    public static final String SOCKET = "socket";
 
     public CreatorButton(Context context,JSONObject jsonObject) {
         super(context,jsonObject);
     }
 
-    private int getBackgroundResource(String type)
+    public static int getBackgroundResource(String type)
     {
         switch (type)
         {
