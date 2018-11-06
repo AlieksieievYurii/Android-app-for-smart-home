@@ -1,6 +1,9 @@
 package com.whitedeveloper.custom.seekbar;
 
 import abak.tr.com.boxedverticalseekbar.BoxedVertical;
+import android.view.View;
+import android.widget.LinearLayout;
+import com.whitedeveloper.controlhome.factory.seekbar.CreatorSeekBar;
 import com.whitedeveloper.custom.PinArduino;
 
 
@@ -8,13 +11,15 @@ public class ControllerSeekBar {
 
     private BoxedVertical seekBar;
     private PinArduino arduinoPin;
+    private LinearLayout linearLayout;
 
-    public ControllerSeekBar(BoxedVertical seekBar, PinArduino arduinoPin) {
+    public ControllerSeekBar(BoxedVertical seekBar, LinearLayout linearLayout, PinArduino arduinoPin) {
         this.seekBar = seekBar;
         this.arduinoPin = arduinoPin;
-
+        this.linearLayout = linearLayout;
         init();
     }
+
 
     private void init()
         {
@@ -25,6 +30,14 @@ public class ControllerSeekBar {
     {
         seekBar.setOnBoxedPointsChangeListener(onValuesChangeListener);
     }
+    void setOnLongClickListener(View.OnLongClickListener onClickListener)
+    {
+        linearLayout.setOnLongClickListener(onClickListener);
+    }
+
+    public LinearLayout getLinearLayout() {
+          return linearLayout;
+      }
 
     public BoxedVertical getSeekBar() {
         return seekBar;

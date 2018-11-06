@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+                android:background="@color/color_background_fragment_creating_view">
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,15 +38,9 @@
                 android:layout_height="wrap_content"/>
     </LinearLayout>
 
-        <Button
-                android:id="@+id/btn_add_new_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/background_head"
-                android:textColor="@color/white"
-                android:text="@string/text_btn_add_new_view"/>
+            <Button
+                    android:id="@+id/btn_add_new_view"
+                    style="@style/view_btn_add_view"/>
         </LinearLayout>
 
 </ScrollView>

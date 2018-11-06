@@ -50,6 +50,6 @@ public class CreatorButton extends CreatorView {
 
     @Override
     public PinArduino createPinArduino() throws JSONException {
-        return new PinArduino('D',getJsonObject().getInt(ATR_PIN));
+        return new PinArduino(PinArduino.TYPE_PIN_DIGITAL,getJsonObject().getInt(ATR_PIN));
     }
 }

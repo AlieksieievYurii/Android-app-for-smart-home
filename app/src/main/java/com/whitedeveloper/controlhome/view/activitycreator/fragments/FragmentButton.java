@@ -11,12 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.whitedeveloper.controlhome.R;
-import com.whitedeveloper.controlhome.controller.prefaranse.ControllerSharedPreference;
+import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
 import com.whitedeveloper.controlhome.factory.CheckID;
 import com.whitedeveloper.controlhome.factory.FactoryViews;
 import com.whitedeveloper.controlhome.factory.button.CreatorButton;
 import com.whitedeveloper.controlhome.view.activitycreator.ActivityCreateNewElement;
-import org.json.JSONArray;
+import com.whitedeveloper.custom.PinArduino;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,7 +24,7 @@ import java.util.Objects;
 
 public class FragmentButton extends Fragment {
 
-    private String[] NAME_ICONS = {CreatorButton.LAMP,CreatorButton.COMPUTER,CreatorButton.FAN,CreatorButton.SOCKET};
+    public static final String[] NAME_ICONS = {CreatorButton.LAMP,CreatorButton.COMPUTER,CreatorButton.FAN,CreatorButton.SOCKET};
 
 
     private Button btnExample;
@@ -35,7 +35,7 @@ public class FragmentButton extends Fragment {
 
     private String id = "";
     private String name = "";
-    private String pin = "";
+    private String pin = "null";
     private String imageType = "";
 
     private View view;
@@ -90,6 +90,7 @@ public class FragmentButton extends Fragment {
             @Override
             public void onClick(View view) {
                 btnExample.setActivated(!btnExample.isActivated());
+                showExampleJson();
             }
         });
 
@@ -113,32 +114,22 @@ public class FragmentButton extends Fragment {
 
     private void showExampleJson()
     {
-        String stringBuilder = "{\n" +
-                   "  \"" + FactoryViews.TYPE_VIEW + "\":\"" + FactoryViews.TYPE_VIEW_BUTTON + "\",\n" +
-                   "  \"" + CreatorButton.ATR_ID + "\":" + id + ",\n" +
-                   "  \"" + CreatorButton.ATR_TEXT + "\":\"" + name + "\",\n" +
-                   "  \"" + CreatorButton.ATR_PIN + "\":" + pin + ",\n" +
-                   "  \"" + CreatorButton.ATR_IMAGE_TYPE + "\":\"" + imageType + "\"\n" +
-                   "}\n";
+        StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("{").append("\n");
+            stringBuilder.append("  \"").append(PinArduino.TYPE_PIN).append("\":\"").append(PinArduino.TYPE_PIN_DIGITAL).append("\",\n");
+            stringBuilder.append("  \"").append(PinArduino.PIN).append("\":").append(pin).append(",\n");
+            stringBuilder.append("  \"").append(PinArduino.STATUS).append("\":\"").append(btnExample.isActivated()?PinArduino.STATUS_HIGH:PinArduino.STATUS_LOW).append("\"\n");
+            stringBuilder.append("}");
+
         tvExampleJson.setText(stringBuilder);
     }
 
     private void saveJsonForCreatingViews()
     {
         try {
-            JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(view.getContext());
-            jsonArray.put(getJSON());
-            ControllerSharedPreference.putJsonForCreatingView(view.getContext(),jsonArray.toString());
-        } catch (Exception e) {
+            EditorViewsJson.saveJsonForCreatingViews(getJSON(),view.getContext());
+        } catch (JSONException e) {
             e.printStackTrace();
-            try {
-                JSONArray jsonArray = new JSONArray();
-                jsonArray.put(getJSON());
-
-                ControllerSharedPreference.putJsonForCreatingView(view.getContext(),jsonArray.toString());
-            } catch (JSONException e1) {
-                e1.printStackTrace();
-            }
         }
     }
 

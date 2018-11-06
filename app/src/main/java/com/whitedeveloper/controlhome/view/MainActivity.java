@@ -16,6 +16,7 @@ import com.whitedeveloper.controlhome.controller.prefaranse.ControllerSharedPref
 import com.whitedeveloper.controlhome.factory.FactoryViews;
 import com.whitedeveloper.controlhome.factory.IcreateView;
 import com.whitedeveloper.controlhome.view.activitycreator.ActivityCreateNewElement;
+import com.whitedeveloper.custom.IrefreshActivity;
 import com.whitedeveloper.custom.buttons.ControllerButton;
 import com.whitedeveloper.custom.seekbar.ControllerSeekBar;
 import com.whitedeveloper.custom.textview.ControllerTextView;
@@ -24,10 +25,11 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements IcreateView
+public class MainActivity extends AppCompatActivity implements IcreateView, IrefreshActivity
 {
 
-    private static final int CODE_REQUEST_ACTIVITY_CREATE_NEW_VIEW = 1;
+    public static final int CODE_REQUEST_ACTIVITY_CREATE_NEW_VIEW = 1;
+
     private ArrayList<ControllerButton> arrayListControllerButtons = new ArrayList<>();
     private ArrayList<ControllerSeekBar> arrayListControllerSeekBars = new ArrayList<>();
     private ArrayList<ControllerTextView> arrayListControllersTextView = new ArrayList<>();
@@ -45,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements IcreateView
        sendArrayListForController();
        splashScreen();
        controller.readingFromServer();
-
     }
 
     @Override
@@ -73,7 +74,8 @@ public class MainActivity extends AppCompatActivity implements IcreateView
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CODE_REQUEST_ACTIVITY_CREATE_NEW_VIEW && resultCode == Activity.RESULT_OK)
-            upDateViews();
+            refresh();
+        Log.i("OK","THE BEST KEK "+ requestCode + "  " + resultCode);
     }
 
     private void splashScreen()
@@ -86,16 +88,6 @@ public class MainActivity extends AppCompatActivity implements IcreateView
             }
         };
         handler.postDelayed(runnable,2000);
-    }
-
-    private void upDateViews()
-    {
-        arrayListControllerButtons.clear();
-        arrayListControllerSeekBars.clear();
-        arrayListControllersTextView.clear();
-        gridLayout.removeAllViews();
-        createViews();
-        sendArrayListForController();
     }
 
     private void start()
@@ -114,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements IcreateView
 
     private void initAll()
     {
-        controller = new Controller(this);
+        controller = new Controller(this,this);
         factoryViews = new FactoryViews(this,this);
         gridLayout = findViewById(R.id.main_grid_layout);
     }
@@ -141,12 +133,22 @@ public class MainActivity extends AppCompatActivity implements IcreateView
     public void createSeekBar(ControllerSeekBar controllerSeekBar)
     {
         arrayListControllerSeekBars.add(controllerSeekBar);
-        gridLayout.addView(controllerSeekBar.getSeekBar());
+        gridLayout.addView(controllerSeekBar.getLinearLayout());
     }
 
     @Override
     public void createTextView(ControllerTextView controllerTextView) {
         arrayListControllersTextView.add(controllerTextView);
         gridLayout.addView(controllerTextView.getTextViewSensor());
+    }
+
+    @Override
+    public void refresh() {
+        arrayListControllerButtons.clear();
+        arrayListControllerSeekBars.clear();
+        arrayListControllersTextView.clear();
+        gridLayout.removeAllViews();
+        createViews();
+        sendArrayListForController();
     }
 }

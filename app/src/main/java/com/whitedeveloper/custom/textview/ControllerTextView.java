@@ -1,5 +1,6 @@
 package com.whitedeveloper.custom.textview;
 
+import android.view.View;
 import android.widget.TextView;
 
 public class ControllerTextView
@@ -24,6 +25,11 @@ public class ControllerTextView
     public void setValue(int value) {
         this.value = value;
         textViewSensor.setText(String.valueOf(value));
+    }
+
+    void setOnLongClickListener(View.OnLongClickListener onClickListener)
+    {
+        textViewSensor.setOnLongClickListener(onClickListener);
     }
 
     public TextView getTextViewSensor() {

@@ -13,7 +13,7 @@
         <item name="android:layout_width">80dp</item>
         <item name="android:layout_marginLeft">6dp</item>
         <item name="android:layout_marginRight">6dp</item>
-        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginTop">6dp</item>
         <item name="android:layout_marginBottom">5dp</item>
         <item name="android:paddingTop">62dp</item>
         <item name="android:textSize">10sp</item>
@@ -25,7 +25,7 @@
         <item name="android:layout_width">80dp</item>
         <item name="android:layout_marginLeft">6dp</item>
         <item name="android:layout_marginRight">6dp</item>
-        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginTop">8dp</item>
         <item name="android:layout_marginBottom">5dp</item>
         <item name="android:paddingTop">61dp</item>
         <item name="android:textSize">14sp</item>
@@ -35,13 +35,28 @@
 
     <style name="view_seek_bars">
         <item name="android:layout_width">80dp</item>
-        <item name="android:layout_height">160dp</item>
-        <item name="android:layout_margin">6dp</item>
+        <item name="android:layout_height">170dp</item>
+        <item name="android:layout_margin">2dp</item>
         <item name="libCornerRadius">20</item>
         <item name="backgroundColor">@color/background_seek_bar</item>
         <item name="progressColor">@color/color_progress</item>
+        <item name="android:textColor">@color/white</item>
         <item name="step">1</item>
         <item name="defaultValue">0</item>
+    </style>
+
+    <style name="view_btn_add_view">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">30dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:background">@drawable/background_head</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:text">@string/text_btn_add_new_view</item>
     </style>
 
 </resources>

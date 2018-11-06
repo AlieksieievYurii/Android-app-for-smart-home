@@ -19,6 +19,7 @@
         <attr name="libCornerRadius"/>
         <attr name="backgroundColor"/>
         <attr name="progressColor"/>
+        <attr name="android:textColor"/>
         <attr name="step"/>
         <attr name="defaultValue"/>
     </declare-styleable>

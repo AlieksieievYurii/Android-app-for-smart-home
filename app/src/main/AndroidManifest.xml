@@ -23,6 +23,8 @@
         </activity>
         <activity android:name=".view.activitycreator.ActivityCreateNewElement">
         </activity>
+        <activity android:name=".view.activitycreator.editorviews.ActivityEditView">
+        </activity>
     </application>
 
 </manifest>

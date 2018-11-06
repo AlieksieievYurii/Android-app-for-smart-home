@@ -2,15 +2,19 @@ package com.whitedeveloper.controlhome.controller.json;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import static com.whitedeveloper.custom.PinArduino.*;
 
 class CreatorJSON
 {
-    static JSONObject getJsonPinArduinoObject(char type, int pin, int status)
+
+
+
+    static JSONObject getJsonPinArduinoObject(String type, int pin, int status)
     {
             try {
-                if(type == 'D')
+                if(type.equals(TYPE_PIN_DIGITAL))
                     return getDigitalPinAction(pin,status);
-                else if(type == 'A')
+                else if(type.equals(TYPE_PIN_DIGITAL_ANALOG))
                     return getPWMpinAction(pin,status);
 
             } catch (JSONException e) {
@@ -20,10 +24,10 @@ class CreatorJSON
     }
 
     private static JSONObject getDigitalPinAction(int pin, int status) throws JSONException {
-        return new JSONObject().put("T","D").put("P",pin).put("S",status == 1?"H":"L");
+        return new JSONObject().put(TYPE_PIN,TYPE_PIN_DIGITAL).put(PIN,pin).put(STATUS,status == 1?STATUS_HIGH:STATUS_LOW);
     }
 
     private static JSONObject getPWMpinAction(int pin, int value) throws JSONException {
-            return new JSONObject().put("T","A").put("P",pin).put("V",value);
+            return new JSONObject().put(TYPE_PIN,TYPE_PIN_DIGITAL_ANALOG).put(PIN,pin).put(VALUE,value);
         }
 }

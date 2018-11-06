@@ -4,11 +4,10 @@ import abak.tr.com.boxedverticalseekbar.BoxedVertical;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.util.Log;
+import android.text.Layout;
+import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.GridLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.factory.convertor.ConverterDpPx;
 
@@ -39,17 +38,13 @@ public class ObtainStyle
     public static void setStyleSeekBar(Context context, BoxedVertical boxedVertical)
     {
         TypedArray typedArray = context.obtainStyledAttributes(R.style.view_seek_bars,R.styleable.style_seek_bar);
-        GridLayout.LayoutParams layoutParams =
-                new GridLayout.LayoutParams(
-                        new ViewGroup.LayoutParams(typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_width,0),
-                                typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_height,0))
-                );
-        layoutParams.rowSpec = GridLayout.spec(GridLayout.UNDEFINED,2);
-
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         layoutParams.setMargins(typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
                 typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
                 typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
                 typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0));
+        layoutParams.weight = 1;
+
         boxedVertical.setLayoutParams(layoutParams);
         boxedVertical.setCornerRadius(typedArray.getInt(R.styleable.style_seek_bar_libCornerRadius,1));
         boxedVertical.setStep(typedArray.getInt(R.styleable.style_seek_bar_step,1));
@@ -57,6 +52,42 @@ public class ObtainStyle
 
         typedArray.recycle();
     }
+
+    public static void setStyleTextViewForSeekBar(Context context, TextView textView)
+    {
+        TypedArray typedArray = context.obtainStyledAttributes(R.style.view_seek_bars,R.styleable.style_seek_bar);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.weight = 0;
+
+        textView.setLayoutParams(layoutParams);
+        textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        textView.setTextColor(typedArray.getColor(R.styleable.style_seek_bar_android_textColor,Color.WHITE));
+
+        typedArray.recycle();
+    }
+
+    public static void setStyleLayoutSeekBar(Context context, LinearLayout linearLayout)
+        {
+            TypedArray typedArray = context.obtainStyledAttributes(R.style.view_seek_bars,R.styleable.style_seek_bar);
+            GridLayout.LayoutParams layoutParams =
+                    new GridLayout.LayoutParams(
+                            new ViewGroup.LayoutParams(typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_width,0),
+                                    typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_height,0))
+                    );
+            layoutParams.rowSpec = GridLayout.spec(GridLayout.UNDEFINED,2);
+
+            layoutParams.setMargins(typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
+                    typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
+                    typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
+                    typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0));
+            linearLayout.setLayoutParams(layoutParams);
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
+            linearLayout.setGravity(RelativeLayout.CENTER_HORIZONTAL);
+            //linearLayout.setPadding(5,5,6,3);
+            linearLayout.setBackgroundResource(R.drawable.background_seek_bar_container);
+
+            typedArray.recycle();
+        }
 
     public static void setStyleTextView(Context context, TextView textView)
     {

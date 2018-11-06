@@ -2,11 +2,20 @@ package com.whitedeveloper.custom;
 
 public class PinArduino
 {
-    private char typePin;
+    public static final String PIN = "P";
+    public static final String TYPE_PIN = "T";
+    public static final String TYPE_PIN_DIGITAL = "D";
+    public static final String TYPE_PIN_DIGITAL_ANALOG = "A";
+    public static final String STATUS = "S";
+    public static final String STATUS_HIGH = "H";
+    public static final String STATUS_LOW = "L";
+    public static final String VALUE = "V";
+
+    private String typePin;
     private int pin;
     private int value;
 
-    public char getTypePin() {
+    public String getTypePin() {
         return typePin;
     }
 
@@ -22,7 +31,7 @@ public class PinArduino
         this.value = value;
     }
 
-    public PinArduino(char typePin, int pin) {
+    public PinArduino(String typePin, int pin) {
         this.typePin = typePin;
         this.pin = pin;
 

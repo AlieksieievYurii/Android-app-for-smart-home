@@ -9,12 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.whitedeveloper.controlhome.R;
-import com.whitedeveloper.controlhome.controller.prefaranse.ControllerSharedPreference;
+import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
 import com.whitedeveloper.controlhome.factory.CheckID;
 import com.whitedeveloper.controlhome.factory.FactoryViews;
 import com.whitedeveloper.controlhome.factory.textview.CreatorTextView;
 import com.whitedeveloper.controlhome.view.activitycreator.ActivityCreateNewElement;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -80,22 +79,12 @@ public class FragmentTextViewSensor extends Fragment
     }
 
     private void saveJsonForCreatingViews() {
-           try {
-               JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(view.getContext());
-               jsonArray.put(getJSON());
-               ControllerSharedPreference.putJsonForCreatingView(view.getContext(), jsonArray.toString());
-           } catch (Exception e) {
-               e.printStackTrace();
-               try {
-                   JSONArray jsonArray = new JSONArray();
-                   jsonArray.put(getJSON());
-
-                   ControllerSharedPreference.putJsonForCreatingView(view.getContext(), jsonArray.toString());
-               } catch (JSONException e1) {
-                   e1.printStackTrace();
-               }
-           }
-       }
+        try {
+            EditorViewsJson.saveJsonForCreatingViews(getJSON(),view.getContext());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
        private JSONObject getJSON() throws JSONException {
 

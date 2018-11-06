@@ -4,6 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".view.activitycreator.ActivityCreateNewElement"
         android:orientation="vertical">
 
@@ -11,6 +12,8 @@
             android:id="@+id/tl_type_element"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:tabSelectedTextColor="@color/white"
+            app:tabIndicatorColor="@color/white"
             android:background="#535353">
     </android.support.design.widget.TabLayout>
     <android.support.v4.view.ViewPager

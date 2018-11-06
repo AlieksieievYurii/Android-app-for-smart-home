@@ -4,6 +4,7 @@ import abak.tr.com.boxedverticalseekbar.BoxedVertical;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.whitedeveloper.controlhome.factory.button.CreatorButton;
 import com.whitedeveloper.controlhome.factory.seekbar.CreatorSeekBar;
@@ -59,7 +60,7 @@ public class FactoryViews
         creatorView = new CreatorSeekBar(context,jsonObject);
         View view = creatorView.createView();
         PinArduino pinArduino = creatorView.createPinArduino();
-        icreateView.createSeekBar(new ControllerSeekBar((BoxedVertical)view,pinArduino));
+        icreateView.createSeekBar(new ControllerSeekBar(((CreatorSeekBar)creatorView).getBoxedVertical(),(LinearLayout)view,pinArduino));
     }
 
     private void createTextView(JSONObject jsonObject) throws JSONException {

@@ -8,13 +8,11 @@ class VibrationButton
 {
     private static final long TIME_VIBRATION = 100;
 
-    private Context context;
     private Vibrator vibrator;
     private boolean activated = false;
 
     VibrationButton(Context context) {
-            this.context = context;
-            this.vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        this.vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
     boolean isActivated() {

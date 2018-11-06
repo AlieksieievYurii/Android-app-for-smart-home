@@ -1,5 +1,6 @@
 package com.whitedeveloper.controlhome.view.activitycreator.fragments;
 
+import abak.tr.com.boxedverticalseekbar.BoxedVertical;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,13 +14,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.whitedeveloper.controlhome.R;
-import com.whitedeveloper.controlhome.controller.prefaranse.ControllerSharedPreference;
+import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
 import com.whitedeveloper.controlhome.factory.CheckID;
 import com.whitedeveloper.controlhome.factory.FactoryViews;
-import com.whitedeveloper.controlhome.factory.button.CreatorButton;
 import com.whitedeveloper.controlhome.factory.seekbar.CreatorSeekBar;
 import com.whitedeveloper.controlhome.view.activitycreator.ActivityCreateNewElement;
-import org.json.JSONArray;
+import com.whitedeveloper.custom.PinArduino;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,18 +31,21 @@ public class FragmentSeekBar extends Fragment {
     private EditText edtName;
     private EditText edtPin;
     private TextView tvExampleJson;
+    private TextView tvTextOfSeekBar;
 
     private View view;
 
     private String id = "";
     private String name = "";
-    private String pin = "";
+    private String pin = "null";
+    private int value = 0;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_seek_bar,container,false);
         init();
+        showExampleJson();
         return view;
     }
 
@@ -52,12 +55,32 @@ public class FragmentSeekBar extends Fragment {
         edtName = view.findViewById(R.id.edt_name);
         edtPin = view.findViewById(R.id.edt_pin_controller);
         tvExampleJson = view.findViewById(R.id.tv_example_json);
+        tvTextOfSeekBar = view.findViewById(R.id.tv_text_seek_bar);
 
         TypingListener typingListener = new TypingListener();
 
         edtId.addTextChangedListener(typingListener);
         edtName.addTextChangedListener(typingListener);
         edtPin.addTextChangedListener(typingListener);
+
+        ((BoxedVertical)view.findViewById(R.id.bv_example)).setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
+            @Override
+            public void onPointsChanged(BoxedVertical boxedVertical, int i) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(BoxedVertical boxedVertical) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(BoxedVertical boxedVertical) {
+                    value = boxedVertical.getValue();
+                    showExampleJson();
+                    showExampleSeekBar();
+            }
+        });
 
         view.findViewById(R.id.btn_add_new_view).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,14 +94,19 @@ public class FragmentSeekBar extends Fragment {
         });
     }
 
+    private void showExampleSeekBar()
+    {
+        tvTextOfSeekBar.setText(name);
+    }
+
     private void showExampleJson()
     {
-        String stringBuilder = "{\n" +
-                      "  \"" + FactoryViews.TYPE_VIEW + "\":\"" + FactoryViews.TYPE_VIEW_SEEK_BAR + "\",\n" +
-                      "  \"" + CreatorButton.ATR_ID + "\":" + id + ",\n" +
-                      "  \"" + CreatorButton.ATR_TEXT + "\":\"" + name + "\",\n" +
-                      "  \"" + CreatorButton.ATR_PIN + "\":" + pin + "\n" +
-                      "}\n";
+        StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append("{").append("\n");
+                    stringBuilder.append("  \"").append(PinArduino.TYPE_PIN).append("\":\"").append(PinArduino.TYPE_PIN_DIGITAL_ANALOG).append("\",\n");
+                    stringBuilder.append("  \"").append(PinArduino.PIN).append("\":").append(pin).append(",\n");
+                    stringBuilder.append("  \"").append(PinArduino.STATUS).append("\":").append(value).append("\n");
+                    stringBuilder.append("}");
         tvExampleJson.setText(stringBuilder);
     }
 
@@ -102,19 +130,9 @@ public class FragmentSeekBar extends Fragment {
 
     private void saveJsonForCreatingViews() {
         try {
-            JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(view.getContext());
-            jsonArray.put(getJSON());
-            ControllerSharedPreference.putJsonForCreatingView(view.getContext(), jsonArray.toString());
-        } catch (Exception e) {
+            EditorViewsJson.saveJsonForCreatingViews(getJSON(),view.getContext());
+        } catch (JSONException e) {
             e.printStackTrace();
-            try {
-                JSONArray jsonArray = new JSONArray();
-                jsonArray.put(getJSON());
-
-                ControllerSharedPreference.putJsonForCreatingView(view.getContext(), jsonArray.toString());
-            } catch (JSONException e1) {
-                e1.printStackTrace();
-            }
         }
     }
 
@@ -143,6 +161,7 @@ public class FragmentSeekBar extends Fragment {
                 pin = edtPin.getText().toString();
 
                 showExampleJson();
+                showExampleSeekBar();
             }
 
             @Override

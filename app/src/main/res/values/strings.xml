@@ -14,4 +14,7 @@
     <string name="text_btn_add_new_view">Add View</string>
     <string name="text_activity_main_item_add_new_view">Add view</string>
     <string name="text_fragment_interval">Interval...</string>
+    <string name="text_al_edit_text">Edit</string>
+    <string name="text_al_remove_view">Remove</string>
+    <string name="text_editor_views_btn_apply">Apply</string>
 </resources>

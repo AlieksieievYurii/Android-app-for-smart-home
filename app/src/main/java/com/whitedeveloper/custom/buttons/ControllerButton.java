@@ -2,6 +2,7 @@ package com.whitedeveloper.custom.buttons;
 
 import android.view.View;
 import android.widget.Button;
+import com.whitedeveloper.custom.IrefreshActivity;
 import com.whitedeveloper.custom.PinArduino;
 
 public class ControllerButton
@@ -49,9 +50,13 @@ public class ControllerButton
     public PinArduino getPinArduino() {
             return pinArduino;
         }
-    void setOnClickLIstener(View.OnClickListener onClickLIstener)
+    void setOnClickListener(View.OnClickListener onClickLIstener)
     {
         button.setOnClickListener(onClickLIstener);
+    }
+    void setOnLongClickListener(View.OnLongClickListener onClickListener)
+    {
+        button.setOnLongClickListener(onClickListener);
     }
     public Button getButton() {
           return button;

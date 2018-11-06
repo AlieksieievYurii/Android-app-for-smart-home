@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/background_activity"
+              android:padding="5dp">
+    <Button
+            android:id="@+id/btn_al_edit_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_set"
+            android:textColor="@color/white"
+            android:text="@string/text_al_edit_text"/>
+
+    <Button
+            android:id="@+id/btn_al_remove_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_set"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/white"
+            android:text="@string/text_al_remove_view"/>
+
+</LinearLayout>
