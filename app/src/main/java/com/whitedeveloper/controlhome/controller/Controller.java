@@ -1,6 +1,5 @@
 package com.whitedeveloper.controlhome.controller;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -173,10 +172,8 @@ public class Controller implements
     @Override
     public void setterURL(UrlPreference urlPreference)
     {
-        Log.i("TAG",urlPreference.convertToJson());
        ControllerSharedPreference.putUrlPreference(context,urlPreference);
        Toast.makeText(context,"Please restart the App for apply URL",Toast.LENGTH_LONG).show();
-
     }
 
     @Override

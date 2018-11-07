@@ -6,9 +6,9 @@ import com.whitedeveloper.controlhome.factory.FactoryViews;
 import com.whitedeveloper.controlhome.factory.button.CreatorButton;
 import org.json.JSONArray;
 
-public class FinderTypeElement
+ class FinderTypeElement
 {
-    public static String findTypeElementById(int id, Context context) throws Exception {
+    static String findTypeElementById(int id, Context context) throws Exception {
         JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(context);
 
         for(int i = 0; i < jsonArray.length(); i++)

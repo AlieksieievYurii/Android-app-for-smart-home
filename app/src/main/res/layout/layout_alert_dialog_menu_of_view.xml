@@ -3,7 +3,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@color/background_activity"
+              android:background="@drawable/background_seek_bar_container"
               android:padding="5dp">
     <Button
             android:id="@+id/btn_al_edit_view"

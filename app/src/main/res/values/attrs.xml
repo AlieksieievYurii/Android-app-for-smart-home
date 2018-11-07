@@ -20,6 +20,7 @@
         <attr name="backgroundColor"/>
         <attr name="progressColor"/>
         <attr name="android:textColor"/>
+        <attr name="android:textSize"/>
         <attr name="step"/>
         <attr name="defaultValue"/>
     </declare-styleable>

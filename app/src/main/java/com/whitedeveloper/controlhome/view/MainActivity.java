@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements IcreateView, Iref
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CODE_REQUEST_ACTIVITY_CREATE_NEW_VIEW && resultCode == Activity.RESULT_OK)
             refresh();
-        Log.i("OK","THE BEST KEK "+ requestCode + "  " + resultCode);
     }
 
     private void splashScreen()

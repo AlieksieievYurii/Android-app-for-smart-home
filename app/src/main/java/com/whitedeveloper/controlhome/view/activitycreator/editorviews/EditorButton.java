@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.controller.prefaranse.ControllerSharedPreference;
+import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
 import com.whitedeveloper.controlhome.factory.FactoryViews;
 import com.whitedeveloper.controlhome.factory.button.CreatorButton;
 import com.whitedeveloper.custom.PinArduino;
@@ -18,7 +18,7 @@ import org.json.JSONObject;
 
 import static com.whitedeveloper.controlhome.view.activitycreator.fragments.FragmentButton.NAME_ICONS;
 
-public class EditorButton
+class EditorButton
 {
     private AppCompatActivity appCompatActivity;
 
@@ -27,7 +27,6 @@ public class EditorButton
     private EditText edtPinController;
     private Spinner spImageType;
 
-    private Button btnApply;
     private Button btnExample;
 
     private TextView tvExampleJSON;
@@ -36,7 +35,7 @@ public class EditorButton
     private String pin;
     private String imageType;
 
-    public EditorButton(AppCompatActivity appCompatActivity, int id)
+    EditorButton(AppCompatActivity appCompatActivity, int id)
     {
         this.id = id;
         this.appCompatActivity = appCompatActivity;
@@ -48,7 +47,6 @@ public class EditorButton
 
     private void init()
     {
-
         EditText edtId = appCompatActivity.findViewById(R.id.edt_id);
         edtId.setText(String.valueOf(id));
         edtId.setEnabled(false);
@@ -71,13 +69,13 @@ public class EditorButton
         edtName.addTextChangedListener(typingListener);
         edtPinController.addTextChangedListener(typingListener);
 
-        btnApply = appCompatActivity.findViewById(R.id.btn_add_new_view);
+        Button btnApply = appCompatActivity.findViewById(R.id.btn_add_new_view);
         btnApply.setText(R.string.text_editor_views_btn_apply);
         btnApply.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         if(checkValues()) {
-                            //TODO Implement swapping element in array(I mean save)...okey never mind
+                            saveJsonForCreatingViews();
                             appCompatActivity.setResult(Activity.RESULT_OK);
                             appCompatActivity.finish();
                         }
@@ -102,6 +100,14 @@ public class EditorButton
             }
         });
 
+    }
+
+    private void saveJsonForCreatingViews() {
+        try {
+            EditorViewsJson.saveChangedJsonForCreatingView(getJSON(),appCompatActivity.getBaseContext());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showExampleButton()

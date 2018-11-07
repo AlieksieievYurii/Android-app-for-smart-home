@@ -21,7 +21,7 @@ import java.util.Objects;
 
 public class FragmentTextViewSensor extends Fragment
 {
-    private static final String[] NAME_SENSORS = {CreatorTextView.TEMPERATURE,CreatorTextView.STATE_DAY};
+    public static final String[] NAME_SENSORS = {CreatorTextView.TEMPERATURE,CreatorTextView.STATE_DAY};
 
     private View view;
 
@@ -86,18 +86,17 @@ public class FragmentTextViewSensor extends Fragment
         }
     }
 
-       private JSONObject getJSON() throws JSONException {
+    private JSONObject getJSON() throws JSONException {
 
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put(FactoryViews.TYPE_VIEW,FactoryViews.TYPE_VIEW_TEXT_VIEW);
+        jsonObject.put(CreatorTextView.ATR_ID,Integer.parseInt(id));
+        jsonObject.put(CreatorTextView.ATR_IMAGE_TYPE,typeSensor);
+        jsonObject.put(CreatorTextView.ATR_NAME_SENSOR_ARDUINO,typeSensor);
 
+        return jsonObject;
+    }
 
-               JSONObject jsonObject = new JSONObject();
-               jsonObject.put(FactoryViews.TYPE_VIEW,FactoryViews.TYPE_VIEW_TEXT_VIEW);
-               jsonObject.put(CreatorTextView.ATR_ID,Integer.parseInt(id));
-               jsonObject.put(CreatorTextView.ATR_IMAGE_TYPE,typeSensor);
-               jsonObject.put(CreatorTextView.ATR_NAME_SENSOR_ARDUINO,typeSensor);
-
-               return jsonObject;
-           }
     private boolean checkValues()
           {
              if(id.trim().equals(""))

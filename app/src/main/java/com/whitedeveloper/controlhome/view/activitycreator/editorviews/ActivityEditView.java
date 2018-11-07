@@ -24,12 +24,14 @@ public class ActivityEditView extends AppCompatActivity
                 new EditorButton(this,id);
                 break;
             case FactoryViews.TYPE_VIEW_SEEK_BAR:
-                Log.i("TEST","SEEK_BAR");
+                new EditorSeekBar(this,id);
                 break;
             case FactoryViews.TYPE_VIEW_TEXT_VIEW:
-                Log.i("TEST","SENSOR");
+               new EditorTextViewSensor(this,id);
                 break;
             default:
+                setResult(RESULT_CANCELED);
+                finish();
                 Log.i("ERROR","ERROR");
                 break;
         }

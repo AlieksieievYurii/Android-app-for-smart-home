@@ -1,5 +1,6 @@
 package com.whitedeveloper.controlhome.factory.button;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import com.whitedeveloper.controlhome.R;

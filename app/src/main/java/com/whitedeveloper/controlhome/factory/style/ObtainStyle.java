@@ -4,7 +4,7 @@ import abak.tr.com.boxedverticalseekbar.BoxedVertical;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.text.Layout;
+import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -62,7 +62,9 @@ public class ObtainStyle
         textView.setLayoutParams(layoutParams);
         textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         textView.setTextColor(typedArray.getColor(R.styleable.style_seek_bar_android_textColor,Color.WHITE));
-
+        textView.setTextSize(ConverterDpPx.pxToSp(typedArray.getDimensionPixelOffset(R.styleable.style_seek_bar_android_textSize,10),context));
+        textView.setAllCaps(true);
+        textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         typedArray.recycle();
     }
 
