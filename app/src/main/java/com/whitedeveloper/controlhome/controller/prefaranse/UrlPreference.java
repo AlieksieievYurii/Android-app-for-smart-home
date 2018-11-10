@@ -9,11 +9,13 @@ public class UrlPreference implements Serializable
 {
     private static final String KEY_URL = "url";
     private static final String KEY_NAME_ADDITION_PATH = "name_key_addition_path";
+    private static final String KEY_PATH_TO_HASH= "path_to_hush_sum";
     private static final String KEY_NAME_KEY_PARAM = "name_key_param";
     private static final String KEY_SEVER_KEY = "key";
 
     private String url;
     private String additionPath;
+    private String pathToHashSum;
     private String nameKeyParameter;
     private String key;
 
@@ -33,9 +35,14 @@ public class UrlPreference implements Serializable
         return key;
     }
 
-    public UrlPreference(String url, String additionPath, String nameKeyParameter, String key) {
+    public String getPathToHashSum() {
+        return pathToHashSum;
+    }
+
+    public UrlPreference(String url, String additionPath, String pathToHashSum, String nameKeyParameter, String key) {
         this.url = url;
         this.additionPath = additionPath;
+        this.pathToHashSum = pathToHashSum;
         this.nameKeyParameter = nameKeyParameter;
         this.key = key;
     }
@@ -48,16 +55,18 @@ public class UrlPreference implements Serializable
 
         url = jsonObject.getString(KEY_URL);
         additionPath = jsonObject.getString(KEY_NAME_ADDITION_PATH);
+        pathToHashSum = jsonObject.getString(KEY_PATH_TO_HASH);
         nameKeyParameter = jsonObject.getString(KEY_NAME_KEY_PARAM);
         key = jsonObject.getString(KEY_SEVER_KEY);
     }
 
-    public String convertToJson()
+    String convertToJson()
     {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put(KEY_URL,url);
             jsonObject.put(KEY_NAME_ADDITION_PATH,additionPath);
+            jsonObject.put(KEY_PATH_TO_HASH,pathToHashSum);
             jsonObject.put(KEY_NAME_KEY_PARAM,nameKeyParameter);
             jsonObject.put(KEY_SEVER_KEY,key);
 
@@ -79,8 +88,23 @@ public class UrlPreference implements Serializable
             stringBuilder.append("/");
         stringBuilder.append(additionPath);
 
-        stringBuilder.append("?").append(nameKeyParameter).append("=");
-        stringBuilder.append(key);
+        if(nameKeyParameter != null) {
+            stringBuilder.append("?").append(nameKeyParameter).append("=");
+            stringBuilder.append(key);
+        }
+
+        return stringBuilder.toString();
+    }
+
+    public String getHushUrl()
+    {
+        if(url.equals(""))
+            return "";
+
+        StringBuilder stringBuilder = new StringBuilder(url);
+        if(!url.substring(url.length() - 1).equals("/"))
+            stringBuilder.append("/");
+        stringBuilder.append(pathToHashSum);
 
         return stringBuilder.toString();
     }

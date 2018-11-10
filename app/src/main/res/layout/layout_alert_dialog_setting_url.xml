@@ -17,6 +17,12 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/text_hind_edt_url_addition_path"
                 android:inputType="textUri"/>
+    <EditText
+                    android:id="@+id/edt_alert_dialog_url_path_to_hash_sum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/text_hind_edt_url_path_to_hash_sum"
+                    android:inputType="textUri"/>
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

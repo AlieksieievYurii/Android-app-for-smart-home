@@ -10,6 +10,7 @@ import android.widget.*;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.controller.prefaranse.ControllerSharedPreference;
 import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
+import com.whitedeveloper.controlhome.factory.Checker;
 import com.whitedeveloper.controlhome.factory.FactoryViews;
 import com.whitedeveloper.controlhome.factory.seekbar.CreatorSeekBar;
 import com.whitedeveloper.custom.PinArduino;
@@ -27,14 +28,15 @@ class EditorSeekBar
     private TextView tvExampleJson;
     private TextView tvTextOfSeekBar;
 
-    private int id;
+    private int originId;
+    private int originPin;
     private String name;
     private String pin;
     private int value = 0;
 
     EditorSeekBar(AppCompatActivity appCompatActivity, int id)
     {
-        this.id = id;
+        this.originId = id;
         this.appCompatActivity = appCompatActivity;
         appCompatActivity.setContentView(R.layout.fragment_seek_bar);
 
@@ -46,7 +48,7 @@ class EditorSeekBar
     {
 
         EditText edtId = appCompatActivity.findViewById(R.id.edt_id);
-        edtId.setText(String.valueOf(id));
+        edtId.setText(String.valueOf(originId));
         edtId.setEnabled(false);
 
         edtName = appCompatActivity.findViewById(R.id.edt_name);
@@ -116,6 +118,10 @@ class EditorSeekBar
        {
            Toast.makeText(appCompatActivity.getBaseContext(),"Pin can't be empty!",Toast.LENGTH_SHORT).show();
            return false;
+       }else if(!String.valueOf(originPin).equals(pin) && Checker.checkPin(Integer.parseInt(pin),appCompatActivity))
+       {
+           Toast.makeText(appCompatActivity,"This pin is already exists!",Toast.LENGTH_SHORT).show();
+           return false;
        }
 
        return true;
@@ -124,7 +130,7 @@ class EditorSeekBar
     private JSONObject getJSON() throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(FactoryViews.TYPE_VIEW,FactoryViews.TYPE_VIEW_SEEK_BAR);
-        jsonObject.put(CreatorSeekBar.ATR_ID,id);
+        jsonObject.put(CreatorSeekBar.ATR_ID,originId);
         jsonObject.put(CreatorSeekBar.ATR_NAME,name);
         jsonObject.put(CreatorSeekBar.ATR_PIN,Integer.parseInt(pin));
 
@@ -145,11 +151,13 @@ class EditorSeekBar
             JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(appCompatActivity.getBaseContext());
             for(int i = 0; i < jsonArray.length(); i++)
             {
-                if(jsonArray.getJSONObject(i).getInt(CreatorSeekBar.ATR_ID) == id)
+                if(jsonArray.getJSONObject(i).getInt(CreatorSeekBar.ATR_ID) == originId)
                 {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                    edtPinController.setText(jsonObject.getString(CreatorSeekBar.ATR_PIN));
+                    originPin = jsonObject.getInt(CreatorSeekBar.ATR_PIN);
+
+                    edtPinController.setText(String.valueOf(originPin));
                     edtName.setText(jsonObject.getString(CreatorSeekBar.ATR_NAME));
                 }
             }

@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements IcreateView, Iref
        createViews();
        sendArrayListForController();
        splashScreen();
-       controller.readingFromServer();
     }
 
     @Override
@@ -149,5 +148,17 @@ public class MainActivity extends AppCompatActivity implements IcreateView, Iref
         gridLayout.removeAllViews();
         createViews();
         sendArrayListForController();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        controller.stopProcess();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        controller.readOnceFromServer();
     }
 }

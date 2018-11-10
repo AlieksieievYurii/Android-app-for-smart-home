@@ -9,6 +9,7 @@ import android.widget.*;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.controller.prefaranse.ControllerSharedPreference;
 import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
+import com.whitedeveloper.controlhome.factory.Checker;
 import com.whitedeveloper.controlhome.factory.FactoryViews;
 import com.whitedeveloper.controlhome.factory.button.CreatorButton;
 import com.whitedeveloper.custom.PinArduino;
@@ -22,7 +23,8 @@ class EditorButton
 {
     private AppCompatActivity appCompatActivity;
 
-    private int id;
+    private int originId;
+    private int originPin;
     private EditText edtName;
     private EditText edtPinController;
     private Spinner spImageType;
@@ -37,7 +39,7 @@ class EditorButton
 
     EditorButton(AppCompatActivity appCompatActivity, int id)
     {
-        this.id = id;
+        this.originId = id;
         this.appCompatActivity = appCompatActivity;
         appCompatActivity.setContentView(R.layout.fragment_button);
 
@@ -48,7 +50,7 @@ class EditorButton
     private void init()
     {
         EditText edtId = appCompatActivity.findViewById(R.id.edt_id);
-        edtId.setText(String.valueOf(id));
+        edtId.setText(String.valueOf(originId));
         edtId.setEnabled(false);
 
         edtName = appCompatActivity.findViewById(R.id.edt_name);
@@ -134,6 +136,10 @@ class EditorButton
        {
            Toast.makeText(appCompatActivity.getBaseContext(),"Pin can't be empty!",Toast.LENGTH_SHORT).show();
            return false;
+       }else if(!String.valueOf(originPin).equals(pin) && Checker.checkPin(Integer.parseInt(pin),appCompatActivity))
+       {
+           Toast.makeText(appCompatActivity,"This pin is already exists!",Toast.LENGTH_SHORT).show();
+           return false;
        }
 
        return true;
@@ -142,7 +148,7 @@ class EditorButton
     private JSONObject getJSON() throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(FactoryViews.TYPE_VIEW,FactoryViews.TYPE_VIEW_BUTTON);
-        jsonObject.put(CreatorButton.ATR_ID,id );
+        jsonObject.put(CreatorButton.ATR_ID, originId);
         jsonObject.put(CreatorButton.ATR_TEXT,name);
         jsonObject.put(CreatorButton.ATR_PIN,Integer.parseInt(pin));
         jsonObject.put(CreatorButton.ATR_IMAGE_TYPE,imageType);
@@ -156,15 +162,17 @@ class EditorButton
             JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(appCompatActivity.getBaseContext());
             for(int i = 0; i < jsonArray.length(); i++)
             {
-                if(jsonArray.getJSONObject(i).getInt(CreatorButton.ATR_ID) == id)
+                if(jsonArray.getJSONObject(i).getInt(CreatorButton.ATR_ID) == originId)
                 {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                     imageType = jsonObject.getString(CreatorButton.ATR_IMAGE_TYPE);
                     setImageButtonExample(imageType);
 
+                    originPin = jsonObject.getInt(CreatorButton.ATR_PIN);
+
                     edtName.setText(jsonObject.getString(CreatorButton.ATR_TEXT));
-                    edtPinController.setText(jsonObject.getString(CreatorButton.ATR_PIN));
+                    edtPinController.setText(String.valueOf(originPin));
                 }
             }
         } catch (Exception e) {

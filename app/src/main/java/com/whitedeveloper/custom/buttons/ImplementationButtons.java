@@ -46,7 +46,7 @@ public class ImplementationButtons implements View.OnClickListener, View.OnLongC
         try {
             ControllerButton controllerButton = getControllerById(view.getId());
             controllerButton.buttonPressed();
-            ionClickButton.onClickButton();
+            ionClickButton.onClickButton(view.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,5 +1,7 @@
 package com.whitedeveloper.controlhome.controller;
 
+import android.content.Context;
+import android.util.Log;
 import com.whitedeveloper.custom.buttons.ControllerButton;
 import com.whitedeveloper.custom.seekbar.ControllerSeekBar;
 import com.whitedeveloper.custom.textview.ControllerTextView;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 
 class SetterStatusViewFRomServer
 {
+    private static final String PROPERTY_HASH_CODE = "HashCode";
     private static final String PROPERTY_ACTIONS_FROM_SERVER = "Actions";
     private static final String PROPERTY_SENSORS_FROM_SERVER = "ParamsFromArduino";
     private static final String PROPERTY_TYPE_PIN_FOR_ACTIONS = "T";
@@ -21,6 +24,16 @@ class SetterStatusViewFRomServer
     private static final String PROPERTY_VALUE_FOR_ACTIONS = "V";
     private static final String PROPERTY_VALUE_FOR_SENSOR = "Value";
 
+
+    static void setPropertyHashCode(Context context, String data)
+    {
+        try {
+            JSONObject jsonObject = new JSONObject(data);
+            Log.i("TEST",jsonObject.getString(PROPERTY_HASH_CODE));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
     static void setButtonsStatus(ArrayList<ControllerButton> controllerButtons, String dataFromServer) throws JSONException {
         JSONArray jsonArrayListActions = getArrayListOfSpecificElements(dataFromServer,PROPERTY_ACTIONS_FROM_SERVER);

@@ -1,35 +1,52 @@
 package com.whitedeveloper.controlhome.model;
 
+import android.content.Context;
 import android.util.Log;
 import com.whitedeveloper.controlhome.controller.interfaces.UpDateActivity;
+import com.whitedeveloper.controlhome.controller.prefaranse.ControllerSharedPreference;
 import com.whitedeveloper.controlhome.controller.prefaranse.UrlPreference;
 import com.whitedeveloper.controlhome.model.http.ConnectorHttp;
+import com.whitedeveloper.controlhome.model.http.HashFromServer;
 import com.whitedeveloper.controlhome.model.http.IresponseFromServer;
 import com.whitedeveloper.controlhome.model.http.writerreader.ReadFromServer;
+import com.whitedeveloper.controlhome.model.http.writerreader.ReaderServerHashCode;
 import com.whitedeveloper.controlhome.model.http.writerreader.WriteToServer;
 
 
 import java.net.HttpURLConnection;
 
-public class DataFromServer implements IresponseFromServer {
+public class DataFromServer implements IresponseFromServer, HashFromServer {
 
     private UpDateActivity upDateActivity;
     private UrlPreference urlPreference;
+    private Context context;
 
-    public DataFromServer(UrlPreference urlPreference, UpDateActivity upDateActivity)
+    public DataFromServer(Context context, UrlPreference urlPreference, UpDateActivity upDateActivity)
     {
         this.urlPreference = urlPreference;
         this.upDateActivity = upDateActivity;
+        this.context = context;
+    }
+
+    public void readDataFromServerByHashCode()
+    {
+        new ReaderServerHashCode(ConnectorHttp.getConnection(urlPreference.getHushUrl(),"GET"),this).execute();
     }
 
     public void readDataFromServer()
     {
-        new ReadFromServer(ConnectorHttp.getConnection(urlPreference,"GET"),this).execute();
+        Log.i("TEST_READ","LOL");
+        new ReadFromServer(ConnectorHttp.getConnection(urlPreference, "GET"), this).execute();
     }
 
     public void writeDataToServer(String data)
     {
         new WriteToServer(ConnectorHttp.getConnection(urlPreference,"POST"),this).execute(data);
+    }
+
+    private boolean checkHashCode(String hashCodeFromServer)
+    {
+        return ControllerSharedPreference.getHashCode(context).equals(hashCodeFromServer);
     }
 
     @Override
@@ -45,5 +62,20 @@ public class DataFromServer implements IresponseFromServer {
             upDateActivity.updateActivity(data,codeResponse);
         else
             upDateActivity.updateActivity(null,codeResponse);
+    }
+
+    @Override
+    public void hashCodeFromServer(String hashCode, int codeResponse) {
+
+        if (codeResponse == HttpURLConnection.HTTP_OK) {
+            Log.i("HASH",hashCode);
+            if (!checkHashCode(hashCode))
+            {
+                Log.i("HASH","HASH CODES ARE DIFFERENCE");
+                readDataFromServer();
+                ControllerSharedPreference.putHashCode(context,hashCode);
+            }
+        } else
+            upDateActivity.updateActivity(null, codeResponse);
     }
 }

@@ -1,4 +1,4 @@
-package com.whitedeveloper.controlhome.controller.alertdialog;
+package com.whitedeveloper.controlhome.view.alertdialog;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -24,6 +24,7 @@ public class AlertDialogSetterURL
 
     private EditText edtURL;
     private EditText edtUrlAdditionPath;
+    private EditText edtUrlToHashSum;
     private EditText edtNameParamKey;
     private EditText edtKey;
 
@@ -38,6 +39,7 @@ public class AlertDialogSetterURL
         builder = new AlertDialog.Builder(context);
         View view = ((LayoutInflater) Objects.requireNonNull(context.getSystemService(Context.LAYOUT_INFLATER_SERVICE))).inflate(R.layout.layout_alert_dialog_setting_url,null);
         edtURL = view.findViewById(R.id.edt_alert_dialog_url);
+        edtUrlToHashSum = view.findViewById(R.id.edt_alert_dialog_url_path_to_hash_sum);
         edtUrlAdditionPath = view.findViewById(R.id.edt_alert_dialog_url_addition_path);
         edtNameParamKey = view.findViewById(R.id.edt_alert_dialog_name_key_param);
         edtKey = view.findViewById(R.id.edt_alert_dialog_key);
@@ -62,6 +64,7 @@ public class AlertDialogSetterURL
     {
         String url = edtURL.getText().toString();
         String additionPath = edtUrlAdditionPath.getText().toString();
+        String pathToHashSum = edtUrlToHashSum.getText().toString();
         String nameKeyParam = edtNameParamKey.getText().toString();
         String key = edtKey.getText().toString();
 
@@ -69,7 +72,7 @@ public class AlertDialogSetterURL
         if(url.replaceAll("\\s+","").equals("") || url.replaceAll("\\s+","").length() <= 10)
             return false;
 
-        iSetterURL.setterURL(new UrlPreference(url,additionPath,nameKeyParam,key));
+        iSetterURL.setterURL(new UrlPreference(url,additionPath,pathToHashSum,nameKeyParam,key));
         return true;
     }
 
@@ -78,6 +81,7 @@ public class AlertDialogSetterURL
         try {
             edtURL.setText(oldUrlPreference.getUrl());
             edtUrlAdditionPath.setText(oldUrlPreference.getAdditionPath());
+            edtUrlToHashSum.setText(oldUrlPreference.getPathToHashSum());
             edtNameParamKey.setText(oldUrlPreference.getNameKeyParameter());
             edtKey.setText(oldUrlPreference.getKey());
         }catch (Exception e)

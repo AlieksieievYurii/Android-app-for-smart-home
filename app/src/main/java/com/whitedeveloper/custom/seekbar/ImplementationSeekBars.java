@@ -46,7 +46,7 @@ public class ImplementationSeekBars implements BoxedVertical.OnValuesChangeListe
         try {
             ControllerSeekBar controllerSeekBar = findBoxedVerticalByID(boxedVertical.getId());
             controllerSeekBar.setValue(boxedVertical.getValue());
-            ionDoSeekBar.onDoSeekBar();
+            ionDoSeekBar.onDoSeekBar(boxedVertical.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }

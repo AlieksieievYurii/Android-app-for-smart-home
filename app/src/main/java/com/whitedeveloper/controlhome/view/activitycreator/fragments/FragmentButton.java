@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
-import com.whitedeveloper.controlhome.factory.CheckID;
+import com.whitedeveloper.controlhome.factory.Checker;
 import com.whitedeveloper.controlhome.factory.FactoryViews;
 import com.whitedeveloper.controlhome.factory.button.CreatorButton;
 import com.whitedeveloper.controlhome.view.activitycreator.ActivityCreateNewElement;
@@ -139,11 +139,16 @@ public class FragmentButton extends Fragment {
        {
            Toast.makeText(view.getContext(),"Id can't be empty!",Toast.LENGTH_SHORT).show();
            return false;
-       }else if(pin.trim().equals(""))
+       }else if(Checker.checkPin(Integer.parseInt(pin),getContext()))
+       {
+           Toast.makeText(view.getContext(),"This pin is already exists!",Toast.LENGTH_SHORT).show();
+           return false;
+       }
+       else if(pin.trim().equals(""))
        {
            Toast.makeText(view.getContext(),"Pin can't be empty!",Toast.LENGTH_SHORT).show();
            return false;
-       }else if(!CheckID.checkId(Integer.parseInt(id),view.getContext()))
+       }else if(Checker.checkId(Integer.parseInt(id), view.getContext()))
        {
            Toast.makeText(view.getContext(),"This Id is already exists!",Toast.LENGTH_SHORT).show();
            return false;

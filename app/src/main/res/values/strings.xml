@@ -17,4 +17,5 @@
     <string name="text_al_edit_text">Edit</string>
     <string name="text_al_remove_view">Remove</string>
     <string name="text_editor_views_btn_apply">Apply</string>
+    <string name="text_hind_edt_url_path_to_hash_sum">Path to hashSum…</string>
 </resources>

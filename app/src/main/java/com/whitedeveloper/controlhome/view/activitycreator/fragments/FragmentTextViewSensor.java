@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
-import com.whitedeveloper.controlhome.factory.CheckID;
+import com.whitedeveloper.controlhome.factory.Checker;
 import com.whitedeveloper.controlhome.factory.FactoryViews;
 import com.whitedeveloper.controlhome.factory.textview.CreatorTextView;
 import com.whitedeveloper.controlhome.view.activitycreator.ActivityCreateNewElement;
@@ -103,7 +103,7 @@ public class FragmentTextViewSensor extends Fragment
              {
                  Toast.makeText(view.getContext(),"Id can't be empty!",Toast.LENGTH_SHORT).show();
                  return false;
-             }else if(!CheckID.checkId(Integer.parseInt(id),view.getContext()))
+             }else if(Checker.checkId(Integer.parseInt(id), view.getContext()))
              {
                  Toast.makeText(view.getContext(),"This Id is already exists!",Toast.LENGTH_SHORT).show();
                  return false;

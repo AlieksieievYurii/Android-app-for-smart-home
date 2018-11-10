@@ -3,7 +3,7 @@ import java.util.Timer;
 
 public class ScheduleTimeUpDate
 {
-    private static final int PERIOD = 5000;
+    private static final int PERIOD = 1000;
     private static final int START_DELAY = 0;
     private ItimeUpDate itimeUpDate;
     private Timer timer;

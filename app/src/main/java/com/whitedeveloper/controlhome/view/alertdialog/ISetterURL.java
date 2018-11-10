@@ -1,4 +1,4 @@
-package com.whitedeveloper.controlhome.controller.alertdialog;
+package com.whitedeveloper.controlhome.view.alertdialog;
 
 import com.whitedeveloper.controlhome.controller.prefaranse.UrlPreference;
 

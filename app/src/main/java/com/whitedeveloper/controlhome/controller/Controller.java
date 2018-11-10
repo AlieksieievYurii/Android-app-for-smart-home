@@ -7,10 +7,10 @@ import android.util.Log;
 import android.widget.Toast;
 import com.whitedeveloper.controlhome.view.MainActivity;
 import com.whitedeveloper.controlhome.view.activitycreator.editorviews.ActivityEditView;
-import com.whitedeveloper.controlhome.controller.alertdialog.AlertDialogSetterURL;
-import com.whitedeveloper.controlhome.controller.alertdialog.ISetterURL;
+import com.whitedeveloper.controlhome.view.alertdialog.AlertDialogSetterURL;
+import com.whitedeveloper.controlhome.view.alertdialog.ISetterURL;
 import com.whitedeveloper.controlhome.controller.interfaces.*;
-import com.whitedeveloper.controlhome.controller.json.CreatorJsonByControllerButton;
+import com.whitedeveloper.controlhome.controller.json.CreatorJsonByController;
 import com.whitedeveloper.controlhome.controller.prefaranse.ControllerSharedPreference;
 import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
 import com.whitedeveloper.controlhome.controller.prefaranse.UrlPreference;
@@ -50,6 +50,7 @@ public class Controller implements
 
     private Context context;
     private IrefreshActivity irefreshActivity;
+    private CreatorJsonByController creatorJsonByController;
 
     public  Controller(Context context, IrefreshActivity irefreshActivity)
     {
@@ -61,6 +62,7 @@ public class Controller implements
     private void init()
     {
         this.dataFromServer  = new DataFromServer(
+                        context,
                        getUrlPreference(),
                        this);
 
@@ -70,17 +72,27 @@ public class Controller implements
         this.scheduleTimeUpDate = new ScheduleTimeUpDate(this);
     }
 
-    private void runWithServer()
+
+
+    private void runWithServer(int id)
     {
-        sendToServer(CreatorJsonByControllerButton.getReadyJsonActionsForArduino(
-                this.controllerButtons,
-                this.controllerSeekBars));
-                readingFromServer();
+        this.creatorJsonByController = new CreatorJsonByController(
+                 controllerButtons,
+                 controllerSeekBars);
+
+        try {
+            String object = creatorJsonByController.getJsonOfElement(id);
+            sendToServer(object);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        checkTheChanges();
     }
 
     private void setViewsByActionsFromServer(String data)
     {
         try {
+            SetterStatusViewFRomServer.setPropertyHashCode(context,data);
             SetterStatusViewFRomServer.setButtonsStatus(this.controllerButtons,data);
             SetterStatusViewFRomServer.setSeekBarsStatus(this.controllerSeekBars,data);
             SetterStatusViewFRomServer.setTextViewSensors(this.controllerTextViews,data);
@@ -89,7 +101,12 @@ public class Controller implements
         }
     }
 
-    public void readingFromServer()
+    private void checkTheChanges()
+    {
+        dataFromServer.readDataFromServerByHashCode();
+    }
+
+    public void readOnceFromServer()
     {
         dataFromServer.readDataFromServer();
     }
@@ -133,17 +150,16 @@ public class Controller implements
 
 
     @Override
-    public void onClickButton() {
-
-        runWithServer();
+    public void onClickButton(int id) {
+        runWithServer(id);
         vibrationButton.pressEffect();
     }
 
 
     @Override
-    public void onDoSeekBar() {
+    public void onDoSeekBar(int id) {
 
-        runWithServer();
+        runWithServer(id);
         vibrationButton.pressEffect();
     }
 
@@ -151,14 +167,14 @@ public class Controller implements
     public void updateActivity(String data, int codeResponse) {
           if(data != null)
           {
+              Log.i("DATA FROM SEVER",data);
               setViewsByActionsFromServer(data);
 
               if(!scheduleTimeUpDate.isRun())
                   scheduleTimeUpDate.run();
           }
           else {
-              if(scheduleTimeUpDate.isRun())
-                  scheduleTimeUpDate.stop();
+              stopProcess();
               Toast.makeText(context, "Error of server CODE:" + codeResponse, Toast.LENGTH_LONG).show();
           }
       }
@@ -178,7 +194,7 @@ public class Controller implements
 
     @Override
     public void timeUpDate() {
-        readingFromServer();
+        checkTheChanges();
         Log.i("timer_schedule:::","is running...");
     }
 
@@ -203,5 +219,11 @@ public class Controller implements
     public void editView(int id)
     {
         ((AppCompatActivity)context).startActivityForResult(new Intent(context,ActivityEditView.class).putExtra("id",id), MainActivity.CODE_REQUEST_ACTIVITY_CREATE_NEW_VIEW);
+    }
+
+    public void stopProcess()
+    {
+        if(scheduleTimeUpDate.isRun())
+            scheduleTimeUpDate.stop();
     }
 }
