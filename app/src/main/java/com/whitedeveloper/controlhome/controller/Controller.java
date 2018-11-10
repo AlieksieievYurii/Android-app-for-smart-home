@@ -50,7 +50,6 @@ public class Controller implements
 
     private Context context;
     private IrefreshActivity irefreshActivity;
-    private CreatorJsonByController creatorJsonByController;
 
     public  Controller(Context context, IrefreshActivity irefreshActivity)
     {
@@ -76,9 +75,9 @@ public class Controller implements
 
     private void runWithServer(int id)
     {
-        this.creatorJsonByController = new CreatorJsonByController(
-                 controllerButtons,
-                 controllerSeekBars);
+        CreatorJsonByController creatorJsonByController = new CreatorJsonByController(
+                controllerButtons,
+                controllerSeekBars);
 
         try {
             String object = creatorJsonByController.getJsonOfElement(id);
@@ -113,12 +112,6 @@ public class Controller implements
 
     private void sendToServer(String json)
     {
-        try
-        {
-            Log.i("URL_ADDRESS::", getUrlPreference().getFullUrl());
-
-        }catch (Exception e){}
-        Log.i("DATA_FOR_SERVER:::",json);
         dataFromServer.writeDataToServer(json);
     }
 
@@ -167,7 +160,6 @@ public class Controller implements
     public void updateActivity(String data, int codeResponse) {
           if(data != null)
           {
-              Log.i("DATA FROM SEVER",data);
               setViewsByActionsFromServer(data);
 
               if(!scheduleTimeUpDate.isRun())
@@ -195,7 +187,6 @@ public class Controller implements
     @Override
     public void timeUpDate() {
         checkTheChanges();
-        Log.i("timer_schedule:::","is running...");
     }
 
     @Override
@@ -211,7 +202,7 @@ public class Controller implements
             irefreshActivity.refresh();
         } catch (Exception e) {
             e.printStackTrace();
-            Log.i("TAG","Error of removing element!");
+            Log.i("REMOVING EL","Error of removing element!");
         }
     }
 
