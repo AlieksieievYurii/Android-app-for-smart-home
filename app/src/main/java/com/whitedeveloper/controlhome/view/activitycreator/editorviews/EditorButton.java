@@ -21,9 +21,9 @@ import static com.whitedeveloper.controlhome.view.activitycreator.fragments.Frag
 
 class EditorButton
 {
-    private AppCompatActivity appCompatActivity;
+    private final AppCompatActivity appCompatActivity;
 
-    private int originId;
+    private final int originId;
     private int originPin;
     private EditText edtName;
     private EditText edtPinController;
@@ -49,7 +49,7 @@ class EditorButton
 
     private void init()
     {
-        EditText edtId = appCompatActivity.findViewById(R.id.edt_id);
+        final EditText edtId = appCompatActivity.findViewById(R.id.edt_id);
         edtId.setText(String.valueOf(originId));
         edtId.setEnabled(false);
 
@@ -67,11 +67,11 @@ class EditorButton
                    }
                });
 
-        TypingListener typingListener = new TypingListener();
+        final TypingListener typingListener = new TypingListener();
         edtName.addTextChangedListener(typingListener);
         edtPinController.addTextChangedListener(typingListener);
 
-        Button btnApply = appCompatActivity.findViewById(R.id.btn_add_new_view);
+        final Button btnApply = appCompatActivity.findViewById(R.id.btn_add_new_view);
         btnApply.setText(R.string.text_editor_views_btn_apply);
         btnApply.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -84,7 +84,8 @@ class EditorButton
                     }
                 });
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(appCompatActivity.getBaseContext(), android.R.layout.simple_spinner_item, NAME_ICONS);
+        final ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(appCompatActivity.getBaseContext(), android.R.layout.simple_spinner_item, NAME_ICONS);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spImageType.setAdapter(adapter);
@@ -120,7 +121,7 @@ class EditorButton
 
     private void showExampleJson()
     {
-        StringBuilder stringBuilder = new StringBuilder();
+        final StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("{").append("\n");
             stringBuilder.append("  \"").append(PinArduino.TYPE_PIN).append("\":\"").append(PinArduino.TYPE_PIN_DIGITAL).append("\",\n");
             stringBuilder.append("  \"").append(PinArduino.PIN).append("\":").append(pin).append(",\n");
@@ -146,7 +147,7 @@ class EditorButton
     }
 
     private JSONObject getJSON() throws JSONException {
-        JSONObject jsonObject = new JSONObject();
+        final JSONObject jsonObject = new JSONObject();
         jsonObject.put(FactoryViews.TYPE_VIEW,FactoryViews.TYPE_VIEW_BUTTON);
         jsonObject.put(CreatorButton.ATR_ID, originId);
         jsonObject.put(CreatorButton.ATR_TEXT,name);
@@ -159,12 +160,12 @@ class EditorButton
     private void setAllOldFields()
     {
         try {
-            JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(appCompatActivity.getBaseContext());
+            final JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(appCompatActivity.getBaseContext());
             for(int i = 0; i < jsonArray.length(); i++)
             {
                 if(jsonArray.getJSONObject(i).getInt(CreatorButton.ATR_ID) == originId)
                 {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    final JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                     imageType = jsonObject.getString(CreatorButton.ATR_IMAGE_TYPE);
                     setImageButtonExample(imageType);

@@ -57,7 +57,7 @@ public class FragmentSeekBar extends Fragment {
         tvExampleJson = view.findViewById(R.id.tv_example_json);
         tvTextOfSeekBar = view.findViewById(R.id.tv_text_seek_bar);
 
-        TypingListener typingListener = new TypingListener();
+        final TypingListener typingListener = new TypingListener();
 
         edtId.addTextChangedListener(typingListener);
         edtName.addTextChangedListener(typingListener);
@@ -101,7 +101,7 @@ public class FragmentSeekBar extends Fragment {
 
     private void showExampleJson()
     {
-        StringBuilder stringBuilder = new StringBuilder();
+       final StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append("{").append("\n");
                     stringBuilder.append("  \"").append(PinArduino.TYPE_PIN).append("\":\"").append(PinArduino.TYPE_PIN_DIGITAL_ANALOG).append("\",\n");
                     stringBuilder.append("  \"").append(PinArduino.PIN).append("\":").append(pin).append(",\n");
@@ -141,7 +141,7 @@ public class FragmentSeekBar extends Fragment {
     }
 
     private JSONObject getJSON() throws JSONException {
-            JSONObject jsonObject = new JSONObject();
+            final JSONObject jsonObject = new JSONObject();
             jsonObject.put(FactoryViews.TYPE_VIEW,FactoryViews.TYPE_VIEW_SEEK_BAR);
             jsonObject.put(CreatorSeekBar.ATR_ID,Integer.parseInt(id));
             jsonObject.put(CreatorSeekBar.ATR_NAME,name);

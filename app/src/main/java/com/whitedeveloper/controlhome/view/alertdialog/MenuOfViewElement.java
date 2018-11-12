@@ -13,9 +13,9 @@ import java.util.Objects;
 
 public class MenuOfViewElement {
 
-    private Context context;
-    private int id;
-    private IEditView editView;
+    private final Context context;
+    private final int id;
+    private final IEditView editView;
     private AlertDialog.Builder builder;
     private AlertDialog alertDialog;
 
@@ -31,9 +31,9 @@ public class MenuOfViewElement {
     {
 
         builder = new AlertDialog.Builder(context);
-        View view = ((LayoutInflater) Objects.requireNonNull(context.getSystemService(Context.LAYOUT_INFLATER_SERVICE))).inflate(R.layout.layout_alert_dialog_menu_of_view,null);
-        Button btnEdit = view.findViewById(R.id.btn_al_edit_view);
-        Button btnRemove = view.findViewById(R.id.btn_al_remove_view);
+        final View view = ((LayoutInflater) Objects.requireNonNull(context.getSystemService(Context.LAYOUT_INFLATER_SERVICE))).inflate(R.layout.layout_alert_dialog_menu_of_view,null);
+        final Button btnEdit = view.findViewById(R.id.btn_al_edit_view);
+        final Button btnRemove = view.findViewById(R.id.btn_al_remove_view);
 
         btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override

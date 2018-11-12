@@ -22,7 +22,7 @@ public class ConnectorHttp
     public static HttpURLConnection getConnection(String urlString, String requestMethod)
         {
             try {
-                URL url = new URL(urlString);
+                final URL url = new URL(urlString);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
                 httpURLConnection.setRequestMethod(requestMethod);

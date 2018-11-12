@@ -9,7 +9,7 @@ import com.whitedeveloper.controlhome.view.activitycreator.fragments.FragmentTex
 
 
 public class PageAdapter extends FragmentStatePagerAdapter {
-    private int num;
+    private final int num;
 
     PageAdapter(FragmentManager fm,int num) {
         super(fm);

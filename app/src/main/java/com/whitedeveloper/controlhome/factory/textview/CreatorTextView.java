@@ -38,7 +38,7 @@ public class CreatorTextView extends CreatorView
     @Override
     public View createView() throws JSONException
     {
-        TextView textView = new TextView(getContext());
+        final TextView textView = new TextView(getContext());
         textView.setId(getJsonObject().getInt(ATR_ID));
         textView.setBackgroundResource(getBackgroundResource(getJsonObject().getString(ATR_IMAGE_TYPE)));
         ObtainStyle.setStyleTextView(getContext(),textView);

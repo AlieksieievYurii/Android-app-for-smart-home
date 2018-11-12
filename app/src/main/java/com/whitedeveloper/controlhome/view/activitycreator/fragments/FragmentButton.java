@@ -53,16 +53,18 @@ public class FragmentButton extends Fragment {
         imageType =  NAME_ICONS[0];
 
         btnExample = view.findViewById(R.id.btn_example);
-        Button btnAddNewView = view.findViewById(R.id.btn_add_new_view);
+        final Button btnAddNewView = view.findViewById(R.id.btn_add_new_view);
         tvExampleJson = view.findViewById(R.id.tv_example_json);
         edtId = view.findViewById(R.id.edt_id);
         edtName = view.findViewById(R.id.edt_name);
         edtPin = view.findViewById(R.id.edt_pin_controller);
-        Spinner spTypeImage = view.findViewById(R.id.sp_image_type);
+        final Spinner spTypeImage = view.findViewById(R.id.sp_image_type);
 
-        TypingListener typingListener = new TypingListener();
+        final TypingListener typingListener = new TypingListener();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, NAME_ICONS);
+        final ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, NAME_ICONS);
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spTypeImage.setAdapter(adapter);
@@ -114,7 +116,7 @@ public class FragmentButton extends Fragment {
 
     private void showExampleJson()
     {
-        StringBuilder stringBuilder = new StringBuilder();
+        final StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("{").append("\n");
             stringBuilder.append("  \"").append(PinArduino.TYPE_PIN).append("\":\"").append(PinArduino.TYPE_PIN_DIGITAL).append("\",\n");
             stringBuilder.append("  \"").append(PinArduino.PIN).append("\":").append(pin).append(",\n");
@@ -157,7 +159,7 @@ public class FragmentButton extends Fragment {
     }
 
     private JSONObject getJSON() throws JSONException {
-        JSONObject jsonObject = new JSONObject();
+       final JSONObject jsonObject = new JSONObject();
         jsonObject.put(FactoryViews.TYPE_VIEW,FactoryViews.TYPE_VIEW_BUTTON);
         jsonObject.put(CreatorButton.ATR_ID,Integer.parseInt(id));
         jsonObject.put(CreatorButton.ATR_TEXT,name);

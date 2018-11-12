@@ -16,12 +16,10 @@ import java.util.Objects;
 
 public class AlertDialogSetterURL
 {
-    private Context context;
+    private final Context context;
+    private final ISetterURL iSetterURL;
     private AlertDialog.Builder builder;
     private AlertDialog alertDialog;
-
-    private ISetterURL iSetterURL;
-
     private EditText edtURL;
     private EditText edtUrlAdditionPath;
     private EditText edtUrlToHashSum;
@@ -37,13 +35,13 @@ public class AlertDialogSetterURL
     private void init()
     {
         builder = new AlertDialog.Builder(context);
-        View view = ((LayoutInflater) Objects.requireNonNull(context.getSystemService(Context.LAYOUT_INFLATER_SERVICE))).inflate(R.layout.layout_alert_dialog_setting_url,null);
+        final View view = ((LayoutInflater) Objects.requireNonNull(context.getSystemService(Context.LAYOUT_INFLATER_SERVICE))).inflate(R.layout.layout_alert_dialog_setting_url,null);
         edtURL = view.findViewById(R.id.edt_alert_dialog_url);
         edtUrlToHashSum = view.findViewById(R.id.edt_alert_dialog_url_path_to_hash_sum);
         edtUrlAdditionPath = view.findViewById(R.id.edt_alert_dialog_url_addition_path);
         edtNameParamKey = view.findViewById(R.id.edt_alert_dialog_name_key_param);
         edtKey = view.findViewById(R.id.edt_alert_dialog_key);
-        Button btnSet = view.findViewById(R.id.btn_alert_dialog_set);
+        final Button btnSet = view.findViewById(R.id.btn_alert_dialog_set);
 
         btnSet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,11 +60,11 @@ public class AlertDialogSetterURL
 
     private boolean readPreference()
     {
-        String url = edtURL.getText().toString();
-        String additionPath = edtUrlAdditionPath.getText().toString();
-        String pathToHashSum = edtUrlToHashSum.getText().toString();
-        String nameKeyParam = edtNameParamKey.getText().toString();
-        String key = edtKey.getText().toString();
+        final String url = edtURL.getText().toString();
+        final String additionPath = edtUrlAdditionPath.getText().toString();
+        final String pathToHashSum = edtUrlToHashSum.getText().toString();
+        final String nameKeyParam = edtNameParamKey.getText().toString();
+        final String key = edtKey.getText().toString();
 
 
         if(url.replaceAll("\\s+","").equals("") || url.replaceAll("\\s+","").length() <= 10)

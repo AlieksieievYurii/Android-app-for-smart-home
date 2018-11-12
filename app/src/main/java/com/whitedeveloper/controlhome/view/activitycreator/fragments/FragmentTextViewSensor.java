@@ -42,10 +42,11 @@ public class FragmentTextViewSensor extends Fragment
     private void init()
     {
         edtId = view.findViewById(R.id.edt_id);
-        Spinner spTypeSensor = view.findViewById(R.id.sp_sensor_type);
         tvExample = view.findViewById(R.id.tv_sensor_example);
+        final Spinner spTypeSensor = view.findViewById(R.id.sp_sensor_type);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, NAME_SENSORS);
+        final ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, NAME_SENSORS);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spTypeSensor.setAdapter(adapter);
         spTypeSensor.setSelection(0);

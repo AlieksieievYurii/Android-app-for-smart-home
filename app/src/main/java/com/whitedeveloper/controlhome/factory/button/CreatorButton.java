@@ -1,6 +1,5 @@
 package com.whitedeveloper.controlhome.factory.button;
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import com.whitedeveloper.controlhome.R;
@@ -40,7 +39,7 @@ public class CreatorButton extends CreatorView {
 
     @Override
     public View createView() throws JSONException {
-        Button button = new Button(getContext());
+        final Button button = new Button(getContext());
         button.setText(getJsonObject().getString(ATR_TEXT));
         button.setBackgroundResource(getBackgroundResource(getJsonObject().getString(ATR_IMAGE_TYPE)));
         button.setId(getJsonObject().getInt(ATR_ID));

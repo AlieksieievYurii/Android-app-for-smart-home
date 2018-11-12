@@ -16,7 +16,7 @@ public class ActivityEditView extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_view);
 
-        int id = getIntent().getIntExtra(ID,0);
+        final int id = getIntent().getIntExtra(ID,0);
 
         switch (getTypeView(id))
         {

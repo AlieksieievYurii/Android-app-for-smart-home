@@ -8,9 +8,9 @@ import com.whitedeveloper.custom.PinArduino;
 public class ControllerButton
 {
     private long id;
-    private Button button;
+    private final Button button;
+    private final PinArduino pinArduino;
     private boolean checked = false;
-    private PinArduino pinArduino;
 
 
     public ControllerButton(Button button, PinArduino pinArduino)

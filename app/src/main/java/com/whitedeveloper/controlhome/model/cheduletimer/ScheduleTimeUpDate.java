@@ -5,7 +5,7 @@ public class ScheduleTimeUpDate
 {
     private static final int PERIOD = 1000;
     private static final int START_DELAY = 0;
-    private ItimeUpDate itimeUpDate;
+    private final ItimeUpDate itimeUpDate;
     private Timer timer;
     private boolean isRun;
 

@@ -21,14 +21,14 @@ import org.json.JSONObject;
 
 class EditorSeekBar
 {
-    private AppCompatActivity appCompatActivity;
+    private final AppCompatActivity appCompatActivity;
 
     private EditText edtName;
     private EditText edtPinController;
     private TextView tvExampleJson;
     private TextView tvTextOfSeekBar;
 
-    private int originId;
+    private final int originId;
     private int originPin;
     private String name;
     private String pin;
@@ -47,7 +47,7 @@ class EditorSeekBar
     private void init()
     {
 
-        EditText edtId = appCompatActivity.findViewById(R.id.edt_id);
+        final EditText edtId = appCompatActivity.findViewById(R.id.edt_id);
         edtId.setText(String.valueOf(originId));
         edtId.setEnabled(false);
 
@@ -57,7 +57,7 @@ class EditorSeekBar
         tvExampleJson = appCompatActivity.findViewById(R.id.tv_example_json);
 
         tvTextOfSeekBar = appCompatActivity.findViewById(R.id.tv_text_seek_bar);
-        BoxedVertical boxedVerticalExample = appCompatActivity.findViewById(R.id.bv_example);
+        final BoxedVertical boxedVerticalExample = appCompatActivity.findViewById(R.id.bv_example);
         boxedVerticalExample.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
             @Override
             public void onPointsChanged(BoxedVertical boxedVertical, int i) {
@@ -77,11 +77,11 @@ class EditorSeekBar
             }
         });
 
-        TypingListener typingListener = new TypingListener();
+        final TypingListener typingListener = new TypingListener();
         edtName.addTextChangedListener(typingListener);
         edtPinController.addTextChangedListener(typingListener);
 
-        Button btnApply = appCompatActivity.findViewById(R.id.btn_add_new_view);
+        final Button btnApply = appCompatActivity.findViewById(R.id.btn_add_new_view);
         btnApply.setText(R.string.text_editor_views_btn_apply);
         btnApply.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -103,7 +103,7 @@ class EditorSeekBar
 
     private void showExampleJson()
     {
-        StringBuilder stringBuilder = new StringBuilder();
+        final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("{").append("\n");
         stringBuilder.append("  \"").append(PinArduino.TYPE_PIN).append("\":\"").append(PinArduino.TYPE_PIN_DIGITAL_ANALOG).append("\",\n");
         stringBuilder.append("  \"").append(PinArduino.PIN).append("\":").append(pin).append(",\n");
@@ -128,7 +128,7 @@ class EditorSeekBar
     }
 
     private JSONObject getJSON() throws JSONException {
-        JSONObject jsonObject = new JSONObject();
+        final JSONObject jsonObject = new JSONObject();
         jsonObject.put(FactoryViews.TYPE_VIEW,FactoryViews.TYPE_VIEW_SEEK_BAR);
         jsonObject.put(CreatorSeekBar.ATR_ID,originId);
         jsonObject.put(CreatorSeekBar.ATR_NAME,name);
@@ -148,12 +148,12 @@ class EditorSeekBar
     private void setAllOldFields()
     {
         try {
-            JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(appCompatActivity.getBaseContext());
+            final JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(appCompatActivity.getBaseContext());
             for(int i = 0; i < jsonArray.length(); i++)
             {
                 if(jsonArray.getJSONObject(i).getInt(CreatorSeekBar.ATR_ID) == originId)
                 {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    final JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                     originPin = jsonObject.getInt(CreatorSeekBar.ATR_PIN);
 

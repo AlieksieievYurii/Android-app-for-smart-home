@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 public class CreatorJsonByController
 {
-    private ArrayList<ControllerButton> arrayListControllerButton;
-    private ArrayList<ControllerSeekBar> controllerSeekBarArrayList;
+    private final ArrayList<ControllerButton> arrayListControllerButton;
+    private final ArrayList<ControllerSeekBar> controllerSeekBarArrayList;
 
     public CreatorJsonByController(ArrayList<ControllerButton> arrayListControllerButton, ArrayList<ControllerSeekBar> controllerSeekBarArrayList) {
         this.arrayListControllerButton = arrayListControllerButton;

@@ -17,9 +17,9 @@ import java.net.HttpURLConnection;
 
 public class DataFromServer implements IresponseFromServer, HashFromServer {
 
-    private UpDateActivity upDateActivity;
-    private UrlPreference urlPreference;
-    private Context context;
+    private final UpDateActivity upDateActivity;
+    private final UrlPreference urlPreference;
+    private final Context context;
 
     public DataFromServer(Context context, UrlPreference urlPreference, UpDateActivity upDateActivity)
     {
@@ -73,7 +73,6 @@ public class DataFromServer implements IresponseFromServer, HashFromServer {
             {
                 Log.i("HASH","HASH CODES ARE DIFFERENCE");
                 readDataFromServer();
-                ControllerSharedPreference.putHashCode(context,hashCode);
             }
         } else
             upDateActivity.updateActivity(null, codeResponse);

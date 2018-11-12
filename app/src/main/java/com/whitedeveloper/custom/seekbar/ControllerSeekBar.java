@@ -9,9 +9,9 @@ import com.whitedeveloper.custom.PinArduino;
 
 public class ControllerSeekBar {
 
-    private BoxedVertical seekBar;
-    private PinArduino arduinoPin;
-    private LinearLayout linearLayout;
+    private final BoxedVertical seekBar;
+    private final PinArduino arduinoPin;
+    private final LinearLayout linearLayout;
 
     public ControllerSeekBar(BoxedVertical seekBar, LinearLayout linearLayout, PinArduino arduinoPin) {
         this.seekBar = seekBar;

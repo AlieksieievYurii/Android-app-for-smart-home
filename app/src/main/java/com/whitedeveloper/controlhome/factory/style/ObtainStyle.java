@@ -16,8 +16,8 @@ public class ObtainStyle
 
     public static void setStyleButton(Context context,Button button)
     {
-        TypedArray typedArray = context.obtainStyledAttributes(R.style.view_buttons,R.styleable.style_button);
-        GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams(
+        final TypedArray typedArray = context.obtainStyledAttributes(R.style.view_buttons,R.styleable.style_button);
+        final GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams(
                 new ViewGroup.LayoutParams(
                      (typedArray.getLayoutDimension(R.styleable.style_button_android_layout_width,0)),
                         typedArray.getLayoutDimension(R.styleable.style_button_android_layout_height,0))
@@ -37,8 +37,8 @@ public class ObtainStyle
 
     public static void setStyleSeekBar(Context context, BoxedVertical boxedVertical)
     {
-        TypedArray typedArray = context.obtainStyledAttributes(R.style.view_seek_bars,R.styleable.style_seek_bar);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        final TypedArray typedArray = context.obtainStyledAttributes(R.style.view_seek_bars,R.styleable.style_seek_bar);
+        final LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         layoutParams.setMargins(typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
                 typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
                 typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
@@ -55,8 +55,8 @@ public class ObtainStyle
 
     public static void setStyleTextViewForSeekBar(Context context, TextView textView)
     {
-        TypedArray typedArray = context.obtainStyledAttributes(R.style.view_seek_bars,R.styleable.style_seek_bar);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        final TypedArray typedArray = context.obtainStyledAttributes(R.style.view_seek_bars,R.styleable.style_seek_bar);
+        final LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.weight = 0;
 
         textView.setLayoutParams(layoutParams);
@@ -69,32 +69,31 @@ public class ObtainStyle
     }
 
     public static void setStyleLayoutSeekBar(Context context, LinearLayout linearLayout)
-        {
-            TypedArray typedArray = context.obtainStyledAttributes(R.style.view_seek_bars,R.styleable.style_seek_bar);
-            GridLayout.LayoutParams layoutParams =
-                    new GridLayout.LayoutParams(
-                            new ViewGroup.LayoutParams(typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_width,0),
-                                    typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_height,0))
-                    );
-            layoutParams.rowSpec = GridLayout.spec(GridLayout.UNDEFINED,2);
+    {
+        final TypedArray typedArray = context.obtainStyledAttributes(R.style.view_seek_bars,R.styleable.style_seek_bar);
+        final GridLayout.LayoutParams layoutParams =
+                new GridLayout.LayoutParams(
+                        new ViewGroup.LayoutParams(typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_width,0),
+                                typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_height,0)));
+        layoutParams.rowSpec = GridLayout.spec(GridLayout.UNDEFINED,2);
 
-            layoutParams.setMargins(typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
-                    typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
-                    typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
-                    typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0));
-            linearLayout.setLayoutParams(layoutParams);
-            linearLayout.setOrientation(LinearLayout.VERTICAL);
-            linearLayout.setGravity(RelativeLayout.CENTER_HORIZONTAL);
-            //linearLayout.setPadding(5,5,6,3);
-            linearLayout.setBackgroundResource(R.drawable.background_seek_bar_container);
+        layoutParams.setMargins(typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
+                typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
+                typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
+                typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0));
+        linearLayout.setLayoutParams(layoutParams);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.setGravity(RelativeLayout.CENTER_HORIZONTAL);
+        //linearLayout.setPadding(5,5,6,3);
+        linearLayout.setBackgroundResource(R.drawable.background_seek_bar_container);
 
-            typedArray.recycle();
+        typedArray.recycle();
         }
 
     public static void setStyleTextView(Context context, TextView textView)
     {
-        TypedArray typedArray = context.obtainStyledAttributes(R.style.view_sensors,R.styleable.style_text_view);
-        GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams(
+        final TypedArray typedArray = context.obtainStyledAttributes(R.style.view_sensors,R.styleable.style_text_view);
+        final GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams(
              new ViewGroup.LayoutParams(typedArray.getLayoutDimension(R.styleable.style_text_view_android_layout_width,0),
                              typedArray.getLayoutDimension(R.styleable.style_text_view_android_layout_height,0))
         );

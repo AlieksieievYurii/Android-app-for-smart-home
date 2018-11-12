@@ -5,8 +5,8 @@ import android.widget.TextView;
 
 public class ControllerTextView
 {
-    private TextView textViewSensor;
-    private String name;
+    private final TextView textViewSensor;
+    private final String name;
     private int value;
 
     public ControllerTextView(TextView textViewSensor, String nameSensorArduino) {

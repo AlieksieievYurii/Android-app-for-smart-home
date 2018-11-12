@@ -48,8 +48,8 @@ public class Controller implements
     private ArrayList<ControllerSeekBar> controllerSeekBars;
     private ArrayList<ControllerTextView> controllerTextViews;
 
-    private Context context;
-    private IrefreshActivity irefreshActivity;
+    private final Context context;
+    private final IrefreshActivity irefreshActivity;
 
     public  Controller(Context context, IrefreshActivity irefreshActivity)
     {

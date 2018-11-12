@@ -4,7 +4,6 @@ import abak.tr.com.boxedverticalseekbar.BoxedVertical;
 import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.whitedeveloper.controlhome.factory.CreatorView;
 import com.whitedeveloper.controlhome.factory.style.ObtainStyle;
@@ -26,10 +25,10 @@ public class CreatorSeekBar extends CreatorView {
 
     @Override
     public View createView() throws JSONException {
-        LinearLayout linearLayout = new LinearLayout(getContext());
+        final LinearLayout linearLayout = new LinearLayout(getContext());
         ObtainStyle.setStyleLayoutSeekBar(getContext(),linearLayout);
 
-        TextView textView = new TextView(getContext());
+        final TextView textView = new TextView(getContext());
         try {
             textView.setText(getJsonObject().getString(ATR_NAME));
         } catch (JSONException e) {

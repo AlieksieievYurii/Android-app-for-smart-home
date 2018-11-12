@@ -18,12 +18,12 @@ import org.json.JSONObject;
 
 class EditorTextViewSensor
 {
-    private AppCompatActivity appCompatActivity;
+    private final AppCompatActivity appCompatActivity;
 
     private TextView tvExample;
     private Spinner spinnerImageType;
 
-    private int id;
+    private final int id;
     private String imageType;
 
     EditorTextViewSensor(AppCompatActivity appCompatActivity, int id) {
@@ -39,12 +39,12 @@ class EditorTextViewSensor
     private void setAllOldFields()
     {
         try {
-            JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(appCompatActivity.getBaseContext());
+            final JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(appCompatActivity.getBaseContext());
             for(int i = 0; i < jsonArray.length(); i++)
             {
                 if(jsonArray.getJSONObject(i).getInt(CreatorSeekBar.ATR_ID) == id)
                 {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    final JSONObject jsonObject = jsonArray.getJSONObject(i);
                     imageType = jsonObject.getString(CreatorTextView.ATR_IMAGE_TYPE);
                     spinnerImageType.setSelection(getIndexOfNAME_TYPESbyName(imageType));
                 }
@@ -71,7 +71,7 @@ class EditorTextViewSensor
 
         spinnerImageType = appCompatActivity.findViewById(R.id.sp_sensor_type);
         tvExample = appCompatActivity.findViewById(R.id.tv_sensor_example);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(appCompatActivity.getBaseContext(), android.R.layout.simple_spinner_item, FragmentTextViewSensor.NAME_SENSORS);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(appCompatActivity.getBaseContext(), android.R.layout.simple_spinner_item, FragmentTextViewSensor.NAME_SENSORS);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerImageType.setAdapter(adapter);
 
@@ -109,7 +109,7 @@ class EditorTextViewSensor
 
     private JSONObject getJSON() throws JSONException {
 
-        JSONObject jsonObject = new JSONObject();
+        final JSONObject jsonObject = new JSONObject();
         jsonObject.put(FactoryViews.TYPE_VIEW,FactoryViews.TYPE_VIEW_TEXT_VIEW);
         jsonObject.put(CreatorTextView.ATR_ID,id);
         jsonObject.put(CreatorTextView.ATR_IMAGE_TYPE,imageType);

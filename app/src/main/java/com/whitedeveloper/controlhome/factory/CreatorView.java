@@ -8,8 +8,8 @@ import org.json.JSONObject;
 
 public abstract class CreatorView {
 
-    private JSONObject jsonObject;
-    private Context context;
+    private final JSONObject jsonObject;
+    private final Context context;
 
     public Context getContext() {
         return context;
