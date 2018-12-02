@@ -2,8 +2,9 @@ package com.whitedeveloper.controlhome.factory;
 
 import android.content.Context;
 import com.whitedeveloper.controlhome.controller.prefaranse.ControllerSharedPreference;
-import com.whitedeveloper.controlhome.factory.button.CreatorButton;
 import org.json.JSONArray;
+
+import static com.whitedeveloper.TagKeys.*;
 
 public class Checker {
     public static boolean checkId(int id, Context context)
@@ -12,7 +13,7 @@ public class Checker {
             final JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(context);
 
             for(int i = 0; i < jsonArray.length(); i++)
-                if(jsonArray.getJSONObject(i).getInt(CreatorButton.ATR_ID) == id)
+                if(jsonArray.getJSONObject(i).getInt(ATR_ID) == id)
                     return true;
 
             } catch (Exception e) {
@@ -26,7 +27,7 @@ public class Checker {
         try {
             final JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(context);
             for(int i = 0; i < jsonArray.length(); i++) {
-                if (jsonArray.getJSONObject(i).getInt(CreatorButton.ATR_PIN) == pin)
+                if (jsonArray.getJSONObject(i).getInt(ATR_PIN) == pin)
                     return true;
             }
 

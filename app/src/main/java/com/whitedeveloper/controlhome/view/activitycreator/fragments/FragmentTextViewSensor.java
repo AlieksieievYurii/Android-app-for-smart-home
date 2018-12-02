@@ -11,7 +11,6 @@ import android.widget.*;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
 import com.whitedeveloper.controlhome.factory.Checker;
-import com.whitedeveloper.controlhome.factory.FactoryViews;
 import com.whitedeveloper.controlhome.factory.textview.CreatorTextView;
 import com.whitedeveloper.controlhome.view.activitycreator.ActivityCreateNewElement;
 import org.json.JSONException;
@@ -19,6 +18,8 @@ import org.json.JSONObject;
 
 import java.util.Objects;
 import java.util.Random;
+
+import static com.whitedeveloper.TagKeys.*;
 
 public class FragmentTextViewSensor extends Fragment {
     public static final String[] NAME_SENSORS = {CreatorTextView.TEMPERATURE, CreatorTextView.STATE_DAY};
@@ -87,10 +88,10 @@ public class FragmentTextViewSensor extends Fragment {
     private JSONObject getJSON() throws JSONException {
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put(FactoryViews.TYPE_VIEW, FactoryViews.TYPE_VIEW_TEXT_VIEW);
-        jsonObject.put(CreatorTextView.ATR_ID, id);
-        jsonObject.put(CreatorTextView.ATR_IMAGE_TYPE, typeSensor);
-        jsonObject.put(CreatorTextView.ATR_NAME_SENSOR_ARDUINO, typeSensor);
+        jsonObject.put(TYPE_VIEW,TYPE_VIEW_TEXT_VIEW);
+        jsonObject.put(ATR_ID, id);
+        jsonObject.put(ATR_IMAGE_TYPE, typeSensor);
+        jsonObject.put(ATR_NAME_SENSOR, typeSensor);
 
         return jsonObject;
     }

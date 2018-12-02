@@ -7,13 +7,13 @@ import android.widget.*;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.controller.prefaranse.ControllerSharedPreference;
 import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
-import com.whitedeveloper.controlhome.factory.FactoryViews;
-import com.whitedeveloper.controlhome.factory.seekbar.CreatorSeekBar;
 import com.whitedeveloper.controlhome.factory.textview.CreatorTextView;
 import com.whitedeveloper.controlhome.view.activitycreator.fragments.FragmentTextViewSensor;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import static com.whitedeveloper.TagKeys.*;
 
 
 class EditorTextViewSensor
@@ -42,10 +42,10 @@ class EditorTextViewSensor
             final JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(appCompatActivity.getBaseContext());
             for(int i = 0; i < jsonArray.length(); i++)
             {
-                if(jsonArray.getJSONObject(i).getInt(CreatorSeekBar.ATR_ID) == id)
+                if(jsonArray.getJSONObject(i).getInt(ATR_ID) == id)
                 {
                     final JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    imageType = jsonObject.getString(CreatorTextView.ATR_IMAGE_TYPE);
+                    imageType = jsonObject.getString(ATR_IMAGE_TYPE);
                     spinnerImageType.setSelection(getIndexOfNAME_TYPESbyName(imageType));
                 }
             }
@@ -106,10 +106,10 @@ class EditorTextViewSensor
     private JSONObject getJSON() throws JSONException {
 
         final JSONObject jsonObject = new JSONObject();
-        jsonObject.put(FactoryViews.TYPE_VIEW,FactoryViews.TYPE_VIEW_TEXT_VIEW);
-        jsonObject.put(CreatorTextView.ATR_ID,id);
-        jsonObject.put(CreatorTextView.ATR_IMAGE_TYPE,imageType);
-        jsonObject.put(CreatorTextView.ATR_NAME_SENSOR_ARDUINO,imageType);
+        jsonObject.put(TYPE_VIEW,TYPE_VIEW_TEXT_VIEW);
+        jsonObject.put(ATR_ID,id);
+        jsonObject.put(ATR_IMAGE_TYPE,imageType);
+        jsonObject.put(ATR_NAME_SENSOR,imageType);
 
         return jsonObject;
     }

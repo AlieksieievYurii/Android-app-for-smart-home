@@ -11,11 +11,10 @@ import com.whitedeveloper.custom.PinTCOD;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.whitedeveloper.TagKeys.*;
+
 public class CreatorSeekBar extends CreatorView {
 
-    public static final String ATR_ID = "id";
-    public static final String ATR_PIN = "pin";
-    public static final String ATR_NAME = "name";
 
     private BoxedVertical boxedVertical;
 

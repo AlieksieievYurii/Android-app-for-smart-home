@@ -11,12 +11,12 @@ import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.controller.prefaranse.ControllerSharedPreference;
 import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
 import com.whitedeveloper.controlhome.factory.Checker;
-import com.whitedeveloper.controlhome.factory.FactoryViews;
-import com.whitedeveloper.controlhome.factory.seekbar.CreatorSeekBar;
 import com.whitedeveloper.custom.PinTCOD;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import static com.whitedeveloper.TagKeys.*;
 
 
 class EditorSeekBar {
@@ -120,10 +120,10 @@ class EditorSeekBar {
 
     private JSONObject getJSON() throws JSONException {
         final JSONObject jsonObject = new JSONObject();
-        jsonObject.put(FactoryViews.TYPE_VIEW, FactoryViews.TYPE_VIEW_SEEK_BAR);
-        jsonObject.put(CreatorSeekBar.ATR_ID, originId);
-        jsonObject.put(CreatorSeekBar.ATR_NAME, name);
-        jsonObject.put(CreatorSeekBar.ATR_PIN, Integer.parseInt(pin));
+        jsonObject.put(TYPE_VIEW, TYPE_VIEW_SEEK_BAR);
+        jsonObject.put(ATR_ID, originId);
+        jsonObject.put(ATR_NAME, name);
+        jsonObject.put(ATR_PIN, Integer.parseInt(pin));
 
         return jsonObject;
     }
@@ -140,13 +140,13 @@ class EditorSeekBar {
         try {
             final JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(appCompatActivity.getBaseContext());
             for (int i = 0; i < jsonArray.length(); i++) {
-                if (jsonArray.getJSONObject(i).getInt(CreatorSeekBar.ATR_ID) == originId) {
+                if (jsonArray.getJSONObject(i).getInt(ATR_ID) == originId) {
                     final JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                    originPin = jsonObject.getInt(CreatorSeekBar.ATR_PIN);
+                    originPin = jsonObject.getInt(ATR_PIN);
 
                     edtPinController.setText(String.valueOf(originPin));
-                    edtName.setText(jsonObject.getString(CreatorSeekBar.ATR_NAME));
+                    edtName.setText(jsonObject.getString(ATR_NAME));
                 }
             }
         } catch (Exception e) {

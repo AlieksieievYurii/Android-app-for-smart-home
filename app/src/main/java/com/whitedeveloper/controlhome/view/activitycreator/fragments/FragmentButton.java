@@ -13,8 +13,6 @@ import android.widget.*;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
 import com.whitedeveloper.controlhome.factory.Checker;
-import com.whitedeveloper.controlhome.factory.FactoryViews;
-import com.whitedeveloper.controlhome.factory.button.CreatorButton;
 import com.whitedeveloper.controlhome.view.Icons;
 import com.whitedeveloper.controlhome.view.activitycreator.ActivityCreateNewElement;
 import com.whitedeveloper.custom.PinTCOD;
@@ -23,6 +21,8 @@ import org.json.JSONObject;
 
 import java.util.Objects;
 import java.util.Random;
+
+import static com.whitedeveloper.TagKeys.*;
 
 public class FragmentButton extends Fragment {
 
@@ -152,11 +152,11 @@ public class FragmentButton extends Fragment {
 
     private JSONObject getJSON() throws JSONException {
         final JSONObject jsonObject = new JSONObject();
-        jsonObject.put(FactoryViews.TYPE_VIEW, FactoryViews.TYPE_VIEW_BUTTON);
-        jsonObject.put(CreatorButton.ATR_ID, id);
-        jsonObject.put(CreatorButton.ATR_TEXT, name);
-        jsonObject.put(CreatorButton.ATR_PIN, Integer.parseInt(pin));
-        jsonObject.put(CreatorButton.ATR_IMAGE_TYPE, icon.getNameIcon());
+        jsonObject.put(TYPE_VIEW,TYPE_VIEW_BUTTON);
+        jsonObject.put(ATR_ID, id);
+        jsonObject.put(ATR_TEXT, name);
+        jsonObject.put(ATR_PIN, Integer.parseInt(pin));
+        jsonObject.put(ATR_IMAGE_TYPE, icon.getNameIcon());
 
         return jsonObject;
     }

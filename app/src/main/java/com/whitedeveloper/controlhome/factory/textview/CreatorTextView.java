@@ -10,13 +10,10 @@ import com.whitedeveloper.custom.PinTCOD;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.whitedeveloper.TagKeys.*;
+
 public class CreatorTextView extends CreatorView
 {
-    public static final String ATR_ID = "id";
-    public static final String ATR_NAME_SENSOR_ARDUINO = "nameSensor";
-    public static final String ATR_IMAGE_TYPE = "typeImage";
-
-
     public static final String TEMPERATURE = "temperature";
     public static final String STATE_DAY = "stateDay";
 
@@ -50,8 +47,8 @@ public class CreatorTextView extends CreatorView
         return null;
     }
 
-    public String getNameSensorArduino() throws JSONException {
-        return getJsonObject().getString(ATR_NAME_SENSOR_ARDUINO);
+    public String getNameSensorTCOD() throws JSONException {
+        return getJsonObject().getString(ATR_NAME_SENSOR);
     }
 
 }

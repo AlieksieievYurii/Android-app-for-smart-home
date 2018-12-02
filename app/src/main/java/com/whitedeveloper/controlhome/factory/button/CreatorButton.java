@@ -11,13 +11,9 @@ import org.json.JSONObject;
 
 import java.util.Objects;
 
+import static com.whitedeveloper.TagKeys.*;
+
 public class CreatorButton extends CreatorView {
-
-    public static final String ATR_TEXT = "text";
-    public static final String ATR_IMAGE_TYPE = "typeImage";
-    public static final String ATR_PIN = "pin";
-    public static final String ATR_ID = "id";
-
 
     public CreatorButton(Context context,JSONObject jsonObject) {
         super(context,jsonObject);

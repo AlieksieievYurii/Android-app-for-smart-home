@@ -16,11 +16,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.whitedeveloper.TagKeys.*;
+
 public class FactoryViews {
-    public static final String TYPE_VIEW = "type_view";
-    public static final String TYPE_VIEW_BUTTON = "type_view_button";
-    public static final String TYPE_VIEW_SEEK_BAR = "type_view_seek_bar";
-    public static final String TYPE_VIEW_TEXT_VIEW = "type_view_text_view";
     private final IcreateView icreateView;
     private CreatorView creatorView;
     private final Context context;
@@ -70,7 +68,7 @@ public class FactoryViews {
     private void createTextView(JSONObject jsonObject) throws JSONException {
         creatorView = new CreatorTextView(context, jsonObject);
         final View view = creatorView.createView();
-        final String nameSensor = ((CreatorTextView) creatorView).getNameSensorArduino();
+        final String nameSensor = ((CreatorTextView) creatorView).getNameSensorTCOD();
         icreateView.createTextView(new ControllerTextView((TextView) view, nameSensor));
     }
 

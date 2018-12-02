@@ -87,7 +87,7 @@ class SetterStatusViewFRomServer {
     private static JSONObject getJsonObjectByNamePropertySensor(String nameProperty, JSONArray array) throws JSONException {
         for (int i = 0; i < array.length(); i++) {
             final JSONObject jsonObject = (JSONObject) array.get(i);
-            if (jsonObject.getString("ParamsFromArduino").equals(nameProperty))
+            if (jsonObject.getString(PROPERTY_SENSORS_FROM_SERVER).equals(nameProperty))
                 return jsonObject;
         }
         throw new JSONException("Not found JSON object with name params " + nameProperty);

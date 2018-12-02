@@ -10,13 +10,13 @@ import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.controller.prefaranse.ControllerSharedPreference;
 import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
 import com.whitedeveloper.controlhome.factory.Checker;
-import com.whitedeveloper.controlhome.factory.FactoryViews;
-import com.whitedeveloper.controlhome.factory.button.CreatorButton;
 import com.whitedeveloper.controlhome.view.Icons;
 import com.whitedeveloper.custom.PinTCOD;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import static com.whitedeveloper.TagKeys.*;
 
 class EditorButton {
     private final AppCompatActivity appCompatActivity;
@@ -140,11 +140,11 @@ class EditorButton {
 
     private JSONObject getJSON() throws JSONException {
         final JSONObject jsonObject = new JSONObject();
-        jsonObject.put(FactoryViews.TYPE_VIEW, FactoryViews.TYPE_VIEW_BUTTON);
-        jsonObject.put(CreatorButton.ATR_ID, originId);
-        jsonObject.put(CreatorButton.ATR_TEXT, name);
-        jsonObject.put(CreatorButton.ATR_PIN, Integer.parseInt(pin));
-        jsonObject.put(CreatorButton.ATR_IMAGE_TYPE, icon.getNameIcon());
+        jsonObject.put(TYPE_VIEW, TYPE_VIEW_BUTTON);
+        jsonObject.put(ATR_ID, originId);
+        jsonObject.put(ATR_TEXT, name);
+        jsonObject.put(ATR_PIN, Integer.parseInt(pin));
+        jsonObject.put(ATR_IMAGE_TYPE, icon.getNameIcon());
 
         return jsonObject;
     }
@@ -153,15 +153,15 @@ class EditorButton {
         try {
             final JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(appCompatActivity.getBaseContext());
             for (int i = 0; i < jsonArray.length(); i++) {
-                if (jsonArray.getJSONObject(i).getInt(CreatorButton.ATR_ID) == originId) {
+                if (jsonArray.getJSONObject(i).getInt(ATR_ID) == originId) {
                     final JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                    icon = Icons.getEnumByName(jsonObject.getString(CreatorButton.ATR_IMAGE_TYPE));
+                    icon = Icons.getEnumByName(jsonObject.getString(ATR_IMAGE_TYPE));
                     setImageButtonExample(icon);
 
-                    originPin = jsonObject.getInt(CreatorButton.ATR_PIN);
+                    originPin = jsonObject.getInt(ATR_PIN);
 
-                    edtName.setText(jsonObject.getString(CreatorButton.ATR_TEXT));
+                    edtName.setText(jsonObject.getString(ATR_TEXT));
                     edtPinController.setText(String.valueOf(originPin));
                 }
             }

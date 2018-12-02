@@ -15,8 +15,6 @@ import android.widget.TextView;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
 import com.whitedeveloper.controlhome.factory.Checker;
-import com.whitedeveloper.controlhome.factory.FactoryViews;
-import com.whitedeveloper.controlhome.factory.seekbar.CreatorSeekBar;
 import com.whitedeveloper.controlhome.view.activitycreator.ActivityCreateNewElement;
 import com.whitedeveloper.custom.PinTCOD;
 import org.json.JSONException;
@@ -24,6 +22,8 @@ import org.json.JSONObject;
 
 import java.util.Objects;
 import java.util.Random;
+
+import static com.whitedeveloper.TagKeys.*;
 
 public class FragmentSeekBar extends Fragment {
 
@@ -136,10 +136,10 @@ public class FragmentSeekBar extends Fragment {
 
     private JSONObject getJSON() throws JSONException {
         final JSONObject jsonObject = new JSONObject();
-        jsonObject.put(FactoryViews.TYPE_VIEW, FactoryViews.TYPE_VIEW_SEEK_BAR);
-        jsonObject.put(CreatorSeekBar.ATR_ID, id);
-        jsonObject.put(CreatorSeekBar.ATR_NAME, name);
-        jsonObject.put(CreatorSeekBar.ATR_PIN, Integer.parseInt(pin));
+        jsonObject.put(TYPE_VIEW, TYPE_VIEW_SEEK_BAR);
+        jsonObject.put(ATR_ID, id);
+        jsonObject.put(ATR_NAME, name);
+        jsonObject.put(ATR_PIN, Integer.parseInt(pin));
 
         return jsonObject;
     }
