@@ -1,18 +1,18 @@
 package com.whitedeveloper.controlhome.controller.json;
 
 import com.whitedeveloper.custom.buttons.ControllerButton;
-import com.whitedeveloper.custom.PinArduino;
+import com.whitedeveloper.custom.PinTCOD;
 import com.whitedeveloper.custom.seekbar.ControllerSeekBar;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class CreatorJsonByController
+public class CreatorJsonForTCOD
 {
     private final ArrayList<ControllerButton> arrayListControllerButton;
     private final ArrayList<ControllerSeekBar> controllerSeekBarArrayList;
 
-    public CreatorJsonByController(ArrayList<ControllerButton> arrayListControllerButton, ArrayList<ControllerSeekBar> controllerSeekBarArrayList) {
+    public CreatorJsonForTCOD(ArrayList<ControllerButton> arrayListControllerButton, ArrayList<ControllerSeekBar> controllerSeekBarArrayList) {
         this.arrayListControllerButton = arrayListControllerButton;
         this.controllerSeekBarArrayList = controllerSeekBarArrayList;
     }
@@ -38,23 +38,23 @@ public class CreatorJsonByController
     private String getJsonButtonAction(int id) throws Exception {
         for(ControllerButton controllerButton : arrayListControllerButton)
             if(controllerButton.getId() == id)
-               return getJsonObjectByPinArduino(controllerButton.getPinArduino()).toString();
+               return getJsonObjectByPinTCOD(controllerButton.getPinTCOD()).toString();
 
         throw new Exception("Error can not found button in ArrayList of ControllerButton with id " + id);
     }
 
-    private JSONObject getJsonObjectByPinArduino(PinArduino pinArduino)
+    private JSONObject getJsonObjectByPinTCOD(PinTCOD pinTCOD)
     {
 
-        return CreatorJSON.getJsonPinArduinoObject(pinArduino.getTypePin(),
-                                         pinArduino.getPin(),
-                                         pinArduino.getValue());
+        return CreatorJSON.getJsonObjectPinTCOD(pinTCOD.getTypePin(),
+                                         pinTCOD.getPin(),
+                                         pinTCOD.getValue());
     }
 
     private String getJsonSeekBarAction(int id) throws Exception {
         for(ControllerSeekBar controllerSeekBar : controllerSeekBarArrayList)
             if(controllerSeekBar.getId() == id)
-                return getJsonObjectByPinArduino(controllerSeekBar.getPinArduino()).toString();
+                return getJsonObjectByPinTCOD(controllerSeekBar.getPinArduino()).toString();
 
         throw  new Exception("Error can not found seek bar in ArrayList of ControllerSeekBar with id " + id);
     }

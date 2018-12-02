@@ -8,10 +8,10 @@ import java.net.URL;
 
 public class ConnectorHttp
 {
-    public static HttpURLConnection getConnection(UrlPreference urlPreference, String requestMethod)
+    public static HttpURLConnection getConnection(UrlPreference urlPreference, Request request)
     {
         try {
-            return getConnection(urlPreference.getFullUrl(),requestMethod);
+            return getConnection(urlPreference.getFullUrl(),request);
         }catch (Exception error)
         {
             error.printStackTrace();
@@ -19,17 +19,17 @@ public class ConnectorHttp
         }
     }
 
-    public static HttpURLConnection getConnection(String urlString, String requestMethod)
+    public static HttpURLConnection getConnection(String urlString, Request request)
         {
             try {
                 final URL url = new URL(urlString);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
-                httpURLConnection.setRequestMethod(requestMethod);
+                httpURLConnection.setRequestMethod(request.toString());
                 httpURLConnection.setConnectTimeout(20000);
                 httpURLConnection.setReadTimeout(20000);
                 httpURLConnection.setDoInput(true);
-                httpURLConnection.setDoOutput(requestMethod.equals("POST"));
+                httpURLConnection.setDoOutput(request.equals(Request.POST));
                 return httpURLConnection;
 
             } catch (Exception e) {

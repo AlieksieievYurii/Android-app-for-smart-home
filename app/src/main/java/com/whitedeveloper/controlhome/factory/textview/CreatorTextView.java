@@ -6,7 +6,7 @@ import android.widget.TextView;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.factory.CreatorView;
 import com.whitedeveloper.controlhome.factory.style.ObtainStyle;
-import com.whitedeveloper.custom.PinArduino;
+import com.whitedeveloper.custom.PinTCOD;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,7 +46,7 @@ public class CreatorTextView extends CreatorView
     }
 
     @Override
-    public PinArduino createPinArduino(){
+    public PinTCOD createPinArduino(){
         return null;
     }
 

@@ -3,7 +3,6 @@ package com.whitedeveloper.controlhome.controller;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Toast;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.view.MainActivity;
@@ -11,7 +10,7 @@ import com.whitedeveloper.controlhome.view.activitycreator.editorviews.ActivityE
 import com.whitedeveloper.controlhome.view.alertdialog.AlertDialogSetterURL;
 import com.whitedeveloper.controlhome.view.alertdialog.ISetterURL;
 import com.whitedeveloper.controlhome.controller.interfaces.*;
-import com.whitedeveloper.controlhome.controller.json.CreatorJsonByController;
+import com.whitedeveloper.controlhome.controller.json.CreatorJsonForTCOD;
 import com.whitedeveloper.controlhome.controller.prefaranse.ControllerSharedPreference;
 import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
 import com.whitedeveloper.controlhome.controller.prefaranse.UrlPreference;
@@ -31,17 +30,17 @@ import com.whitedeveloper.custom.seekbar.IonDoSeekBar;
 import com.whitedeveloper.custom.textview.ControllerTextView;
 import com.whitedeveloper.custom.textview.ImplementationTextView;
 import org.json.JSONException;
+
 import java.util.ArrayList;
 
 public class Controller implements
-                        UpDateActivity,
-                        IonClickButton,
-                        IonDoSeekBar,
-                        ISetterURL,
-                        ItimeUpDate,
-                        IonLongPressViewElement,
-                        IEditView
-{
+        UpDateActivity,
+        IonClickButton,
+        IonDoSeekBar,
+        ISetterURL,
+        ItimeUpDate,
+        IonLongPressViewElement,
+        IEditView {
     private DataFromServer dataFromServer;
     private ScheduleTimeUpDate scheduleTimeUpDate;
     private VibrationButton vibrationButton;
@@ -52,19 +51,17 @@ public class Controller implements
     private final Context context;
     private final IrefreshActivity irefreshActivity;
 
-    public  Controller(Context context, IrefreshActivity irefreshActivity)
-    {
+    public Controller(Context context, IrefreshActivity irefreshActivity) {
         this.context = context;
         this.irefreshActivity = irefreshActivity;
         init();
     }
 
-    private void init()
-    {
-        this.dataFromServer  = new DataFromServer(
-                        context,
-                       getUrlPreference(),
-                       this);
+    private void init() {
+        this.dataFromServer = new DataFromServer(
+                context,
+                getUrlPreference(),
+                this);
 
         this.vibrationButton = new VibrationButton(context);
         this.vibrationButton.setActivated(true);
@@ -73,15 +70,13 @@ public class Controller implements
     }
 
 
-
-    private void runWithServer(int id)
-    {
-        CreatorJsonByController creatorJsonByController = new CreatorJsonByController(
+    private void runWithServer(int id) {
+        CreatorJsonForTCOD creatorJsonForTCOD = new CreatorJsonForTCOD(
                 controllerButtons,
                 controllerSeekBars);
 
         try {
-            String object = creatorJsonByController.getJsonOfElement(id);
+            String object = creatorJsonForTCOD.getJsonOfElement(id);
             sendToServer(object);
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,35 +84,33 @@ public class Controller implements
         checkTheChanges();
     }
 
-    private void setViewsByActionsFromServer(String data)
-    {
+    private void setViewsByActionsFromServer(String data) {
+        SetterStatusViewFRomServer.setPropertyHashCode(context, data);
+
         try {
-            SetterStatusViewFRomServer.setPropertyHashCode(context,data);
-            SetterStatusViewFRomServer.setButtonsStatus(this.controllerButtons,data);
-            SetterStatusViewFRomServer.setSeekBarsStatus(this.controllerSeekBars,data);
-            SetterStatusViewFRomServer.setTextViewSensors(this.controllerTextViews,data);
+            SetterStatusViewFRomServer.setButtonsStatus(this.controllerButtons, data);
+            SetterStatusViewFRomServer.setSeekBarsStatus(this.controllerSeekBars, data);
+            SetterStatusViewFRomServer.setTextViewSensors(this.controllerTextViews, data);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
     }
 
-    private void checkTheChanges()
-    {
+    private void checkTheChanges() {
         dataFromServer.readDataFromServerByHashCode();
     }
 
-    public void readOnceFromServer()
-    {
+    public void readOnceFromServer() {
         dataFromServer.readDataFromServer();
     }
 
-    private void sendToServer(String json)
-    {
+    private void sendToServer(String json) {
         dataFromServer.writeDataToServer(json);
     }
 
-    private UrlPreference getUrlPreference()
-    {
+    private UrlPreference getUrlPreference() {
         try {
             return ControllerSharedPreference.getUrlPreference(context);
         } catch (Exception e) {
@@ -129,17 +122,19 @@ public class Controller implements
 
     public void setArrayListButtons(ArrayList<ControllerButton> controllerButtons) {
         this.controllerButtons = controllerButtons;
-        new ImplementationButtons(controllerButtons,this,this);
+        new ImplementationButtons(controllerButtons, this, this);
 
     }
+
     public void setArrayListSeekBars(ArrayList<ControllerSeekBar> controllerSeekBarArrayList) {
         this.controllerSeekBars = controllerSeekBarArrayList;
-        new ImplementationSeekBars(controllerSeekBarArrayList,this,this);
+        new ImplementationSeekBars(controllerSeekBarArrayList, this, this);
 
     }
+
     public void setArrayListTextViewSensors(ArrayList<ControllerTextView> arrayListControllerTextViews) {
         this.controllerTextViews = arrayListControllerTextViews;
-        new ImplementationTextView(arrayListControllerTextViews,this);
+        new ImplementationTextView(arrayListControllerTextViews, this);
     }
 
 
@@ -159,30 +154,27 @@ public class Controller implements
 
     @Override
     public void updateActivity(String data, int codeResponse) {
-          if(data != null)
-          {
-              setViewsByActionsFromServer(data);
+        if (data != null) {
+            setViewsByActionsFromServer(data);
 
-              if(!scheduleTimeUpDate.isRun())
-                  scheduleTimeUpDate.run();
-          }
-          else {
-              stopProcess();
-              Toast.makeText(context, context.getString(R.string.error_of_server) + codeResponse, Toast.LENGTH_LONG).show();
-          }
-      }
+            if (!scheduleTimeUpDate.isRun())
+                scheduleTimeUpDate.run();
+        } else {
+            stopProcess();
+            Toast.makeText(context, context.getString(R.string.error_of_server) + codeResponse, Toast.LENGTH_LONG).show();
+        }
+    }
 
 
     public void setPreference() {
-        AlertDialogSetterURL alertDialogSetterURL = new AlertDialogSetterURL(context,this);
+        AlertDialogSetterURL alertDialogSetterURL = new AlertDialogSetterURL(context, this);
         alertDialogSetterURL.show(getUrlPreference());
     }
 
     @Override
-    public void setterURL(UrlPreference urlPreference)
-    {
-       ControllerSharedPreference.putUrlPreference(context,urlPreference);
-       Toast.makeText(context, R.string.restart_app,Toast.LENGTH_LONG).show();
+    public void setterURL(UrlPreference urlPreference) {
+        ControllerSharedPreference.putUrlPreference(context, urlPreference);
+        Toast.makeText(context, R.string.restart_app, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -192,14 +184,14 @@ public class Controller implements
 
     @Override
     public void longPress(int id) {
-        MenuOfViewElement menuOfViewElement = new MenuOfViewElement(context,id,this);
+        MenuOfViewElement menuOfViewElement = new MenuOfViewElement(context, id, this);
         menuOfViewElement.show();
     }
 
     @Override
     public void removeView(int id) {
         try {
-            EditorViewsJson.removeViewWithID(id,context);
+            EditorViewsJson.removeViewWithID(id, context);
             irefreshActivity.refresh();
         } catch (Exception e) {
             e.printStackTrace();
@@ -207,14 +199,13 @@ public class Controller implements
     }
 
     @Override
-    public void editView(int id)
-    {
-        ((AppCompatActivity)context).startActivityForResult(new Intent(context,ActivityEditView.class).putExtra("id",id), MainActivity.CODE_REQUEST_ACTIVITY_CREATE_NEW_VIEW);
+    public void editView(int id) {
+        ((AppCompatActivity) context).startActivityForResult(new Intent(context, ActivityEditView.class).putExtra("id", id), MainActivity.CODE_REQUEST_ACTIVITY_CREATE_NEW_VIEW);
     }
 
-    public void stopProcess()
-    {
-        if(scheduleTimeUpDate.isRun())
+    public void stopProcess() {
+        if (scheduleTimeUpDate.isRun())
             scheduleTimeUpDate.stop();
     }
+
 }

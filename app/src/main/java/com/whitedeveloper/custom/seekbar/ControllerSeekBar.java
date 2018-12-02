@@ -3,17 +3,16 @@ package com.whitedeveloper.custom.seekbar;
 import abak.tr.com.boxedverticalseekbar.BoxedVertical;
 import android.view.View;
 import android.widget.LinearLayout;
-import com.whitedeveloper.controlhome.factory.seekbar.CreatorSeekBar;
-import com.whitedeveloper.custom.PinArduino;
+import com.whitedeveloper.custom.PinTCOD;
 
 
 public class ControllerSeekBar {
 
     private final BoxedVertical seekBar;
-    private final PinArduino arduinoPin;
+    private final PinTCOD arduinoPin;
     private final LinearLayout linearLayout;
 
-    public ControllerSeekBar(BoxedVertical seekBar, LinearLayout linearLayout, PinArduino arduinoPin) {
+    public ControllerSeekBar(BoxedVertical seekBar, LinearLayout linearLayout, PinTCOD arduinoPin) {
         this.seekBar = seekBar;
         this.arduinoPin = arduinoPin;
         this.linearLayout = linearLayout;
@@ -43,7 +42,7 @@ public class ControllerSeekBar {
         return seekBar;
     }
 
-    public PinArduino getPinArduino() {
+    public PinTCOD getPinArduino() {
         return arduinoPin;
     }
     public int getId()

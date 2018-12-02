@@ -1,6 +1,6 @@
 package com.whitedeveloper.custom;
 
-public class PinArduino
+public class PinTCOD
 {
     public static final String PIN = "P";
     public static final String TYPE_PIN = "T";
@@ -31,7 +31,7 @@ public class PinArduino
         this.value = value;
     }
 
-    public PinArduino(String typePin, int pin) {
+    public PinTCOD(String typePin, int pin) {
         this.typePin = typePin;
         this.pin = pin;
 

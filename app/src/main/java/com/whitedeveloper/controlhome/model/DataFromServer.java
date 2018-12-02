@@ -8,6 +8,7 @@ import com.whitedeveloper.controlhome.controller.prefaranse.UrlPreference;
 import com.whitedeveloper.controlhome.model.http.ConnectorHttp;
 import com.whitedeveloper.controlhome.model.http.HashFromServer;
 import com.whitedeveloper.controlhome.model.http.IresponseFromServer;
+import com.whitedeveloper.controlhome.model.http.Request;
 import com.whitedeveloper.controlhome.model.http.writerreader.ReadFromServer;
 import com.whitedeveloper.controlhome.model.http.writerreader.ReaderServerHashCode;
 import com.whitedeveloper.controlhome.model.http.writerreader.WriteToServer;
@@ -30,18 +31,17 @@ public class DataFromServer implements IresponseFromServer, HashFromServer {
 
     public void readDataFromServerByHashCode()
     {
-        new ReaderServerHashCode(ConnectorHttp.getConnection(urlPreference.getHushUrl(),"GET"),this).execute();
+        new ReaderServerHashCode(ConnectorHttp.getConnection(urlPreference.getHushUrl(), Request.GET),this).execute();
     }
 
     public void readDataFromServer()
     {
-        Log.i("TEST_READ","LOL");
-        new ReadFromServer(ConnectorHttp.getConnection(urlPreference, "GET"), this).execute();
+        new ReadFromServer(ConnectorHttp.getConnection(urlPreference, Request.GET), this).execute();
     }
 
     public void writeDataToServer(String data)
     {
-        new WriteToServer(ConnectorHttp.getConnection(urlPreference,"POST"),this).execute(data);
+        new WriteToServer(ConnectorHttp.getConnection(urlPreference,Request.POST),this).execute(data);
     }
 
     private boolean checkHashCode(String hashCodeFromServer)

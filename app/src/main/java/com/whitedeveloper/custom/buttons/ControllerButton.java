@@ -2,21 +2,20 @@ package com.whitedeveloper.custom.buttons;
 
 import android.view.View;
 import android.widget.Button;
-import com.whitedeveloper.custom.IrefreshActivity;
-import com.whitedeveloper.custom.PinArduino;
+import com.whitedeveloper.custom.PinTCOD;
 
 public class ControllerButton
 {
     private long id;
     private final Button button;
-    private final PinArduino pinArduino;
+    private final PinTCOD pinTCOD;
     private boolean checked = false;
 
 
-    public ControllerButton(Button button, PinArduino pinArduino)
+    public ControllerButton(Button button, PinTCOD pinTCOD)
     {
         this.button = button;
-        this.pinArduino = pinArduino;
+        this.pinTCOD = pinTCOD;
         this.id  = button.getId();
     }
 
@@ -32,12 +31,12 @@ public class ControllerButton
         if(checked)
         {
             button.setActivated(true);
-            pinArduino.setValue(1);
+            pinTCOD.setValue(1);
         }
         else
         {
             button.setActivated(false);
-            pinArduino.setValue(0);
+            pinTCOD.setValue(0);
         }
     }
 
@@ -47,8 +46,8 @@ public class ControllerButton
         checkChecked();
     }
 
-    public PinArduino getPinArduino() {
-            return pinArduino;
+    public PinTCOD getPinTCOD() {
+            return pinTCOD;
         }
     void setOnClickListener(View.OnClickListener onClickLIstener)
     {

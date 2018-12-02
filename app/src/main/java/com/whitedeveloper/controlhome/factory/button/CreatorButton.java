@@ -5,7 +5,7 @@ import android.widget.Button;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.factory.CreatorView;
 import com.whitedeveloper.controlhome.factory.style.ObtainStyle;
-import com.whitedeveloper.custom.PinArduino;
+import com.whitedeveloper.custom.PinTCOD;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,7 +49,7 @@ public class CreatorButton extends CreatorView {
     }
 
     @Override
-    public PinArduino createPinArduino() throws JSONException {
-        return new PinArduino(PinArduino.TYPE_PIN_DIGITAL,getJsonObject().getInt(ATR_PIN));
+    public PinTCOD createPinArduino() throws JSONException {
+        return new PinTCOD(PinTCOD.TYPE_PIN_DIGITAL,getJsonObject().getInt(ATR_PIN));
     }
 }

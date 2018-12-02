@@ -19,7 +19,7 @@ import com.whitedeveloper.controlhome.factory.Checker;
 import com.whitedeveloper.controlhome.factory.FactoryViews;
 import com.whitedeveloper.controlhome.factory.seekbar.CreatorSeekBar;
 import com.whitedeveloper.controlhome.view.activitycreator.ActivityCreateNewElement;
-import com.whitedeveloper.custom.PinArduino;
+import com.whitedeveloper.custom.PinTCOD;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -103,9 +103,9 @@ public class FragmentSeekBar extends Fragment {
     {
        final StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append("{").append("\n");
-                    stringBuilder.append("  \"").append(PinArduino.TYPE_PIN).append("\":\"").append(PinArduino.TYPE_PIN_DIGITAL_ANALOG).append("\",\n");
-                    stringBuilder.append("  \"").append(PinArduino.PIN).append("\":").append(pin).append(",\n");
-                    stringBuilder.append("  \"").append(PinArduino.STATUS).append("\":").append(value).append("\n");
+                    stringBuilder.append("  \"").append(PinTCOD.TYPE_PIN).append("\":\"").append(PinTCOD.TYPE_PIN_DIGITAL_ANALOG).append("\",\n");
+                    stringBuilder.append("  \"").append(PinTCOD.PIN).append("\":").append(pin).append(",\n");
+                    stringBuilder.append("  \"").append(PinTCOD.STATUS).append("\":").append(value).append("\n");
                     stringBuilder.append("}");
         tvExampleJson.setText(stringBuilder);
     }

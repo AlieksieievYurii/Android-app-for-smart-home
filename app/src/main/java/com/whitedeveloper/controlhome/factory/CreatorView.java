@@ -2,7 +2,7 @@ package com.whitedeveloper.controlhome.factory;
 
 import android.content.Context;
 import android.view.View;
-import com.whitedeveloper.custom.PinArduino;
+import com.whitedeveloper.custom.PinTCOD;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,5 +26,5 @@ public abstract class CreatorView {
     }
 
     public abstract View createView() throws JSONException;
-    public abstract PinArduino createPinArduino() throws JSONException;
+    public abstract PinTCOD createPinArduino() throws JSONException;
 }

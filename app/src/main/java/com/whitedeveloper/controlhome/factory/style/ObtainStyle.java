@@ -77,14 +77,10 @@ public class ObtainStyle
                                 typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_height,0)));
         layoutParams.rowSpec = GridLayout.spec(GridLayout.UNDEFINED,2);
 
-        layoutParams.setMargins(typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
-                typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
-                typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
-                typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0));
+        layoutParams.setMargins(ConverterDpPx.dpToPx(6),ConverterDpPx.dpToPx(6),ConverterDpPx.dpToPx(6),ConverterDpPx.dpToPx(6));
         linearLayout.setLayoutParams(layoutParams);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.setGravity(RelativeLayout.CENTER_HORIZONTAL);
-        //linearLayout.setPadding(5,5,6,3);
         linearLayout.setBackgroundResource(R.drawable.background_seek_bar_container);
 
         typedArray.recycle();

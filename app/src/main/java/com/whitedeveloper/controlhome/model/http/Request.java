@@ -14,4 +14,10 @@ public enum Request
     public String toString() {
         return request;
     }
+
+    public boolean equals(Request request)
+    {
+        return request.toString().equals(this.toString());
+    }
+
 }
