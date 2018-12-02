@@ -11,4 +11,6 @@ public class TagKeys {
     public static final String PROPERTY_HIGH_LEVEL_FOR_ACTIONS = "H";
     public static final String PROPERTY_VALUE_FOR_ACTIONS = "V";
     public static final String PROPERTY_VALUE_FOR_SENSOR = "Value";
+
+    public static final int CODE_REQUEST_ACTIVITY_CREATE_NEW_VIEW = 1;
 }

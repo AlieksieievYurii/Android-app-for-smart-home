@@ -70,7 +70,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/E:/Programs/IntelliJ%20IDEA%20Community%20Edition%202018.2/plugins/android/lib/android.jar!/images/material_design_icons/social/ic_sentiment_satisfied_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/E:/Programs/IntelliJ%20IDEA%20Community%20Edition%202018.2/plugins/android/lib/android.jar!/images/material_design_icons/alert/ic_error_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -80,12 +80,10 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="faffff" />
-                            <entry key="height" value="48" />
-                            <entry key="outputName" value="ic_sentiment_satisfied_black_48dp" />
+                            <entry key="color" value="ff0000" />
+                            <entry key="outputName" value="ic_error" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\WhiteDeveloper" />
-                            <entry key="width" value="48" />
                           </map>
                         </option>
                       </PersistentState>

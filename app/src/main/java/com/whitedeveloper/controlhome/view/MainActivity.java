@@ -20,13 +20,11 @@ import com.whitedeveloper.custom.buttons.ControllerButton;
 import com.whitedeveloper.custom.seekbar.ControllerSeekBar;
 import com.whitedeveloper.custom.textview.ControllerTextView;
 import org.json.JSONArray;
-
 import java.util.ArrayList;
+import static com.whitedeveloper.TagKeys.CODE_REQUEST_ACTIVITY_CREATE_NEW_VIEW;
 
 
 public class MainActivity extends AppCompatActivity implements IcreateView, IrefreshActivity {
-
-    public static final int CODE_REQUEST_ACTIVITY_CREATE_NEW_VIEW = 1;
 
     private ArrayList<ControllerButton> arrayListControllerButtons = new ArrayList<>();
     private ArrayList<ControllerSeekBar> arrayListControllerSeekBars = new ArrayList<>();
@@ -60,8 +58,6 @@ public class MainActivity extends AppCompatActivity implements IcreateView, Iref
                 break;
             case R.id.activity_main_item_add_new_view:
                 startActivityForResult(new Intent(MainActivity.this, ActivityCreateNewElement.class), CODE_REQUEST_ACTIVITY_CREATE_NEW_VIEW);
-                break;
-            default:
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -33,6 +33,8 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
+import static com.whitedeveloper.TagKeys.CODE_REQUEST_ACTIVITY_CREATE_NEW_VIEW;
+
 public class Controller implements
         UpDateActivity,
         IonClickButton,
@@ -200,7 +202,7 @@ public class Controller implements
 
     @Override
     public void editView(int id) {
-        ((AppCompatActivity) context).startActivityForResult(new Intent(context, ActivityEditView.class).putExtra("id", id), MainActivity.CODE_REQUEST_ACTIVITY_CREATE_NEW_VIEW);
+        ((AppCompatActivity) context).startActivityForResult(new Intent(context, ActivityEditView.class).putExtra("id", id), CODE_REQUEST_ACTIVITY_CREATE_NEW_VIEW);
     }
 
     public void stopProcess() {
