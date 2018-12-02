@@ -51,7 +51,7 @@ public class AlertDialogSetterURL
                     alertDialog.dismiss();
                 }
                 else
-                    Toast.makeText(context,"Wrong URL!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.wrong_url,Toast.LENGTH_SHORT).show();
             }
         });
 

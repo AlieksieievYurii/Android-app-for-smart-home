@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
+import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.view.MainActivity;
 import com.whitedeveloper.controlhome.view.activitycreator.editorviews.ActivityEditView;
 import com.whitedeveloper.controlhome.view.alertdialog.AlertDialogSetterURL;
@@ -167,7 +168,7 @@ public class Controller implements
           }
           else {
               stopProcess();
-              Toast.makeText(context, "Error of server CODE:" + codeResponse, Toast.LENGTH_LONG).show();
+              Toast.makeText(context, context.getString(R.string.error_of_server) + codeResponse, Toast.LENGTH_LONG).show();
           }
       }
 
@@ -181,7 +182,7 @@ public class Controller implements
     public void setterURL(UrlPreference urlPreference)
     {
        ControllerSharedPreference.putUrlPreference(context,urlPreference);
-       Toast.makeText(context,"Please restart the App for apply URL",Toast.LENGTH_LONG).show();
+       Toast.makeText(context, R.string.restart_app,Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -202,7 +203,6 @@ public class Controller implements
             irefreshActivity.refresh();
         } catch (Exception e) {
             e.printStackTrace();
-            Log.i("REMOVING EL","Error of removing element!");
         }
     }
 
