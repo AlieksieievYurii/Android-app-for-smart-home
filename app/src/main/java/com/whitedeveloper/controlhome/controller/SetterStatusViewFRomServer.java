@@ -28,7 +28,7 @@ class SetterStatusViewFRomServer {
 
         for (ControllerButton controllerButton : controllerButtons) {
             final JSONObject button = getJsonObjectByTCODPin(
-                    controllerButton.getPinTCOD().getPin(),
+                    controllerButton.getPinOfTCOD().getPin(),
                     jsonArrayListActions);
             if (button != null)
                 controllerButton.setChecked(isDigitalPinON(button));

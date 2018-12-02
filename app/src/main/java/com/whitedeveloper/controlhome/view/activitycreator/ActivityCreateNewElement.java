@@ -24,9 +24,9 @@ public class ActivityCreateNewElement extends AppCompatActivity {
         final TabLayout tabLayout = findViewById(R.id.tl_type_element);
         placeFragment = findViewById(R.id.vp_place_setttings);
 
-        tabLayout.addTab(tabLayout.newTab().setText("Button"));
-        tabLayout.addTab(tabLayout.newTab().setText("SeekBar"));
-        tabLayout.addTab(tabLayout.newTab().setText("Sensor"));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.button));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.seek_bar));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.sensor));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final PageAdapter pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());

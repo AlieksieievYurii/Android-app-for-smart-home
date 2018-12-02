@@ -23,6 +23,9 @@
     <string name="wrong_url">Wrong URL!</string>
     <string name="pin_existed">This pin already exists!</string>
     <string name="pin_can_be_empty">Pin can\'t be empty!</string>
+    <string name="button">Button</string>
+    <string name="seek_bar">SeekBar</string>
+    <string name="sensor">Sensor</string>
 
     <string-array name="name_icons">
         <item>lamp</item>

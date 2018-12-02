@@ -2,7 +2,7 @@ package com.whitedeveloper.controlhome.controller.json;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import static com.whitedeveloper.custom.PinTCOD.*;
+import static com.whitedeveloper.custom.PinOfTCOD.*;
 
 class CreatorJSON
 {

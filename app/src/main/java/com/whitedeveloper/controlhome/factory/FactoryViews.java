@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.whitedeveloper.controlhome.factory.button.CreatorButton;
 import com.whitedeveloper.controlhome.factory.seekbar.CreatorSeekBar;
 import com.whitedeveloper.controlhome.factory.textview.CreatorTextView;
-import com.whitedeveloper.custom.PinTCOD;
+import com.whitedeveloper.custom.PinOfTCOD;
 import com.whitedeveloper.custom.buttons.ControllerButton;
 import com.whitedeveloper.custom.seekbar.ControllerSeekBar;
 import com.whitedeveloper.custom.textview.ControllerTextView;
@@ -54,15 +54,15 @@ public class FactoryViews {
     private void createButton(JSONObject jsonObject) throws JSONException {
         creatorView = new CreatorButton(context, jsonObject);
         final View view = creatorView.createView();
-        final PinTCOD pinTCOD = creatorView.createPinTCOD();
-        icreateView.createButton(new ControllerButton((Button) view, pinTCOD));
+        final PinOfTCOD pinOfTCOD = creatorView.createPinTCOD();
+        icreateView.createButton(new ControllerButton((Button) view, pinOfTCOD));
     }
 
     private void createSeekBar(JSONObject jsonObject) throws JSONException {
         creatorView = new CreatorSeekBar(context, jsonObject);
         final View view = creatorView.createView();
-        final PinTCOD pinTCOD = creatorView.createPinTCOD();
-        icreateView.createSeekBar(new ControllerSeekBar(((CreatorSeekBar) creatorView).getBoxedVertical(), (LinearLayout) view, pinTCOD));
+        final PinOfTCOD pinOfTCOD = creatorView.createPinTCOD();
+        icreateView.createSeekBar(new ControllerSeekBar(((CreatorSeekBar) creatorView).getBoxedVertical(), (LinearLayout) view, pinOfTCOD));
     }
 
     private void createTextView(JSONObject jsonObject) throws JSONException {

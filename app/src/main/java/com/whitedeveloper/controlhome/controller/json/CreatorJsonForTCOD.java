@@ -1,7 +1,7 @@
 package com.whitedeveloper.controlhome.controller.json;
 
 import com.whitedeveloper.custom.buttons.ControllerButton;
-import com.whitedeveloper.custom.PinTCOD;
+import com.whitedeveloper.custom.PinOfTCOD;
 import com.whitedeveloper.custom.seekbar.ControllerSeekBar;
 import org.json.JSONObject;
 
@@ -38,17 +38,17 @@ public class CreatorJsonForTCOD
     private String getJsonButtonAction(int id) throws Exception {
         for(ControllerButton controllerButton : arrayListControllerButton)
             if(controllerButton.getId() == id)
-               return getJsonObjectByPinTCOD(controllerButton.getPinTCOD()).toString();
+               return getJsonObjectByPinTCOD(controllerButton.getPinOfTCOD()).toString();
 
         throw new Exception("Error can not found button in ArrayList of ControllerButton with id " + id);
     }
 
-    private JSONObject getJsonObjectByPinTCOD(PinTCOD pinTCOD)
+    private JSONObject getJsonObjectByPinTCOD(PinOfTCOD pinOfTCOD)
     {
 
-        return CreatorJSON.getJsonObjectPinTCOD(pinTCOD.getTypePin(),
-                                         pinTCOD.getPin(),
-                                         pinTCOD.getValue());
+        return CreatorJSON.getJsonObjectPinTCOD(pinOfTCOD.getTypePin(),
+                                         pinOfTCOD.getPin(),
+                                         pinOfTCOD.getValue());
     }
 
     private String getJsonSeekBarAction(int id) throws Exception {

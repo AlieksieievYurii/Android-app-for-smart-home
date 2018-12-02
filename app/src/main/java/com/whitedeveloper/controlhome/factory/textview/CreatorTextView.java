@@ -6,7 +6,7 @@ import android.widget.TextView;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.factory.CreatorView;
 import com.whitedeveloper.controlhome.factory.style.ObtainStyle;
-import com.whitedeveloper.custom.PinTCOD;
+import com.whitedeveloper.custom.PinOfTCOD;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,7 +43,7 @@ public class CreatorTextView extends CreatorView
     }
 
     @Override
-    public PinTCOD createPinTCOD(){
+    public PinOfTCOD createPinTCOD(){
         return null;
     }
 

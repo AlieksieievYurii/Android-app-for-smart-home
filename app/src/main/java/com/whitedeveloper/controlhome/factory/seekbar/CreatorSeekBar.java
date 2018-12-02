@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.whitedeveloper.controlhome.factory.CreatorView;
 import com.whitedeveloper.controlhome.factory.style.ObtainStyle;
-import com.whitedeveloper.custom.PinTCOD;
+import com.whitedeveloper.custom.PinOfTCOD;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,7 +51,7 @@ public class CreatorSeekBar extends CreatorView {
     }
 
     @Override
-    public PinTCOD createPinTCOD() throws JSONException {
-        return new PinTCOD(PinTCOD.TYPE_PIN_DIGITAL_ANALOG,getJsonObject().getInt(ATR_PIN));
+    public PinOfTCOD createPinTCOD() throws JSONException {
+        return new PinOfTCOD(PinOfTCOD.TYPE_PIN_DIGITAL_ANALOG,getJsonObject().getInt(ATR_PIN));
     }
 }

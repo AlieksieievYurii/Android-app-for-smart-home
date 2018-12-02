@@ -2,7 +2,6 @@ package com.whitedeveloper.controlhome.view.activitycreator.editorviews;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import com.whitedeveloper.controlhome.R;
 
 import static com.whitedeveloper.TagKeys.*;
@@ -10,14 +9,13 @@ import static com.whitedeveloper.TagKeys.*;
 public class ActivityEditView extends AppCompatActivity
 {
 
-    private static final String ID =  "id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_view);
 
-        final int id = getIntent().getIntExtra(ID,0);
+        final int id = getIntent().getIntExtra(ATR_ID,0);
 
         switch (getTypeView(id))
         {

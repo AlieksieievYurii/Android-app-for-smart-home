@@ -29,7 +29,6 @@ public class MenuOfViewElement {
 
     private void init()
     {
-
         builder = new AlertDialog.Builder(context);
         final View view = ((LayoutInflater) Objects.requireNonNull(context.getSystemService(Context.LAYOUT_INFLATER_SERVICE))).inflate(R.layout.layout_alert_dialog_menu_of_view,null);
         final Button btnEdit = view.findViewById(R.id.btn_al_edit_view);

@@ -15,7 +15,7 @@ import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
 import com.whitedeveloper.controlhome.factory.Checker;
 import com.whitedeveloper.controlhome.view.Icons;
 import com.whitedeveloper.controlhome.view.activitycreator.ActivityCreateNewElement;
-import com.whitedeveloper.custom.PinTCOD;
+import com.whitedeveloper.custom.PinOfTCOD;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -121,9 +121,9 @@ public class FragmentButton extends Fragment {
     private void showExampleJson() {
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("{").append("\n");
-        stringBuilder.append("  \"").append(PinTCOD.TYPE_PIN).append("\":\"").append(PinTCOD.TYPE_PIN_DIGITAL).append("\",\n");
-        stringBuilder.append("  \"").append(PinTCOD.PIN).append("\":").append(pin).append(",\n");
-        stringBuilder.append("  \"").append(PinTCOD.STATUS).append("\":\"").append(btnExample.isActivated() ? PinTCOD.STATUS_HIGH : PinTCOD.STATUS_LOW).append("\"\n");
+        stringBuilder.append("  \"").append(PinOfTCOD.TYPE_PIN).append("\":\"").append(PinOfTCOD.TYPE_PIN_DIGITAL).append("\",\n");
+        stringBuilder.append("  \"").append(PinOfTCOD.PIN).append("\":").append(pin).append(",\n");
+        stringBuilder.append("  \"").append(PinOfTCOD.STATUS).append("\":\"").append(btnExample.isActivated() ? PinOfTCOD.STATUS_HIGH : PinOfTCOD.STATUS_LOW).append("\"\n");
         stringBuilder.append("}");
 
         tvExampleJson.setText(stringBuilder);

@@ -5,7 +5,7 @@ import android.widget.Button;
 import com.whitedeveloper.controlhome.factory.CreatorView;
 import com.whitedeveloper.controlhome.factory.style.ObtainStyle;
 import com.whitedeveloper.controlhome.view.Icons;
-import com.whitedeveloper.custom.PinTCOD;
+import com.whitedeveloper.custom.PinOfTCOD;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,7 +31,7 @@ public class CreatorButton extends CreatorView {
     }
 
     @Override
-    public PinTCOD createPinTCOD() throws JSONException {
-        return new PinTCOD(PinTCOD.TYPE_PIN_DIGITAL,getJsonObject().getInt(ATR_PIN));
+    public PinOfTCOD createPinTCOD() throws JSONException {
+        return new PinOfTCOD(PinOfTCOD.TYPE_PIN_DIGITAL,getJsonObject().getInt(ATR_PIN));
     }
 }

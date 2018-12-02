@@ -1,6 +1,6 @@
 package com.whitedeveloper.custom;
 
-public class PinTCOD
+public class PinOfTCOD
 {
     public static final String PIN = "P";
     public static final String TYPE_PIN = "T";
@@ -31,7 +31,7 @@ public class PinTCOD
         this.value = value;
     }
 
-    public PinTCOD(String typePin, int pin) {
+    public PinOfTCOD(String typePin, int pin) {
         this.typePin = typePin;
         this.pin = pin;
 
