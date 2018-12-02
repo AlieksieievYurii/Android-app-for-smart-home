@@ -18,30 +18,33 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Objects;
+import java.util.Random;
 
-public class FragmentTextViewSensor extends Fragment
-{
-    public static final String[] NAME_SENSORS = {CreatorTextView.TEMPERATURE,CreatorTextView.STATE_DAY};
+public class FragmentTextViewSensor extends Fragment {
+    public static final String[] NAME_SENSORS = {CreatorTextView.TEMPERATURE, CreatorTextView.STATE_DAY};
 
     private View view;
-
-    private EditText edtId;
     private TextView tvExample;
-
-    private String id;
     private String typeSensor;
+
+    private int id;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_text_view_sensor,container,false);
+        view = inflater.inflate(R.layout.fragment_text_view_sensor, container, false);
         init();
+        setRandomId();
         return view;
     }
 
-    private void init()
-    {
-        edtId = view.findViewById(R.id.edt_id);
+    private void setRandomId() {
+        do {
+            id = new Random().nextInt();
+        } while (Checker.checkId(id, view.getContext()));
+    }
+
+    private void init() {
         tvExample = view.findViewById(R.id.tv_sensor_example);
         final Spinner spTypeSensor = view.findViewById(R.id.sp_sensor_type);
 
@@ -66,22 +69,16 @@ public class FragmentTextViewSensor extends Fragment
 
         view.findViewById(R.id.btn_add_new_view).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                readAll();
-                if(checkValues())
-                {
-                    saveJsonForCreatingViews();
-                    ((ActivityCreateNewElement) Objects.requireNonNull(getActivity())).finishActivity();
-                }
-
+            public void onClick(View view) {
+                saveJsonForCreatingViews();
+                ((ActivityCreateNewElement) Objects.requireNonNull(getActivity())).finishActivity();
             }
         });
     }
 
     private void saveJsonForCreatingViews() {
         try {
-            EditorViewsJson.saveJsonForCreatingViews(getJSON(),view.getContext());
+            EditorViewsJson.saveJsonForCreatingViews(getJSON(), view.getContext());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -90,35 +87,16 @@ public class FragmentTextViewSensor extends Fragment
     private JSONObject getJSON() throws JSONException {
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put(FactoryViews.TYPE_VIEW,FactoryViews.TYPE_VIEW_TEXT_VIEW);
-        jsonObject.put(CreatorTextView.ATR_ID,Integer.parseInt(id));
-        jsonObject.put(CreatorTextView.ATR_IMAGE_TYPE,typeSensor);
-        jsonObject.put(CreatorTextView.ATR_NAME_SENSOR_ARDUINO,typeSensor);
+        jsonObject.put(FactoryViews.TYPE_VIEW, FactoryViews.TYPE_VIEW_TEXT_VIEW);
+        jsonObject.put(CreatorTextView.ATR_ID, id);
+        jsonObject.put(CreatorTextView.ATR_IMAGE_TYPE, typeSensor);
+        jsonObject.put(CreatorTextView.ATR_NAME_SENSOR_ARDUINO, typeSensor);
 
         return jsonObject;
     }
 
-    private boolean checkValues()
-          {
-             if(id.trim().equals(""))
-             {
-                 Toast.makeText(view.getContext(),"Id can't be empty!",Toast.LENGTH_SHORT).show();
-                 return false;
-             }else if(Checker.checkId(Integer.parseInt(id), view.getContext()))
-             {
-                 Toast.makeText(view.getContext(),"This Id is already exists!",Toast.LENGTH_SHORT).show();
-                 return false;
-             }
-             return true;
-          }
 
-    private void readAll()
-    {
-        id = edtId.getText().toString();
-    }
-
-    private void showExampleView()
-    {
+    private void showExampleView() {
         tvExample.setBackgroundResource(CreatorTextView.getBackgroundResource(typeSensor));
     }
 }

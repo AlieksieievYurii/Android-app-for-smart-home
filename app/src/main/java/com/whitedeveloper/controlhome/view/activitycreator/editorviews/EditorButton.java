@@ -19,8 +19,7 @@ import org.json.JSONObject;
 
 import static com.whitedeveloper.controlhome.view.activitycreator.fragments.FragmentButton.NAME_ICONS;
 
-class EditorButton
-{
+class EditorButton {
     private final AppCompatActivity appCompatActivity;
 
     private final int originId;
@@ -28,6 +27,7 @@ class EditorButton
     private EditText edtName;
     private EditText edtPinController;
     private Spinner spImageType;
+    private TextView tvError;
 
     private Button btnExample;
 
@@ -37,8 +37,7 @@ class EditorButton
     private String pin;
     private String imageType;
 
-    EditorButton(AppCompatActivity appCompatActivity, int id)
-    {
+    EditorButton(AppCompatActivity appCompatActivity, int id) {
         this.originId = id;
         this.appCompatActivity = appCompatActivity;
         appCompatActivity.setContentView(R.layout.fragment_button);
@@ -47,25 +46,22 @@ class EditorButton
         setAllOldFields();
     }
 
-    private void init()
-    {
-        final EditText edtId = appCompatActivity.findViewById(R.id.edt_id);
-        edtId.setText(String.valueOf(originId));
-        edtId.setEnabled(false);
+    private void init() {
 
         edtName = appCompatActivity.findViewById(R.id.edt_name);
         edtPinController = appCompatActivity.findViewById(R.id.edt_pin_controller);
         spImageType = appCompatActivity.findViewById(R.id.sp_image_type);
         tvExampleJSON = appCompatActivity.findViewById(R.id.tv_example_json);
+        tvError = appCompatActivity.findViewById(R.id.tv_error);
 
         btnExample = appCompatActivity.findViewById(R.id.btn_example);
         btnExample.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View view) {
-                       btnExample.setActivated(!btnExample.isActivated());
-                       showExampleJson();
-                   }
-               });
+            @Override
+            public void onClick(View view) {
+                btnExample.setActivated(!btnExample.isActivated());
+                showExampleJson();
+            }
+        });
 
         final TypingListener typingListener = new TypingListener();
         edtName.addTextChangedListener(typingListener);
@@ -74,15 +70,15 @@ class EditorButton
         final Button btnApply = appCompatActivity.findViewById(R.id.btn_add_new_view);
         btnApply.setText(R.string.text_editor_views_btn_apply);
         btnApply.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(checkValues()) {
-                            saveJsonForCreatingViews();
-                            appCompatActivity.setResult(Activity.RESULT_OK);
-                            appCompatActivity.finish();
-                        }
-                    }
-                });
+            @Override
+            public void onClick(View view) {
+                if (checkValues()) {
+                    saveJsonForCreatingViews();
+                    appCompatActivity.setResult(Activity.RESULT_OK);
+                    appCompatActivity.finish();
+                }
+            }
+        });
 
         final ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(appCompatActivity.getBaseContext(), android.R.layout.simple_spinner_item, NAME_ICONS);
@@ -107,64 +103,58 @@ class EditorButton
 
     private void saveJsonForCreatingViews() {
         try {
-            EditorViewsJson.saveChangedJsonForCreatingView(getJSON(),appCompatActivity.getBaseContext());
+            EditorViewsJson.saveChangedJsonForCreatingView(getJSON(), appCompatActivity.getBaseContext());
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private void showExampleButton()
-    {
+    private void showExampleButton() {
         btnExample.setText(name);
         btnExample.setBackgroundResource(CreatorButton.getBackgroundResource(imageType));
     }
 
-    private void showExampleJson()
-    {
+    private void showExampleJson() {
         final StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("{").append("\n");
-            stringBuilder.append("  \"").append(PinTCOD.TYPE_PIN).append("\":\"").append(PinTCOD.TYPE_PIN_DIGITAL).append("\",\n");
-            stringBuilder.append("  \"").append(PinTCOD.PIN).append("\":").append(pin).append(",\n");
-            stringBuilder.append("  \"").append(PinTCOD.STATUS).append("\":\"").append(btnExample.isActivated()? PinTCOD.STATUS_HIGH: PinTCOD.STATUS_LOW).append("\"\n");
-            stringBuilder.append("}");
+        stringBuilder.append("{").append("\n");
+        stringBuilder.append("  \"").append(PinTCOD.TYPE_PIN).append("\":\"").append(PinTCOD.TYPE_PIN_DIGITAL).append("\",\n");
+        stringBuilder.append("  \"").append(PinTCOD.PIN).append("\":").append(pin).append(",\n");
+        stringBuilder.append("  \"").append(PinTCOD.STATUS).append("\":\"").append(btnExample.isActivated() ? PinTCOD.STATUS_HIGH : PinTCOD.STATUS_LOW).append("\"\n");
+        stringBuilder.append("}");
 
         tvExampleJSON.setText(stringBuilder);
     }
 
-    private boolean checkValues()
-    {
-        if(pin.trim().equals(""))
-       {
-           Toast.makeText(appCompatActivity.getBaseContext(),"Pin can't be empty!",Toast.LENGTH_SHORT).show();
-           return false;
-       }else if(!String.valueOf(originPin).equals(pin) && Checker.checkPin(Integer.parseInt(pin),appCompatActivity))
-       {
-           Toast.makeText(appCompatActivity,"This pin is already exists!",Toast.LENGTH_SHORT).show();
-           return false;
-       }
+    private boolean checkValues() {
+        if (pin.trim().equals("")) {
+            tvError.setVisibility(View.VISIBLE);
+            tvError.setText(R.string.pin_can_be_empty);
+            return false;
+        } else if (!String.valueOf(originPin).equals(pin) && Checker.checkPin(Integer.parseInt(pin), appCompatActivity)) {
+            tvError.setVisibility(View.VISIBLE);
+            tvError.setText(R.string.pin_existed);
+            return false;
+        }
 
-       return true;
+        return true;
     }
 
     private JSONObject getJSON() throws JSONException {
         final JSONObject jsonObject = new JSONObject();
-        jsonObject.put(FactoryViews.TYPE_VIEW,FactoryViews.TYPE_VIEW_BUTTON);
+        jsonObject.put(FactoryViews.TYPE_VIEW, FactoryViews.TYPE_VIEW_BUTTON);
         jsonObject.put(CreatorButton.ATR_ID, originId);
-        jsonObject.put(CreatorButton.ATR_TEXT,name);
-        jsonObject.put(CreatorButton.ATR_PIN,Integer.parseInt(pin));
-        jsonObject.put(CreatorButton.ATR_IMAGE_TYPE,imageType);
+        jsonObject.put(CreatorButton.ATR_TEXT, name);
+        jsonObject.put(CreatorButton.ATR_PIN, Integer.parseInt(pin));
+        jsonObject.put(CreatorButton.ATR_IMAGE_TYPE, imageType);
 
         return jsonObject;
     }
 
-    private void setAllOldFields()
-    {
+    private void setAllOldFields() {
         try {
             final JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(appCompatActivity.getBaseContext());
-            for(int i = 0; i < jsonArray.length(); i++)
-            {
-                if(jsonArray.getJSONObject(i).getInt(CreatorButton.ATR_ID) == originId)
-                {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                if (jsonArray.getJSONObject(i).getInt(CreatorButton.ATR_ID) == originId) {
                     final JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                     imageType = jsonObject.getString(CreatorButton.ATR_IMAGE_TYPE);
@@ -181,17 +171,14 @@ class EditorButton
         }
     }
 
-    private void setImageButtonExample(String nameImageType)
-    {
-        for(int i = 0; i < NAME_ICONS.length; i++)
-        {
-            if(NAME_ICONS[i].equals(nameImageType))
+    private void setImageButtonExample(String nameImageType) {
+        for (int i = 0; i < NAME_ICONS.length; i++) {
+            if (NAME_ICONS[i].equals(nameImageType))
                 spImageType.setSelection(i);
         }
     }
 
-    private class TypingListener implements TextWatcher
-    {
+    private class TypingListener implements TextWatcher {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -200,6 +187,7 @@ class EditorButton
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
         {
+            tvError.setVisibility(View.GONE);
             name = edtName.getText().toString();
             pin = edtPinController.getText().toString();
 

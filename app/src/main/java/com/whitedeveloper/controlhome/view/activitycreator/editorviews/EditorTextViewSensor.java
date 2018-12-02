@@ -65,10 +65,6 @@ class EditorTextViewSensor
 
     private void init()
     {
-        final EditText edtId = appCompatActivity.findViewById(R.id.edt_id);
-        edtId.setText(String.valueOf(id));
-        edtId.setEnabled(false);
-
         spinnerImageType = appCompatActivity.findViewById(R.id.sp_sensor_type);
         tvExample = appCompatActivity.findViewById(R.id.tv_sensor_example);
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(appCompatActivity.getBaseContext(), android.R.layout.simple_spinner_item, FragmentTextViewSensor.NAME_SENSORS);
