@@ -25,10 +25,10 @@ public class Checker {
     {
         try {
             final JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(context);
-
-            for(int i = 0; i < jsonArray.length(); i++)
-                if(jsonArray.getJSONObject(i).getInt(CreatorButton.ATR_PIN) == pin)
+            for(int i = 0; i < jsonArray.length(); i++) {
+                if (jsonArray.getJSONObject(i).getInt(CreatorButton.ATR_PIN) == pin)
                     return true;
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

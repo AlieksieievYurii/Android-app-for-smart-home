@@ -21,6 +21,13 @@
     <string name="error_of_server">Error of server CODE:</string>
     <string name="restart_app">Please restart the App for apply URL</string>
     <string name="wrong_url">Wrong URL!</string>
-    <string name="pin_existed">This pin is already exists!</string>
+    <string name="pin_existed">This pin already exists!</string>
     <string name="pin_can_be_empty">Pin can\'t be empty!</string>
+
+    <string-array name="name_icons">
+        <item>lamp</item>
+        <item>computer</item>
+        <item>fan</item>
+        <item>socket</item>
+    </string-array>
 </resources>

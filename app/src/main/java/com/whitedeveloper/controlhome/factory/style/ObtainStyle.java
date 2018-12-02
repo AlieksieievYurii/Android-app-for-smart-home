@@ -39,10 +39,7 @@ public class ObtainStyle
     {
         final TypedArray typedArray = context.obtainStyledAttributes(R.style.view_seek_bars,R.styleable.style_seek_bar);
         final LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        layoutParams.setMargins(typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
-                typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
-                typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0),
-                typedArray.getLayoutDimension(R.styleable.style_seek_bar_android_layout_margin,0));
+
         layoutParams.weight = 1;
 
         boxedVertical.setLayoutParams(layoutParams);

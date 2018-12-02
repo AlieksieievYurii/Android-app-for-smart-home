@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 import com.whitedeveloper.controlhome.R;
-import com.whitedeveloper.controlhome.view.MainActivity;
 import com.whitedeveloper.controlhome.view.activitycreator.editorviews.ActivityEditView;
 import com.whitedeveloper.controlhome.view.alertdialog.AlertDialogSetterURL;
 import com.whitedeveloper.controlhome.view.alertdialog.ISetterURL;

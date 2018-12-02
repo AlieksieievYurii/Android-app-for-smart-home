@@ -56,14 +56,14 @@ public class FactoryViews {
     private void createButton(JSONObject jsonObject) throws JSONException {
         creatorView = new CreatorButton(context, jsonObject);
         final View view = creatorView.createView();
-        final PinTCOD pinTCOD = creatorView.createPinArduino();
+        final PinTCOD pinTCOD = creatorView.createPinTCOD();
         icreateView.createButton(new ControllerButton((Button) view, pinTCOD));
     }
 
     private void createSeekBar(JSONObject jsonObject) throws JSONException {
         creatorView = new CreatorSeekBar(context, jsonObject);
         final View view = creatorView.createView();
-        final PinTCOD pinTCOD = creatorView.createPinArduino();
+        final PinTCOD pinTCOD = creatorView.createPinTCOD();
         icreateView.createSeekBar(new ControllerSeekBar(((CreatorSeekBar) creatorView).getBoxedVertical(), (LinearLayout) view, pinTCOD));
     }
 

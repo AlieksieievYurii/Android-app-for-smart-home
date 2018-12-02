@@ -46,7 +46,7 @@ public class CreatorTextView extends CreatorView
     }
 
     @Override
-    public PinTCOD createPinArduino(){
+    public PinTCOD createPinTCOD(){
         return null;
     }
 

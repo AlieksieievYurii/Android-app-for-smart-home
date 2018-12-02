@@ -52,7 +52,7 @@ public class CreatorSeekBar extends CreatorView {
     }
 
     @Override
-    public PinTCOD createPinArduino() throws JSONException {
+    public PinTCOD createPinTCOD() throws JSONException {
         return new PinTCOD(PinTCOD.TYPE_PIN_DIGITAL_ANALOG,getJsonObject().getInt(ATR_PIN));
     }
 }

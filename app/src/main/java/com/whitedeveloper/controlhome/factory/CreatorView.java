@@ -26,5 +26,5 @@ public abstract class CreatorView {
     }
 
     public abstract View createView() throws JSONException;
-    public abstract PinTCOD createPinArduino() throws JSONException;
+    public abstract PinTCOD createPinTCOD() throws JSONException;
 }

@@ -12,12 +12,11 @@ import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
 import com.whitedeveloper.controlhome.factory.Checker;
 import com.whitedeveloper.controlhome.factory.FactoryViews;
 import com.whitedeveloper.controlhome.factory.button.CreatorButton;
+import com.whitedeveloper.controlhome.view.Icons;
 import com.whitedeveloper.custom.PinTCOD;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import static com.whitedeveloper.controlhome.view.activitycreator.fragments.FragmentButton.NAME_ICONS;
 
 class EditorButton {
     private final AppCompatActivity appCompatActivity;
@@ -35,7 +34,7 @@ class EditorButton {
 
     private String name;
     private String pin;
-    private String imageType;
+    private Icons icon;
 
     EditorButton(AppCompatActivity appCompatActivity, int id) {
         this.originId = id;
@@ -80,15 +79,15 @@ class EditorButton {
             }
         });
 
-        final ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(appCompatActivity.getBaseContext(), android.R.layout.simple_spinner_item, NAME_ICONS);
+        final ArrayAdapter<Icons> adapter =
+                new ArrayAdapter<>(appCompatActivity.getBaseContext(), android.R.layout.simple_spinner_item, Icons.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spImageType.setAdapter(adapter);
         spImageType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                imageType = NAME_ICONS[i];
+                icon = (Icons) spImageType.getSelectedItem();
                 showExampleButton();
                 showExampleJson();
             }
@@ -111,7 +110,7 @@ class EditorButton {
 
     private void showExampleButton() {
         btnExample.setText(name);
-        btnExample.setBackgroundResource(CreatorButton.getBackgroundResource(imageType));
+        btnExample.setBackgroundResource(icon.getDrawable());
     }
 
     private void showExampleJson() {
@@ -145,7 +144,7 @@ class EditorButton {
         jsonObject.put(CreatorButton.ATR_ID, originId);
         jsonObject.put(CreatorButton.ATR_TEXT, name);
         jsonObject.put(CreatorButton.ATR_PIN, Integer.parseInt(pin));
-        jsonObject.put(CreatorButton.ATR_IMAGE_TYPE, imageType);
+        jsonObject.put(CreatorButton.ATR_IMAGE_TYPE, icon.getNameIcon());
 
         return jsonObject;
     }
@@ -157,8 +156,8 @@ class EditorButton {
                 if (jsonArray.getJSONObject(i).getInt(CreatorButton.ATR_ID) == originId) {
                     final JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                    imageType = jsonObject.getString(CreatorButton.ATR_IMAGE_TYPE);
-                    setImageButtonExample(imageType);
+                    icon = Icons.getEnumByName(jsonObject.getString(CreatorButton.ATR_IMAGE_TYPE));
+                    setImageButtonExample(icon);
 
                     originPin = jsonObject.getInt(CreatorButton.ATR_PIN);
 
@@ -171,9 +170,11 @@ class EditorButton {
         }
     }
 
-    private void setImageButtonExample(String nameImageType) {
-        for (int i = 0; i < NAME_ICONS.length; i++) {
-            if (NAME_ICONS[i].equals(nameImageType))
+    private void setImageButtonExample(Icons icon)
+    {
+
+        for (int i = 0; i < Icons.class.getEnumConstants().length; i++) {
+            if (Icons.values()[i].getNameIcon().equals(icon.getNameIcon()))
                 spImageType.setSelection(i);
         }
     }

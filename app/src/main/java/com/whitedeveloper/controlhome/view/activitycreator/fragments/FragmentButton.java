@@ -15,6 +15,7 @@ import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
 import com.whitedeveloper.controlhome.factory.Checker;
 import com.whitedeveloper.controlhome.factory.FactoryViews;
 import com.whitedeveloper.controlhome.factory.button.CreatorButton;
+import com.whitedeveloper.controlhome.view.Icons;
 import com.whitedeveloper.controlhome.view.activitycreator.ActivityCreateNewElement;
 import com.whitedeveloper.custom.PinTCOD;
 import org.json.JSONException;
@@ -25,9 +26,6 @@ import java.util.Random;
 
 public class FragmentButton extends Fragment {
 
-    public static final String[] NAME_ICONS = {CreatorButton.LAMP, CreatorButton.COMPUTER, CreatorButton.FAN, CreatorButton.SOCKET};
-
-
     private Button btnExample;
     private TextView tvExampleJson;
     private EditText edtName;
@@ -37,7 +35,7 @@ public class FragmentButton extends Fragment {
     private int id;
     private String name = "";
     private String pin = "";
-    private String imageType = "";
+    private Icons icon;
 
     private View view;
 
@@ -58,7 +56,6 @@ public class FragmentButton extends Fragment {
     }
 
     private void init() {
-        imageType = NAME_ICONS[0];
 
         tvError = view.findViewById(R.id.tv_error);
 
@@ -71,8 +68,8 @@ public class FragmentButton extends Fragment {
 
         final TypingListener typingListener = new TypingListener();
 
-        final ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, NAME_ICONS);
+        final ArrayAdapter<Icons> adapter =
+                new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, Icons.values());
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -82,7 +79,7 @@ public class FragmentButton extends Fragment {
         spTypeImage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                imageType = NAME_ICONS[i];
+                icon = (Icons) spTypeImage.getSelectedItem();
                 showExampleButton();
                 showExampleJson();
             }
@@ -118,7 +115,7 @@ public class FragmentButton extends Fragment {
 
     private void showExampleButton() {
         btnExample.setText(name);
-        btnExample.setBackgroundResource(CreatorButton.getBackgroundResource(imageType));
+        btnExample.setBackgroundResource(icon.getDrawable());
     }
 
     private void showExampleJson() {
@@ -141,8 +138,6 @@ public class FragmentButton extends Fragment {
     }
 
     private boolean checkValues() {
-
-
         if (pin.trim().equals("")) {
             tvError.setVisibility(View.VISIBLE);
             tvError.setText(R.string.pin_can_be_empty);
@@ -161,7 +156,7 @@ public class FragmentButton extends Fragment {
         jsonObject.put(CreatorButton.ATR_ID, id);
         jsonObject.put(CreatorButton.ATR_TEXT, name);
         jsonObject.put(CreatorButton.ATR_PIN, Integer.parseInt(pin));
-        jsonObject.put(CreatorButton.ATR_IMAGE_TYPE, imageType);
+        jsonObject.put(CreatorButton.ATR_IMAGE_TYPE, icon.getNameIcon());
 
         return jsonObject;
     }
