@@ -57,6 +57,7 @@ public class FragmentButton extends Fragment {
 
     private void init() {
 
+
         tvError = view.findViewById(R.id.tv_error);
 
         btnExample = view.findViewById(R.id.btn_example);
@@ -75,6 +76,7 @@ public class FragmentButton extends Fragment {
 
         spTypeImage.setAdapter(adapter);
         spTypeImage.setSelection(0);
+        icon = Icons.LAMP;
 
         spTypeImage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
