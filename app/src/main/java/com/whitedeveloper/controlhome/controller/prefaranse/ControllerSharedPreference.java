@@ -31,7 +31,7 @@ public class ControllerSharedPreference
         return new JSONArray(sharedPreferences.getString(KEY_OBJECT_JSON_FOR_CREATING_VIEWS_PREFERENCE,null));
     }
 
-    public static void putJsonForCreatingView(Context context, String json)
+    static void putJsonForCreatingView(Context context, String json)
     {
         final SharedPreferences sharedPreferences = context.getSharedPreferences(KEY_JSON_FOR_CREATING_VIEWS_PREFERENCE,Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
