@@ -6,8 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.view.activitycreator.editorviews.ActivityEditView;
-import com.whitedeveloper.controlhome.view.alertdialog.AlertDialogSetterURL;
-import com.whitedeveloper.controlhome.view.alertdialog.ISetterURL;
+import com.whitedeveloper.controlhome.view.alertdialog.AlertDialogSettingsUrl;
 import com.whitedeveloper.controlhome.controller.interfaces.*;
 import com.whitedeveloper.controlhome.controller.json.CreatorJsonForTCOD;
 import com.whitedeveloper.controlhome.controller.prefaranse.ControllerSharedPreference;
@@ -38,7 +37,7 @@ public class Controller implements
         UpDateActivity,
         IonClickButton,
         IonDoSeekBar,
-        ISetterURL,
+        AlertDialogSettingsUrl.CallBackAlertDialogSettingsUrl,
         ItimeUpDate,
         IonLongPressViewElement,
         IEditView {
@@ -168,8 +167,8 @@ public class Controller implements
 
 
     public void setPreference() {
-        AlertDialogSetterURL alertDialogSetterURL = new AlertDialogSetterURL(context, this);
-        alertDialogSetterURL.show(getUrlPreference());
+        AlertDialogSettingsUrl alertDialogSettingsUrl = new AlertDialogSettingsUrl(context, this);
+        alertDialogSettingsUrl.show(getUrlPreference());
     }
 
     @Override

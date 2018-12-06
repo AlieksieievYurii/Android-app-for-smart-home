@@ -1,10 +1,11 @@
 package com.whitedeveloper.controlhome.view.alertdialog;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,48 +15,55 @@ import com.whitedeveloper.controlhome.controller.prefaranse.UrlPreference;
 
 import java.util.Objects;
 
-public class AlertDialogSetterURL
+public class AlertDialogSettingsUrl extends Dialog
 {
+    public interface CallBackAlertDialogSettingsUrl
+    {
+        void setterURL(UrlPreference urlPreference);
+    }
+
     private final Context context;
-    private final ISetterURL iSetterURL;
-    private AlertDialog.Builder builder;
-    private AlertDialog alertDialog;
+    private final CallBackAlertDialogSettingsUrl callBack;
     private EditText edtURL;
     private EditText edtUrlAdditionPath;
     private EditText edtUrlToHashSum;
     private EditText edtNameParamKey;
     private EditText edtKey;
 
-    public AlertDialogSetterURL(Context context, ISetterURL iSetterURL) {
+    public AlertDialogSettingsUrl(@NonNull Context context,CallBackAlertDialogSettingsUrl callBack) {
+        super(context);
         this.context = context;
-        this.iSetterURL = iSetterURL;
+        this.callBack = callBack;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.layout_alert_dialog_setting_url);
         init();
     }
 
     private void init()
     {
-        builder = new AlertDialog.Builder(context);
-        final View view = ((LayoutInflater) Objects.requireNonNull(context.getSystemService(Context.LAYOUT_INFLATER_SERVICE))).inflate(R.layout.layout_alert_dialog_setting_url,null);
-        edtURL = view.findViewById(R.id.edt_alert_dialog_url);
-        edtUrlToHashSum = view.findViewById(R.id.edt_alert_dialog_url_path_to_hash_sum);
-        edtUrlAdditionPath = view.findViewById(R.id.edt_alert_dialog_url_addition_path);
-        edtNameParamKey = view.findViewById(R.id.edt_alert_dialog_name_key_param);
-        edtKey = view.findViewById(R.id.edt_alert_dialog_key);
-        final Button btnSet = view.findViewById(R.id.btn_alert_dialog_set);
+        Objects.requireNonNull(getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        edtURL = findViewById(R.id.edt_alert_dialog_url);
+        edtUrlToHashSum = findViewById(R.id.edt_alert_dialog_url_path_to_hash_sum);
+        edtUrlAdditionPath = findViewById(R.id.edt_alert_dialog_url_addition_path);
+        edtNameParamKey = findViewById(R.id.edt_alert_dialog_name_key_param);
+        edtKey = findViewById(R.id.edt_alert_dialog_key);
+        final Button btnSet = findViewById(R.id.btn_alert_dialog_set);
 
         btnSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(readPreference()) {
-                    alertDialog.hide();
-                    alertDialog.dismiss();
+                    hide();
+                    dismiss();
                 }
                 else
                     Toast.makeText(context, R.string.wrong_url,Toast.LENGTH_SHORT).show();
             }
         });
-
-        builder.setView(view);
     }
 
     private boolean readPreference()
@@ -70,12 +78,14 @@ public class AlertDialogSetterURL
         if(url.replaceAll("\\s+","").equals("") || url.replaceAll("\\s+","").length() <= 10)
             return false;
 
-        iSetterURL.setterURL(new UrlPreference(url,additionPath,pathToHashSum,nameKeyParam,key));
+        callBack.setterURL(new UrlPreference(url,additionPath,pathToHashSum,nameKeyParam,key));
         return true;
     }
 
     public void show(UrlPreference oldUrlPreference)
     {
+        show();
+
         try {
             edtURL.setText(oldUrlPreference.getUrl());
             edtUrlAdditionPath.setText(oldUrlPreference.getAdditionPath());
@@ -86,10 +96,5 @@ public class AlertDialogSetterURL
         {
             e.printStackTrace();
         }
-
-
-        alertDialog = builder.create();
-        Objects.requireNonNull(alertDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        alertDialog.show();
     }
 }
