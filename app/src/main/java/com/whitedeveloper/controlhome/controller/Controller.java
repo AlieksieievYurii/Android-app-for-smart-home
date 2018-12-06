@@ -15,8 +15,7 @@ import com.whitedeveloper.controlhome.controller.prefaranse.UrlPreference;
 import com.whitedeveloper.controlhome.model.DataFromServer;
 import com.whitedeveloper.controlhome.model.cheduletimer.ItimeUpDate;
 import com.whitedeveloper.controlhome.model.cheduletimer.ScheduleTimeUpDate;
-import com.whitedeveloper.controlhome.view.alertdialog.IEditView;
-import com.whitedeveloper.controlhome.view.alertdialog.MenuOfViewElement;
+import com.whitedeveloper.controlhome.view.alertdialog.AlertDialogElementMenu;
 import com.whitedeveloper.custom.IonLongPressViewElement;
 import com.whitedeveloper.custom.IrefreshActivity;
 import com.whitedeveloper.custom.buttons.IonClickButton;
@@ -40,7 +39,7 @@ public class Controller implements
         AlertDialogSettingsUrl.CallBackAlertDialogSettingsUrl,
         ItimeUpDate,
         IonLongPressViewElement,
-        IEditView {
+        AlertDialogElementMenu.CallBackDialogElementMenu {
     private DataFromServer dataFromServer;
     private ScheduleTimeUpDate scheduleTimeUpDate;
     private VibrationButton vibrationButton;
@@ -172,7 +171,7 @@ public class Controller implements
     }
 
     @Override
-    public void setterURL(UrlPreference urlPreference) {
+    public void commitNewUrl(UrlPreference urlPreference) {
         ControllerSharedPreference.putUrlPreference(context, urlPreference);
         Toast.makeText(context, R.string.restart_app, Toast.LENGTH_LONG).show();
     }
@@ -184,8 +183,8 @@ public class Controller implements
 
     @Override
     public void longPress(int id) {
-        MenuOfViewElement menuOfViewElement = new MenuOfViewElement(context, id, this);
-        menuOfViewElement.show();
+        AlertDialogElementMenu alertDialogElementMenu = new AlertDialogElementMenu(context, id, this);
+        alertDialogElementMenu.show();
     }
 
     @Override

@@ -19,10 +19,9 @@ public class AlertDialogSettingsUrl extends Dialog
 {
     public interface CallBackAlertDialogSettingsUrl
     {
-        void setterURL(UrlPreference urlPreference);
+        void commitNewUrl(UrlPreference urlPreference);
     }
 
-    private final Context context;
     private final CallBackAlertDialogSettingsUrl callBack;
     private EditText edtURL;
     private EditText edtUrlAdditionPath;
@@ -32,7 +31,6 @@ public class AlertDialogSettingsUrl extends Dialog
 
     public AlertDialogSettingsUrl(@NonNull Context context,CallBackAlertDialogSettingsUrl callBack) {
         super(context);
-        this.context = context;
         this.callBack = callBack;
     }
 
@@ -61,7 +59,7 @@ public class AlertDialogSettingsUrl extends Dialog
                     dismiss();
                 }
                 else
-                    Toast.makeText(context, R.string.wrong_url,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.wrong_url,Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -78,7 +76,7 @@ public class AlertDialogSettingsUrl extends Dialog
         if(url.replaceAll("\\s+","").equals("") || url.replaceAll("\\s+","").length() <= 10)
             return false;
 
-        callBack.setterURL(new UrlPreference(url,additionPath,pathToHashSum,nameKeyParam,key));
+        callBack.commitNewUrl(new UrlPreference(url,additionPath,pathToHashSum,nameKeyParam,key));
         return true;
     }
 
