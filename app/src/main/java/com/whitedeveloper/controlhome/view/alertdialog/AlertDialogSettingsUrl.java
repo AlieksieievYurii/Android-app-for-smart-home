@@ -1,12 +1,13 @@
 package com.whitedeveloper.controlhome.view.alertdialog;
 
-import android.app.Dialog;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,7 +16,7 @@ import com.whitedeveloper.controlhome.controller.prefaranse.UrlPreference;
 
 import java.util.Objects;
 
-public class AlertDialogSettingsUrl extends Dialog
+public class AlertDialogSettingsUrl extends AlertDialog
 {
     public interface CallBackAlertDialogSettingsUrl
     {
@@ -62,6 +63,8 @@ public class AlertDialogSettingsUrl extends Dialog
                     Toast.makeText(getContext(), R.string.wrong_url,Toast.LENGTH_SHORT).show();
             }
         });
+
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE|WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
     }
 
     private boolean readPreference()
