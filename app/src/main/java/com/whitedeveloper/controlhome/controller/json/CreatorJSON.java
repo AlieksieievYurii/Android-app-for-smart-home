@@ -2,14 +2,14 @@ package com.whitedeveloper.controlhome.controller.json;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import static com.whitedeveloper.custom.PinArduino.*;
+import static com.whitedeveloper.custom.PinOfTCOD.*;
 
 class CreatorJSON
 {
 
 
 
-    static JSONObject getJsonPinArduinoObject(String type, int pin, int status)
+    static JSONObject getJsonObjectPinTCOD(String type, int pin, int status)
     {
             try {
                 if(type.equals(TYPE_PIN_DIGITAL))

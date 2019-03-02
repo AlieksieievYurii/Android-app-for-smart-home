@@ -7,23 +7,23 @@ import android.widget.*;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.controller.prefaranse.ControllerSharedPreference;
 import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
-import com.whitedeveloper.controlhome.factory.FactoryViews;
-import com.whitedeveloper.controlhome.factory.seekbar.CreatorSeekBar;
 import com.whitedeveloper.controlhome.factory.textview.CreatorTextView;
 import com.whitedeveloper.controlhome.view.activitycreator.fragments.FragmentTextViewSensor;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.whitedeveloper.TagKeys.*;
+
 
 class EditorTextViewSensor
 {
-    private AppCompatActivity appCompatActivity;
+    private final AppCompatActivity appCompatActivity;
 
     private TextView tvExample;
     private Spinner spinnerImageType;
 
-    private int id;
+    private final int id;
     private String imageType;
 
     EditorTextViewSensor(AppCompatActivity appCompatActivity, int id) {
@@ -39,13 +39,13 @@ class EditorTextViewSensor
     private void setAllOldFields()
     {
         try {
-            JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(appCompatActivity.getBaseContext());
+            final JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(appCompatActivity.getBaseContext());
             for(int i = 0; i < jsonArray.length(); i++)
             {
-                if(jsonArray.getJSONObject(i).getInt(CreatorSeekBar.ATR_ID) == id)
+                if(jsonArray.getJSONObject(i).getInt(ATR_ID) == id)
                 {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    imageType = jsonObject.getString(CreatorTextView.ATR_IMAGE_TYPE);
+                    final JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    imageType = jsonObject.getString(ATR_IMAGE_TYPE);
                     spinnerImageType.setSelection(getIndexOfNAME_TYPESbyName(imageType));
                 }
             }
@@ -65,13 +65,9 @@ class EditorTextViewSensor
 
     private void init()
     {
-        final EditText edtId = appCompatActivity.findViewById(R.id.edt_id);
-        edtId.setText(String.valueOf(id));
-        edtId.setEnabled(false);
-
         spinnerImageType = appCompatActivity.findViewById(R.id.sp_sensor_type);
         tvExample = appCompatActivity.findViewById(R.id.tv_sensor_example);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(appCompatActivity.getBaseContext(), android.R.layout.simple_spinner_item, FragmentTextViewSensor.NAME_SENSORS);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(appCompatActivity.getBaseContext(), android.R.layout.simple_spinner_item, FragmentTextViewSensor.NAME_SENSORS);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerImageType.setAdapter(adapter);
 
@@ -109,11 +105,11 @@ class EditorTextViewSensor
 
     private JSONObject getJSON() throws JSONException {
 
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put(FactoryViews.TYPE_VIEW,FactoryViews.TYPE_VIEW_TEXT_VIEW);
-        jsonObject.put(CreatorTextView.ATR_ID,id);
-        jsonObject.put(CreatorTextView.ATR_IMAGE_TYPE,imageType);
-        jsonObject.put(CreatorTextView.ATR_NAME_SENSOR_ARDUINO,imageType);
+        final JSONObject jsonObject = new JSONObject();
+        jsonObject.put(TYPE_VIEW,TYPE_VIEW_TEXT_VIEW);
+        jsonObject.put(ATR_ID,id);
+        jsonObject.put(ATR_IMAGE_TYPE,imageType);
+        jsonObject.put(ATR_NAME_SENSOR,imageType);
 
         return jsonObject;
     }

@@ -8,8 +8,8 @@ import java.net.HttpURLConnection;
 
 public class WriteToServer extends AsyncTask<String,Void,Integer>
 {
-    private IresponseFromServer iresponseFromServer;
-    private HttpURLConnection httpURLConnection;
+    private final IresponseFromServer iresponseFromServer;
+    private final HttpURLConnection httpURLConnection;
     private int responseCode;
 
     public WriteToServer(HttpURLConnection httpURLConnection, IresponseFromServer iresponseFromServer) {

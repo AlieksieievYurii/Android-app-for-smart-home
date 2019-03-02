@@ -18,4 +18,19 @@
     <string name="text_al_remove_view">Remove</string>
     <string name="text_editor_views_btn_apply">Apply</string>
     <string name="text_hind_edt_url_path_to_hash_sum">Path to hashSum…</string>
+    <string name="error_of_server">Error of server CODE:</string>
+    <string name="restart_app">Please restart the App for apply URL</string>
+    <string name="wrong_url">Wrong URL!</string>
+    <string name="pin_existed">This pin already exists!</string>
+    <string name="pin_can_be_empty">Pin can\'t be empty!</string>
+    <string name="button">Button</string>
+    <string name="seek_bar">SeekBar</string>
+    <string name="sensor">Sensor</string>
+
+    <string-array name="name_icons">
+        <item>lamp</item>
+        <item>computer</item>
+        <item>fan</item>
+        <item>socket</item>
+    </string-array>
 </resources>

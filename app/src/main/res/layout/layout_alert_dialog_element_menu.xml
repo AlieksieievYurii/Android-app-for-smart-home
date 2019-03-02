@@ -4,6 +4,8 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:background="@drawable/background_seek_bar_container"
+              android:layout_marginLeft="30dp"
+              android:layout_marginRight="30dp"
               android:padding="5dp">
     <Button
             android:id="@+id/btn_al_edit_view"

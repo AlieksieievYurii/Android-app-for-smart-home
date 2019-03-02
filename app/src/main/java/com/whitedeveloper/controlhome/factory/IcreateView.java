@@ -7,4 +7,5 @@ public interface IcreateView {
     void createButton(ControllerButton controllerButton);
     void createSeekBar(ControllerSeekBar controllerSeekBar);
     void createTextView(ControllerTextView controllerTextView);
+    void finishCreating();
 }

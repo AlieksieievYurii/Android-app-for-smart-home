@@ -6,17 +6,14 @@ import android.widget.TextView;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.factory.CreatorView;
 import com.whitedeveloper.controlhome.factory.style.ObtainStyle;
-import com.whitedeveloper.custom.PinArduino;
+import com.whitedeveloper.custom.PinOfTCOD;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.whitedeveloper.TagKeys.*;
+
 public class CreatorTextView extends CreatorView
 {
-    public static final String ATR_ID = "id";
-    public static final String ATR_NAME_SENSOR_ARDUINO = "nameSensor";
-    public static final String ATR_IMAGE_TYPE = "typeImage";
-
-
     public static final String TEMPERATURE = "temperature";
     public static final String STATE_DAY = "stateDay";
 
@@ -38,7 +35,7 @@ public class CreatorTextView extends CreatorView
     @Override
     public View createView() throws JSONException
     {
-        TextView textView = new TextView(getContext());
+        final TextView textView = new TextView(getContext());
         textView.setId(getJsonObject().getInt(ATR_ID));
         textView.setBackgroundResource(getBackgroundResource(getJsonObject().getString(ATR_IMAGE_TYPE)));
         ObtainStyle.setStyleTextView(getContext(),textView);
@@ -46,12 +43,12 @@ public class CreatorTextView extends CreatorView
     }
 
     @Override
-    public PinArduino createPinArduino(){
+    public PinOfTCOD createPinTCOD(){
         return null;
     }
 
-    public String getNameSensorArduino() throws JSONException {
-        return getJsonObject().getString(ATR_NAME_SENSOR_ARDUINO);
+    public String getNameSensorTCOD() throws JSONException {
+        return getJsonObject().getString(ATR_NAME_SENSOR);
     }
 
 }

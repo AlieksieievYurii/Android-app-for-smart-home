@@ -10,8 +10,8 @@ import java.net.HttpURLConnection;
 
 public class ReadFromServer extends AsyncTask<Void,Void,String>
 {
-    private HttpURLConnection httpURLConnection;
-    private IresponseFromServer iresponseFromServer;
+    private final HttpURLConnection httpURLConnection;
+    private final IresponseFromServer iresponseFromServer;
 
     private int codeResponse;
 
@@ -33,7 +33,7 @@ public class ReadFromServer extends AsyncTask<Void,Void,String>
         String dataFromServer = null;
 
         try {
-            InputStream inputStream = httpURLConnection.getInputStream();
+           final InputStream inputStream = httpURLConnection.getInputStream();
             dataFromServer =  readFormServer(inputStream);
             inputStream.close();
 
@@ -46,10 +46,10 @@ public class ReadFromServer extends AsyncTask<Void,Void,String>
     }
     private String readFormServer(InputStream inputStream) throws IOException {
 
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
             String text;
-            StringBuilder stringBuilder = new StringBuilder();
+            final StringBuilder stringBuilder = new StringBuilder();
 
             while((text = bufferedReader.readLine()) != null)
                 stringBuilder.append(text);

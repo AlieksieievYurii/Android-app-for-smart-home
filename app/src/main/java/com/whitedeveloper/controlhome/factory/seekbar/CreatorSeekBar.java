@@ -4,19 +4,17 @@ import abak.tr.com.boxedverticalseekbar.BoxedVertical;
 import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.whitedeveloper.controlhome.factory.CreatorView;
 import com.whitedeveloper.controlhome.factory.style.ObtainStyle;
-import com.whitedeveloper.custom.PinArduino;
+import com.whitedeveloper.custom.PinOfTCOD;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.whitedeveloper.TagKeys.*;
+
 public class CreatorSeekBar extends CreatorView {
 
-    public static final String ATR_ID = "id";
-    public static final String ATR_PIN = "pin";
-    public static final String ATR_NAME = "name";
 
     private BoxedVertical boxedVertical;
 
@@ -26,10 +24,10 @@ public class CreatorSeekBar extends CreatorView {
 
     @Override
     public View createView() throws JSONException {
-        LinearLayout linearLayout = new LinearLayout(getContext());
+        final LinearLayout linearLayout = new LinearLayout(getContext());
         ObtainStyle.setStyleLayoutSeekBar(getContext(),linearLayout);
 
-        TextView textView = new TextView(getContext());
+        final TextView textView = new TextView(getContext());
         try {
             textView.setText(getJsonObject().getString(ATR_NAME));
         } catch (JSONException e) {
@@ -53,7 +51,7 @@ public class CreatorSeekBar extends CreatorView {
     }
 
     @Override
-    public PinArduino createPinArduino() throws JSONException {
-        return new PinArduino(PinArduino.TYPE_PIN_DIGITAL_ANALOG,getJsonObject().getInt(ATR_PIN));
+    public PinOfTCOD createPinTCOD() throws JSONException {
+        return new PinOfTCOD(PinOfTCOD.TYPE_PIN_DIGITAL_ANALOG,getJsonObject().getInt(ATR_PIN));
     }
 }

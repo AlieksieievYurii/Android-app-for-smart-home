@@ -11,31 +11,30 @@ import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.controller.prefaranse.ControllerSharedPreference;
 import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
 import com.whitedeveloper.controlhome.factory.Checker;
-import com.whitedeveloper.controlhome.factory.FactoryViews;
-import com.whitedeveloper.controlhome.factory.seekbar.CreatorSeekBar;
-import com.whitedeveloper.custom.PinArduino;
+import com.whitedeveloper.custom.PinOfTCOD;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.whitedeveloper.TagKeys.*;
 
-class EditorSeekBar
-{
-    private AppCompatActivity appCompatActivity;
+
+class EditorSeekBar {
+    private final AppCompatActivity appCompatActivity;
 
     private EditText edtName;
     private EditText edtPinController;
     private TextView tvExampleJson;
     private TextView tvTextOfSeekBar;
+    private TextView tvError;
 
-    private int originId;
+    private final int originId;
     private int originPin;
     private String name;
     private String pin;
     private int value = 0;
 
-    EditorSeekBar(AppCompatActivity appCompatActivity, int id)
-    {
+    EditorSeekBar(AppCompatActivity appCompatActivity, int id) {
         this.originId = id;
         this.appCompatActivity = appCompatActivity;
         appCompatActivity.setContentView(R.layout.fragment_seek_bar);
@@ -44,20 +43,15 @@ class EditorSeekBar
         setAllOldFields();
     }
 
-    private void init()
-    {
-
-        EditText edtId = appCompatActivity.findViewById(R.id.edt_id);
-        edtId.setText(String.valueOf(originId));
-        edtId.setEnabled(false);
+    private void init() {
 
         edtName = appCompatActivity.findViewById(R.id.edt_name);
         edtPinController = appCompatActivity.findViewById(R.id.edt_pin_controller);
-
+        tvError = appCompatActivity.findViewById(R.id.tv_error);
         tvExampleJson = appCompatActivity.findViewById(R.id.tv_example_json);
-
         tvTextOfSeekBar = appCompatActivity.findViewById(R.id.tv_text_seek_bar);
-        BoxedVertical boxedVerticalExample = appCompatActivity.findViewById(R.id.bv_example);
+
+        final BoxedVertical boxedVerticalExample = appCompatActivity.findViewById(R.id.bv_example);
         boxedVerticalExample.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
             @Override
             public void onPointsChanged(BoxedVertical boxedVertical, int i) {
@@ -77,88 +71,82 @@ class EditorSeekBar
             }
         });
 
-        TypingListener typingListener = new TypingListener();
+        final TypingListener typingListener = new TypingListener();
         edtName.addTextChangedListener(typingListener);
         edtPinController.addTextChangedListener(typingListener);
 
-        Button btnApply = appCompatActivity.findViewById(R.id.btn_add_new_view);
+        final Button btnApply = appCompatActivity.findViewById(R.id.btn_add_new_view);
         btnApply.setText(R.string.text_editor_views_btn_apply);
         btnApply.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(checkValues()) {
-                            saveJsonForCreatingViews();
-                            appCompatActivity.setResult(Activity.RESULT_OK);
-                            appCompatActivity.finish();
-                        }
-                    }
-                });
+            @Override
+            public void onClick(View view) {
+                if (checkValues()) {
+                    saveJsonForCreatingViews();
+                    appCompatActivity.setResult(Activity.RESULT_OK);
+                    appCompatActivity.finish();
+                }
+            }
+        });
 
     }
 
-    private void showExampleSeekBar()
-    {
+    private void showExampleSeekBar() {
         tvTextOfSeekBar.setText(name);
     }
 
-    private void showExampleJson()
-    {
-        StringBuilder stringBuilder = new StringBuilder();
+    private void showExampleJson() {
+        final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("{").append("\n");
-        stringBuilder.append("  \"").append(PinArduino.TYPE_PIN).append("\":\"").append(PinArduino.TYPE_PIN_DIGITAL_ANALOG).append("\",\n");
-        stringBuilder.append("  \"").append(PinArduino.PIN).append("\":").append(pin).append(",\n");
-        stringBuilder.append("  \"").append(PinArduino.STATUS).append("\":").append(value).append("\n");
+        stringBuilder.append("  \"").append(PinOfTCOD.TYPE_PIN).append("\":\"").append(PinOfTCOD.TYPE_PIN_DIGITAL_ANALOG).append("\",\n");
+        stringBuilder.append("  \"").append(PinOfTCOD.PIN).append("\":").append(pin).append(",\n");
+        stringBuilder.append("  \"").append(PinOfTCOD.STATUS).append("\":").append(value).append("\n");
         stringBuilder.append("}");
         tvExampleJson.setText(stringBuilder);
     }
 
-    private boolean checkValues()
-    {
-        if(pin.trim().equals(""))
-       {
-           Toast.makeText(appCompatActivity.getBaseContext(),"Pin can't be empty!",Toast.LENGTH_SHORT).show();
-           return false;
-       }else if(!String.valueOf(originPin).equals(pin) && Checker.checkPin(Integer.parseInt(pin),appCompatActivity))
-       {
-           Toast.makeText(appCompatActivity,"This pin is already exists!",Toast.LENGTH_SHORT).show();
-           return false;
-       }
+    private boolean checkValues() {
+        if (pin.trim().equals("")) {
+            tvError.setVisibility(View.VISIBLE);
+            tvError.setText(R.string.pin_can_be_empty);
+            return false;
+        } else if (!String.valueOf(originPin).equals(pin) && Checker.checkPin(Integer.parseInt(pin), appCompatActivity)) {
+            tvError.setVisibility(View.VISIBLE);
+            tvError.setText(R.string.pin_existed);
+            return false;
+        }
 
-       return true;
+        return true;
     }
 
     private JSONObject getJSON() throws JSONException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put(FactoryViews.TYPE_VIEW,FactoryViews.TYPE_VIEW_SEEK_BAR);
-        jsonObject.put(CreatorSeekBar.ATR_ID,originId);
-        jsonObject.put(CreatorSeekBar.ATR_NAME,name);
-        jsonObject.put(CreatorSeekBar.ATR_PIN,Integer.parseInt(pin));
+        final JSONObject jsonObject = new JSONObject();
+        jsonObject.put(TYPE_VIEW, TYPE_VIEW_SEEK_BAR);
+        jsonObject.put(ATR_ID, originId);
+        jsonObject.put(ATR_NAME, name);
+        jsonObject.put(ATR_PIN, Integer.parseInt(pin));
 
         return jsonObject;
     }
 
     private void saveJsonForCreatingViews() {
         try {
-            EditorViewsJson.saveChangedJsonForCreatingView(getJSON(),appCompatActivity.getBaseContext());
+            EditorViewsJson.saveChangedJsonForCreatingView(getJSON(), appCompatActivity.getBaseContext());
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private void setAllOldFields()
-    {
+    private void setAllOldFields() {
         try {
-            JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(appCompatActivity.getBaseContext());
-            for(int i = 0; i < jsonArray.length(); i++)
-            {
-                if(jsonArray.getJSONObject(i).getInt(CreatorSeekBar.ATR_ID) == originId)
-                {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+            final JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(appCompatActivity.getBaseContext());
+            for (int i = 0; i < jsonArray.length(); i++) {
+                if (jsonArray.getJSONObject(i).getInt(ATR_ID) == originId) {
+                    final JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                    originPin = jsonObject.getInt(CreatorSeekBar.ATR_PIN);
+                    originPin = jsonObject.getInt(ATR_PIN);
 
                     edtPinController.setText(String.valueOf(originPin));
-                    edtName.setText(jsonObject.getString(CreatorSeekBar.ATR_NAME));
+                    edtName.setText(jsonObject.getString(ATR_NAME));
                 }
             }
         } catch (Exception e) {
@@ -166,8 +154,7 @@ class EditorSeekBar
         }
     }
 
-    private class TypingListener implements TextWatcher
-    {
+    private class TypingListener implements TextWatcher {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -176,6 +163,7 @@ class EditorSeekBar
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
         {
+            tvError.setVisibility(View.GONE);
             name = edtName.getText().toString();
             pin = edtPinController.getText().toString();
 

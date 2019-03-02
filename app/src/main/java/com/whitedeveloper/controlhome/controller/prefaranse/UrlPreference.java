@@ -63,7 +63,7 @@ public class UrlPreference implements Serializable
     String convertToJson()
     {
         try {
-            JSONObject jsonObject = new JSONObject();
+            final JSONObject jsonObject = new JSONObject();
             jsonObject.put(KEY_URL,url);
             jsonObject.put(KEY_NAME_ADDITION_PATH,additionPath);
             jsonObject.put(KEY_PATH_TO_HASH,pathToHashSum);
@@ -82,7 +82,7 @@ public class UrlPreference implements Serializable
         if(url.equals(""))
             return "";
 
-        StringBuilder stringBuilder = new StringBuilder(url);
+        final StringBuilder stringBuilder = new StringBuilder(url);
 
         if(!url.substring(url.length() - 1).equals("/"))
             stringBuilder.append("/");
@@ -101,7 +101,7 @@ public class UrlPreference implements Serializable
         if(url.equals(""))
             return "";
 
-        StringBuilder stringBuilder = new StringBuilder(url);
+        final StringBuilder stringBuilder = new StringBuilder(url);
         if(!url.substring(url.length() - 1).equals("/"))
             stringBuilder.append("/");
         stringBuilder.append(pathToHashSum);

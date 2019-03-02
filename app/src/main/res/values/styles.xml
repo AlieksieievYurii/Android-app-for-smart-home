@@ -14,7 +14,7 @@
         <item name="android:layout_marginLeft">6dp</item>
         <item name="android:layout_marginRight">6dp</item>
         <item name="android:layout_marginTop">6dp</item>
-        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
         <item name="android:paddingTop">62dp</item>
         <item name="android:textSize">10sp</item>
         <item name="android:textColor">@color/white</item>
@@ -35,7 +35,7 @@
 
     <style name="view_seek_bars">
         <item name="android:layout_width">80dp</item>
-        <item name="android:layout_height">170dp</item>
+        <item name="android:layout_height">175dp</item>
         <item name="android:layout_margin">2dp</item>
         <item name="libCornerRadius">20</item>
         <item name="backgroundColor">@color/background_seek_bar</item>

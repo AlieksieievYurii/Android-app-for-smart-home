@@ -13,65 +13,75 @@ import android.widget.*;
 import com.whitedeveloper.controlhome.R;
 import com.whitedeveloper.controlhome.controller.prefaranse.EditorViewsJson;
 import com.whitedeveloper.controlhome.factory.Checker;
-import com.whitedeveloper.controlhome.factory.FactoryViews;
-import com.whitedeveloper.controlhome.factory.button.CreatorButton;
+import com.whitedeveloper.controlhome.view.Icons;
 import com.whitedeveloper.controlhome.view.activitycreator.ActivityCreateNewElement;
-import com.whitedeveloper.custom.PinArduino;
+import com.whitedeveloper.custom.PinOfTCOD;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Objects;
+import java.util.Random;
+
+import static com.whitedeveloper.TagKeys.*;
 
 public class FragmentButton extends Fragment {
 
-    public static final String[] NAME_ICONS = {CreatorButton.LAMP,CreatorButton.COMPUTER,CreatorButton.FAN,CreatorButton.SOCKET};
-
-
     private Button btnExample;
     private TextView tvExampleJson;
-    private EditText edtId;
     private EditText edtName;
     private EditText edtPin;
+    private TextView tvError;
 
-    private String id = "";
+    private int id;
     private String name = "";
-    private String pin = "null";
-    private String imageType = "";
+    private String pin = "";
+    private Icons icon;
 
     private View view;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_button,container,false);
+        view = inflater.inflate(R.layout.fragment_button, container, false);
         init();
+        setRandomId();
         return view;
 
     }
 
+    private void setRandomId() {
+        do {
+            id = new Random().nextInt();
+        } while (Checker.checkId(id, view.getContext()));
+    }
+
     private void init() {
-        imageType =  NAME_ICONS[0];
+
+
+        tvError = view.findViewById(R.id.tv_error);
 
         btnExample = view.findViewById(R.id.btn_example);
-        Button btnAddNewView = view.findViewById(R.id.btn_add_new_view);
+        final Button btnAddNewView = view.findViewById(R.id.btn_add_new_view);
         tvExampleJson = view.findViewById(R.id.tv_example_json);
-        edtId = view.findViewById(R.id.edt_id);
         edtName = view.findViewById(R.id.edt_name);
         edtPin = view.findViewById(R.id.edt_pin_controller);
-        Spinner spTypeImage = view.findViewById(R.id.sp_image_type);
+        final Spinner spTypeImage = view.findViewById(R.id.sp_image_type);
 
-        TypingListener typingListener = new TypingListener();
+        final TypingListener typingListener = new TypingListener();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, NAME_ICONS);
+        final ArrayAdapter<Icons> adapter =
+                new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, Icons.values());
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spTypeImage.setAdapter(adapter);
         spTypeImage.setSelection(0);
+        icon = Icons.LAMP;
 
         spTypeImage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                imageType = NAME_ICONS[i];
+                icon = (Icons) spTypeImage.getSelectedItem();
                 showExampleButton();
                 showExampleJson();
             }
@@ -82,7 +92,6 @@ public class FragmentButton extends Fragment {
             }
         });
 
-        edtId.addTextChangedListener(typingListener);
         edtName.addTextChangedListener(typingListener);
         edtPin.addTextChangedListener(typingListener);
 
@@ -97,7 +106,7 @@ public class FragmentButton extends Fragment {
         btnAddNewView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(checkValues()) {
+                if (checkValues()) {
                     saveJsonForCreatingViews();
                     ((ActivityCreateNewElement) Objects.requireNonNull(getActivity())).finishActivity();
 
@@ -106,78 +115,63 @@ public class FragmentButton extends Fragment {
         });
     }
 
-    private void showExampleButton()
-    {
+    private void showExampleButton() {
         btnExample.setText(name);
-        btnExample.setBackgroundResource(CreatorButton.getBackgroundResource(imageType));
+        btnExample.setBackgroundResource(icon.getDrawable());
     }
 
-    private void showExampleJson()
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("{").append("\n");
-            stringBuilder.append("  \"").append(PinArduino.TYPE_PIN).append("\":\"").append(PinArduino.TYPE_PIN_DIGITAL).append("\",\n");
-            stringBuilder.append("  \"").append(PinArduino.PIN).append("\":").append(pin).append(",\n");
-            stringBuilder.append("  \"").append(PinArduino.STATUS).append("\":\"").append(btnExample.isActivated()?PinArduino.STATUS_HIGH:PinArduino.STATUS_LOW).append("\"\n");
-            stringBuilder.append("}");
+    private void showExampleJson() {
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{").append("\n");
+        stringBuilder.append("  \"").append(PinOfTCOD.TYPE_PIN).append("\":\"").append(PinOfTCOD.TYPE_PIN_DIGITAL).append("\",\n");
+        stringBuilder.append("  \"").append(PinOfTCOD.PIN).append("\":").append(pin).append(",\n");
+        stringBuilder.append("  \"").append(PinOfTCOD.STATUS).append("\":\"").append(btnExample.isActivated() ? PinOfTCOD.STATUS_HIGH : PinOfTCOD.STATUS_LOW).append("\"\n");
+        stringBuilder.append("}");
 
         tvExampleJson.setText(stringBuilder);
     }
 
-    private void saveJsonForCreatingViews()
-    {
+    private void saveJsonForCreatingViews() {
         try {
-            EditorViewsJson.saveJsonForCreatingViews(getJSON(),view.getContext());
+            EditorViewsJson.saveJsonForCreatingViews(getJSON(), view.getContext());
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private boolean checkValues()
-    {
-       if(id.trim().equals(""))
-       {
-           Toast.makeText(view.getContext(),"Id can't be empty!",Toast.LENGTH_SHORT).show();
-           return false;
-       }else if(Checker.checkPin(Integer.parseInt(pin),getContext()))
-       {
-           Toast.makeText(view.getContext(),"This pin is already exists!",Toast.LENGTH_SHORT).show();
-           return false;
-       }
-       else if(pin.trim().equals(""))
-       {
-           Toast.makeText(view.getContext(),"Pin can't be empty!",Toast.LENGTH_SHORT).show();
-           return false;
-       }else if(Checker.checkId(Integer.parseInt(id), view.getContext()))
-       {
-           Toast.makeText(view.getContext(),"This Id is already exists!",Toast.LENGTH_SHORT).show();
-           return false;
-       }
-       return true;
+    private boolean checkValues() {
+        if (pin.trim().equals("")) {
+            tvError.setVisibility(View.VISIBLE);
+            tvError.setText(R.string.pin_can_be_empty);
+            return false;
+        } else if (Checker.checkPin(Integer.parseInt(pin), getContext())) {
+            tvError.setVisibility(View.VISIBLE);
+            tvError.setText(R.string.pin_existed);
+            return false;
+        }
+        return true;
     }
 
     private JSONObject getJSON() throws JSONException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put(FactoryViews.TYPE_VIEW,FactoryViews.TYPE_VIEW_BUTTON);
-        jsonObject.put(CreatorButton.ATR_ID,Integer.parseInt(id));
-        jsonObject.put(CreatorButton.ATR_TEXT,name);
-        jsonObject.put(CreatorButton.ATR_PIN,Integer.parseInt(pin));
-        jsonObject.put(CreatorButton.ATR_IMAGE_TYPE,imageType);
+        final JSONObject jsonObject = new JSONObject();
+        jsonObject.put(TYPE_VIEW,TYPE_VIEW_BUTTON);
+        jsonObject.put(ATR_ID, id);
+        jsonObject.put(ATR_TEXT, name);
+        jsonObject.put(ATR_PIN, Integer.parseInt(pin));
+        jsonObject.put(ATR_IMAGE_TYPE, icon.getNameIcon());
 
         return jsonObject;
     }
 
-    private class TypingListener implements TextWatcher
-    {
+    private class TypingListener implements TextWatcher {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
         }
 
         @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
-        {
-            id = edtId.getText().toString();
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            tvError.setVisibility(View.GONE);
             name = edtName.getText().toString();
             pin = edtPin.getText().toString();
 

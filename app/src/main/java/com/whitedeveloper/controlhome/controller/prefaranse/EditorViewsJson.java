@@ -2,19 +2,20 @@ package com.whitedeveloper.controlhome.controller.prefaranse;
 
 import android.content.Context;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
+
+import static com.whitedeveloper.TagKeys.ATR_ID;
 
 public class EditorViewsJson
 {
     public static void removeViewWithID(int id,Context context) throws Exception {
-        JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(context);
+        final JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(context);
 
         for(int i = 0; i < jsonArray.length(); i++)
         {
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            final JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-            if(jsonObject.getInt("id") == id) {
+            if(jsonObject.getInt(ATR_ID) == id) {
                 jsonArray.remove(i);
                 ControllerSharedPreference.putJsonForCreatingView(context,jsonArray.toString());
             }
@@ -24,7 +25,7 @@ public class EditorViewsJson
     public static void saveJsonForCreatingViews(JSONObject json, Context context)
     {
         try {
-            JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(context);
+            final JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(context);
             jsonArray.put(json);
             ControllerSharedPreference.putJsonForCreatingView(context,jsonArray.toString());
         } catch (Exception e) {
@@ -39,8 +40,8 @@ public class EditorViewsJson
     public static void saveChangedJsonForCreatingView(JSONObject jsonObject,Context context)
     {
         try {
-            JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(context);
-            int index = getIndexOfObjectInJsonById(jsonArray,jsonObject);
+            final JSONArray jsonArray = ControllerSharedPreference.getJsonForCreatingView(context);
+            final int index = getIndexOfObjectInJsonById(jsonArray,jsonObject);
             jsonArray.put(index,jsonObject);
             ControllerSharedPreference.putJsonForCreatingView(context,jsonArray.toString());
         } catch (Exception e) {
@@ -50,8 +51,8 @@ public class EditorViewsJson
 
     private static int getIndexOfObjectInJsonById(JSONArray jsonArray, JSONObject jsonObject) throws Exception {
         for(int i = 0; i < jsonArray.length(); i++)
-            if(jsonArray.getJSONObject(i).getInt("id") == jsonObject.getInt("id"))
+            if(jsonArray.getJSONObject(i).getInt(ATR_ID) == jsonObject.getInt(ATR_ID))
                 return i;
-        throw new Exception("Not found jsonObject with id " + jsonObject.getInt("id"));
+        throw new Exception("Not found jsonObject with id " + jsonObject.getInt(ATR_ID));
     }
 }

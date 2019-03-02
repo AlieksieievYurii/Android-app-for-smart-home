@@ -11,4 +11,5 @@
     <color name="color_btn_pressed">#393939</color>
     <color name="color_background_fragment_creating_view">#d1d1d1</color>
     <color name="background_seek_bar_container">#c6c4c4</color>
+    <color name="red">#ff0000</color>
 </resources>
